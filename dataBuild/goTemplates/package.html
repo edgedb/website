@@ -1,0 +1,69 @@
+{{with .PDoc}} {{/* package documentation */}}
+
+<overview>
+  <content>{{comment_html .Doc}}</content>
+  {{example_html $ ""}}
+</overview>
+
+{{with .Consts}}
+<h2 id="pkg-constants">Constants</h2>
+{{range .}} {{comment_html .Doc}}
+<pre>{{node_html $ .Decl true}}</pre>
+{{end}} {{end}} {{with .Vars}}
+<h2 id="pkg-variables">Variables</h2>
+{{range .}} {{comment_html .Doc}}
+<pre>{{node_html $ .Decl true}}</pre>
+{{end}} {{end}} {{range .Funcs}} {{/* Name is a string - no need for FSet */}}
+{{$name_html := html .Name}}
+<h2 id="{{$name_html}}">
+  func <a href="{{posLink_url $ .Decl}}">{{$name_html}}</a>
+  <a class="permalink" href="#{{$name_html}}">&#xb6;</a>
+  {{$since := since "func" "" .Name $.PDoc.ImportPath}} {{if $since}}<span
+    title="Added in Go {{$since}}"
+    >{{$since}}</span
+  >{{end}}
+</h2>
+<pre>{{node_html $ .Decl true}}</pre>
+{{comment_html .Doc}} {{example_html $ .Name}} {{callgraph_html $ "" .Name}}
+{{end}} {{range .Types}} {{$tname := .Name}} {{$tname_html := html .Name}}
+<type name="{{$tname_html}}">
+  <overview>
+    {{comment_html .Doc}}
+    <pre lang="go">{{node_html $ .Decl true}}</pre>
+  </overview>
+
+  {{range .Consts}}
+  <const>
+    {{comment_html .Doc}}
+    <pre lang="go">{{node_html $ .Decl true}}</pre>
+  </const>
+  {{end}} {{range .Vars}}
+  <variable>
+    {{comment_html .Doc}}
+    <pre lang="go">{{node_html $ .Decl true}}</pre>
+  </variable>
+  {{end}} {{example_html $ $tname}} {{implements_html $ $tname}}
+  {{methodset_html $ $tname}} {{range .Funcs}} {{$name_html := html .Name}}
+  <function name="{{$name_html}}">
+    <pre lang="go">{{node_html $ .Decl true}}</pre>
+    {{comment_html .Doc}} {{example_html $ .Name}}
+  </function>
+  {{end}} {{range .Methods}} {{$name_html := html .Name}}
+  <method name="{{$name_html}}" receiverType="{{html .Recv}}">
+    <pre lang="go">{{node_html $ .Decl true}}</pre>
+    {{comment_html .Doc}} {{$name := printf "%s_%s" $tname .Name}}
+    {{example_html $ $name}}
+  </method>
+  {{end}}
+</type>
+{{end}} {{end}} {{with $.Notes}} {{range $marker, $content := .}}
+<h2 id="pkg-note-{{$marker}}">{{noteTitle $marker | html}}s</h2>
+<ul style="list-style: none; padding: 0">
+  {{range .}}
+  <li>
+    <a href="{{posLink_url $ .}}" style="float: left">&#x261e;</a>
+    {{comment_html .Body}}
+  </li>
+  {{end}}
+</ul>
+{{end}} {{end}}

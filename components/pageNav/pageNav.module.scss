@@ -1,0 +1,490 @@
+@import "../../styles/mixins.scss";
+
+.pageHeader {
+  height: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $zindexPageHeader;
+  width: 100vw;
+}
+
+.docsHeader {
+  position: sticky;
+  top: var(--globalBannerHeight, 0px);
+  background: #fff;
+  height: var(--docsHeaderHeight);
+  z-index: $zindexPageHeader;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+
+  :global(.globalPageWrapper) {
+    height: 100%;
+  }
+
+  @include darkMode {
+    background: #191919;
+  }
+}
+
+.pageNav {
+  nav {
+    display: flex;
+    font-weight: $weight_bold;
+    font-size: 16px;
+    line-height: 40px;
+    color: #4d4d4d;
+    flex-shrink: 0;
+  }
+
+  @include darkMode {
+    nav {
+      color: #9c9c9c;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+.textLink {
+  display: block;
+  padding: 0 8px;
+
+  @include responsive(lg, padding, 0 4px);
+
+  & > * {
+    display: inline;
+    padding: 12px;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    > span {
+      display: inline-block;
+      border-bottom: 3px solid transparent;
+      line-height: 1em;
+      transition: border-color 0.2s;
+    }
+
+    > svg {
+      display: none;
+      fill: $edb_link_green;
+      width: 16px;
+      margin-right: 16px;
+    }
+
+    @include hover {
+      color: $edb_link_green;
+
+      span {
+        border-color: currentColor;
+      }
+    }
+  }
+
+  &.activeLink > * span {
+    border-color: currentColor;
+  }
+}
+
+.promoLink {
+  --startColor: #8b6cdf;
+  --endColor: #e176a3;
+  --gradient: linear-gradient(
+    90deg,
+    var(--startColor) 0%,
+    var(--endColor) 100%
+  );
+
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+  height: 32px;
+  line-height: 32px;
+  font-weight: $weight_bold;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-left: 16px;
+  margin-right: 12px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="100" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1" y="1" width="100%" height="100%" style="height:calc(100% - 2px); width:calc(100% - 2px)" rx="3" ry="3" stroke-width="2" fill="transparent" stroke="url(%23buttonGradient)"/></svg>');
+
+  span {
+    padding: 0 12px;
+    background: var(--startColor);
+    background: var(--gradient);
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @include hover {
+    background: var(--gradient);
+
+    span {
+      background-clip: unset;
+      color: #fff;
+      -webkit-text-fill-color: unset;
+    }
+  }
+
+  @include breakpoint(md) {
+    height: 29px;
+    line-height: 29px;
+    font-size: 12px;
+    order: -1;
+
+    .docsHeader & {
+      margin: 0 auto;
+    }
+  }
+
+  @include breakpoint(sm) {
+    .docsHeader & {
+      display: none;
+    }
+  }
+}
+
+.mobileLink {
+  display: none;
+}
+
+.linkGroup {
+  display: none;
+  position: relative;
+  margin: 16px 0;
+  padding-top: 28px;
+  padding-bottom: 16px;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #f6f6f6;
+    left: calc((100vw - 100%) / -2);
+    width: 100vw;
+    z-index: -1;
+
+    @include darkMode {
+      background: #262626;
+    }
+  }
+
+  .groupName {
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a1a1a1;
+
+    @include darkMode {
+      color: #666;
+    }
+  }
+}
+
+.injectedComponent {
+  flex-grow: 1;
+  margin-right: 40px;
+
+  @include breakpoint(md) {
+    flex-grow: 0;
+    margin-right: 0;
+  }
+}
+
+.logo {
+  fill: #4c4c4c;
+  align-self: center;
+  margin: -15px 0;
+  --logoHoverScale: 0.74;
+
+  .logoBar {
+    transform: scaleY(0.56);
+    transition: transform 0.2s;
+    will-change: transform;
+  }
+
+  @include darkMode {
+    fill: #b3b3b3;
+  }
+
+  @include hover {
+    .logoBar {
+      transform: scaleY(var(--logoHoverScale));
+    }
+  }
+
+  @mixin smallLogo {
+    width: 72px;
+    margin: -34.5px 0; // = (101-32) / 2
+    --logoHoverScale: 0.8;
+
+    .logoBar {
+      transform: scaleY(0.55); // = 88/72 * 32/71
+    }
+  }
+
+  .docsHeader & {
+    @include smallLogo;
+    --logoHoverScale: 0.7;
+  }
+
+  @include breakpoint(md) {
+    @include smallLogo;
+  }
+}
+
+.siteSectionName {
+  fill: #bcbcbc;
+  margin-left: 16px;
+  flex-shrink: 0;
+
+  @include breakpoint(sm) {
+    height: 11px;
+    width: 39px;
+    margin-left: 14px;
+  }
+
+  @include darkMode {
+    fill: #4c4c4c;
+  }
+}
+
+.headerLogo {
+  grid-column: left-sidebar;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.content {
+  grid-column: content / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+li.iconLinks {
+  display: flex;
+  padding-right: 0;
+  margin: 0 12px;
+
+  --borderColour: #e6e6e6;
+  --backgroundColour: #efefef;
+  --iconColour: #4c4c4c;
+  --textColour: #4c4c4c;
+
+  a {
+    display: flex;
+    padding: 4px;
+
+    span {
+      display: flex;
+      height: 24px;
+      width: 24px;
+      align-items: center;
+      justify-content: center;
+      background: var(--backgroundColour);
+      border: 1px solid var(--borderColour);
+      box-sizing: border-box;
+      border-radius: 4px;
+      transition: background-color 0.2s, border 0.2s, color 0.2s;
+
+      svg {
+        width: 19px;
+        height: 19px;
+        fill: var(--iconColour);
+        transition: fill 0.2s;
+      }
+    }
+
+    @include hover {
+      --backgroundColour: #{$edb_link_green};
+      --borderColour: #{$edb_link_green};
+      --textColour: #{$edb_link_green};
+      --iconColour: #fff;
+
+      span {
+        border-color: var(--borderColour);
+      }
+
+      @include darkMode {
+        --iconColour: #2c2d2e;
+      }
+    }
+
+    &.splitButton {
+      span:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      span:nth-child(2) {
+        width: auto;
+        padding: 0 4px;
+        font-weight: bold;
+        font-size: 14px;
+        color: var(--textColour);
+        border-radius: 0 4px 4px 0;
+        background: #fff;
+        border-left: 0;
+      }
+    }
+  }
+
+  @include darkMode {
+    --borderColour: #9c9c9c;
+    --backgroundColour: #9c9c9c;
+    --iconColour: #2c2d2e;
+    --textColour: #9c9c9c;
+
+    a.splitButton {
+      span:nth-child(2) {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.navMenu {
+  display: none;
+  color: #4d4d4d;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    fill: currentColor;
+  }
+
+  @include hover {
+    color: $edb_mid_blue;
+
+    @include darkMode {
+      color: $edb_dark_link_blue;
+    }
+  }
+
+  @include darkMode {
+    color: #9c9c9c;
+  }
+}
+
+@include breakpoint(md) {
+  .pageHeader {
+    height: 104px;
+  }
+
+  .navMenu {
+    display: flex;
+    z-index: 1;
+  }
+
+  .pageNav nav {
+    display: none;
+
+    position: fixed;
+    background: #fff;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
+  }
+
+  .links {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: max-content;
+    margin: 36px auto;
+    min-height: calc(100% - 72px);
+  }
+
+  .textLink {
+    display: flex;
+    padding: 0;
+
+    font-size: 14px;
+
+    > * {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      padding: 0;
+      width: 100%;
+
+      > span {
+        line-height: 16px;
+      }
+
+      > svg {
+        display: block;
+      }
+    }
+  }
+
+  li.iconLinks {
+    justify-content: center;
+    margin: 0;
+    margin-top: 32px;
+
+    a {
+      padding: 12px;
+    }
+  }
+
+  .linkGroup {
+    display: block;
+
+    .links {
+      margin: 0;
+      margin-top: 4px;
+    }
+  }
+
+  .menuOpen {
+    nav {
+      display: block;
+    }
+
+    .navMenu {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+
+      color: $edb_mid_blue;
+    }
+
+    @include darkMode {
+      nav {
+        color: #808080;
+        background-color: #1f1f1f;
+      }
+
+      .navMenu {
+        color: $edb_dark_blue;
+      }
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .pageHeader {
+    height: 88px;
+  }
+}

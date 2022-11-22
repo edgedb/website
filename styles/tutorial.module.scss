@@ -1,0 +1,140 @@
+@import "./mixins.scss";
+
+.page {
+  --codeBgColour: #e5e5e5;
+
+  --contentWidth: 704px;
+  --leftSidebarWidth: 240px;
+
+  :global(.globalPageWrapper) {
+    grid-template-columns:
+      [left-sidebar] minmax(0, var(--leftSidebarWidth))
+      1fr
+      [content] minmax(auto, var(--contentWidth))
+      1fr;
+  }
+
+  @include darkMode {
+    --codeBgColour: #242424;
+
+    color: #cdcdcd;
+  }
+
+  @include responsive(xl, --contentWidth, 616px);
+
+  @include responsive(lg, --contentWidth, 552px);
+  @include responsive(lg, --leftSidebarWidth, 200px);
+
+  @include responsive(md, --leftSidebarWidth, 0px);
+}
+
+.footer {
+  background: transparent !important;
+}
+
+.content {
+  grid-column: content;
+  min-width: 0;
+
+  h1 {
+    margin: 0;
+
+    @include responsive(md, text-align, center);
+    @include responsive(sm, text-align, unset);
+  }
+}
+
+.toc {
+  grid-column: left-sidebar;
+}
+
+.preheader {
+  @include monoSubheader;
+  font-size: 14px;
+  color: #999999;
+  text-align: start;
+
+  @include darkMode {
+    color: #808080;
+  }
+
+  @include responsive(md, text-align, center);
+  @include responsive(sm, text-align, unset);
+}
+
+.subtopics {
+  margin-top: 1em;
+}
+
+.cells {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5em;
+
+  counter-reset: codecell;
+
+  > *:first-child {
+    padding-top: 0;
+  }
+}
+
+.codeCell {
+  counter-increment: codecell;
+  scroll-margin-top: 50px;
+}
+
+.codeCell,
+.textCell {
+  padding-top: 36px;
+}
+
+.codeCell + .codeCell {
+  padding-top: 72px;
+}
+
+.textCell {
+  p:first-child {
+    margin-top: 0;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.introIllustration {
+  width: 100%;
+  padding-top: calc(100% / #{(1035 / 496)});
+  @include sizedBgImage(
+    "/_images/tutorial/projector_illustration_light",
+    false
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: -70px;
+  margin-bottom: 40px;
+
+  @include darkMode {
+    @include sizedBgImage(
+      "/_images/tutorial/projector_illustration_dark",
+      false
+    );
+  }
+}
+
+@include breakpoint(sm) {
+  .pageNav {
+    font-size: 14px;
+  }
+
+  .introIllustration {
+    @include sizedBgImage(
+      "/_images/tutorial/projector_illustration_light" 768
+    );
+
+    @include darkMode {
+      @include sizedBgImage(
+        "/_images/tutorial/projector_illustration_dark" 768
+      );
+    }
+  }
+}

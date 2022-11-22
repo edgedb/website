@@ -1,0 +1,169 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.section {
+  margin-bottom: 16px;
+}
+
+.sectionName {
+  font-weight: $weight_extrabold;
+  font-size: 18px;
+  line-height: 30px;
+  padding: 5px 0;
+  text-transform: uppercase;
+  color: #4d4d4d;
+
+  @include darkMode {
+    color: #9c9c9c;
+  }
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.categoryLink {
+  --lineColour: #e5e5e5;
+  --activeColour: #{$edb_mid_blue};
+
+  $catLinkHeight: 40px;
+  $lineHeight: 28px;
+
+  position: relative;
+  display: block;
+  font-weight: $weight_semibold;
+  font-size: 18px;
+  line-height: $lineHeight;
+  color: #4d4d4d;
+  padding: #{($catLinkHeight - $lineHeight) / 2} 0;
+  padding-left: 24px;
+
+  a {
+    color: inherit;
+  }
+
+  svg {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: -1px;
+    top: #{($catLinkHeight / 2) - 9px};
+    fill: var(--pageBackgroundColour);
+  }
+
+  .ring {
+    stroke-width: 2px;
+    stroke: var(--lineColour);
+  }
+
+  .line {
+    stroke-width: 2px;
+    stroke: var(--lineColour);
+    top: #{$catLinkHeight / 2};
+    height: 100%;
+  }
+
+  &.completed {
+    color: var(--activeColour);
+
+    .ring {
+      fill: var(--activeColour);
+      stroke: var(--pageBackgroundColour);
+    }
+
+    .line {
+      stroke: var(--activeColour);
+    }
+
+    .dot {
+      fill: none;
+    }
+  }
+
+  &.active {
+    color: var(--activeColour);
+
+    .ring {
+      stroke: var(--activeColour);
+      fill: var(--pageBackgroundColour);
+    }
+    .dot {
+      fill: var(--activeColour);
+    }
+  }
+
+  @include hover {
+    .dot {
+      fill: var(--activeColour);
+    }
+  }
+
+  &:last-child {
+    .line {
+      display: none;
+    }
+  }
+
+  @include darkMode {
+    color: #b3b3b3;
+
+    --lineColour: #595959;
+    --activeColour: #{$edb_dark_blue};
+  }
+}
+
+.menuClose {
+  position: fixed;
+  display: none;
+  bottom: 24px;
+  right: 24px;
+  cursor: pointer;
+
+  svg {
+    fill: $edb_mid_blue;
+
+    @include darkMode {
+      fill: $edb_dark_blue;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .toc {
+    --pageBackgroundColour: #fff;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--pageBackgroundColour);
+    margin: 0;
+    z-index: $zindexNavOverlay;
+    justify-content: center;
+    overflow-y: auto;
+
+    .inner {
+      opacity: 1;
+      margin: auto;
+      padding: 90px;
+    }
+
+    @include darkMode {
+      --pageBackgroundColour: #1f2021;
+    }
+  }
+
+  .menuOpen {
+    &.toc {
+      display: flex;
+    }
+
+    .menuClose {
+      display: flex;
+    }
+  }
+}

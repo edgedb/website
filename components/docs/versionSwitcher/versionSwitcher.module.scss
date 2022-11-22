@@ -1,0 +1,36 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.versionSwitcher {
+  height: 40px;
+  background: #ededed;
+  border-radius: $radius_sm;
+  color: #4f5362;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+  padding-left: 14px;
+  display: flex;
+  align-items: center;
+  max-width: 208px;
+
+  .tag {
+    display: inline-block;
+    color: $edb_green;
+    font-size: 10px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    line-height: 20px;
+    padding: 0 5px;
+    margin-left: auto;
+  }
+
+  @include darkMode {
+    background: #212121;
+    color: #9c9c9c;
+
+    .tag {
+      color: #11714f;
+    }
+  }
+}

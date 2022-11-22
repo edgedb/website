@@ -1,0 +1,62 @@
+@import "../../../styles/settings.vars.scss";
+
+.postAuthors {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 100%;
+
+  .name {
+    font-size: 12px;
+    font-weight: $weight_semibold;
+    display: inline-block;
+  }
+
+  .sep {
+    display: inline-block;
+    width: 2px;
+    height: 30px;
+    background: #ccc;
+    margin: 0 10px;
+    overflow: hidden;
+    font-size: 0;
+  }
+}
+
+.postAuthorCards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.authorCard {
+  display: flex;
+  align-items: center;
+  margin: 8px 16px;
+  text-align: left;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #f1f1f1;
+  }
+
+  .authorDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 6px;
+
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #4d4d4d;
+  }
+
+  .profileName {
+    font-weight: normal;
+    font-size: 12px;
+    color: #9d9d9d;
+  }
+}

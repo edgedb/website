@@ -1,0 +1,13 @@
+Content for edgedb.com/blog
+
+A few rules:
+
+* For every new blog post you should generate a new uuid and
+  specify it via the `.. blog:guid::` directive.
+
+* The `.. blog:draft::` can be used to mark the post as a
+  draft. Draft blog posts are only rendered in development
+  and on staging sites.
+
+  (The `SHOW_DRAFT_BLOG_POSTS` environment variable controls
+  their visibility.)

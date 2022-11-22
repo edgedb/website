@@ -1,0 +1,192 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.rstWrapper {
+  display: contents;
+
+  h2 {
+    line-height: 32px;
+    overflow-wrap: break-word;
+
+    code {
+      font-size: 90%;
+    }
+  }
+
+  .tableWrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    font-size: 17px;
+
+    &.align_center {
+      tr {
+        td {
+          text-align: center;
+        }
+      }
+    }
+
+    tr {
+      &:first-child {
+        td,
+        th {
+          &:first-child {
+            border-top-left-radius: $radius_sm;
+          }
+        }
+        td,
+        th {
+          &:last-child {
+            border-top-right-radius: $radius_sm;
+          }
+        }
+      }
+      &:last-child {
+        td:first-child {
+          border-bottom-left-radius: $radius_sm;
+        }
+        td:last-child {
+          border-bottom-right-radius: $radius_sm;
+        }
+      }
+    }
+
+    thead + tbody tr:first-child {
+      td:first-child {
+        border-top-left-radius: 0;
+      }
+      td:last-child {
+        border-top-right-radius: 0;
+      }
+    }
+
+    th,
+    td {
+      padding: 0.5em 0.8em;
+    }
+
+    td {
+      background-color: var(--codeBgColour);
+      vertical-align: top;
+    }
+    th {
+      background-color: darken($edb_code_bg, 3%);
+    }
+
+    p {
+      margin: 0;
+      line-height: 27px;
+    }
+  }
+
+  ol,
+  ul {
+    li {
+      padding: 5px 0px;
+      p:first-child {
+        margin-top: 0px;
+      }
+      p:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  @include darkMode {
+    table {
+      th {
+        background-color: darken($edb_dark_code_bg, 2%);
+      }
+    }
+  }
+}
+
+:not(aside) {
+  &.note,
+  &.important,
+  &.warning {
+    --notePadding: var(--overhang, 32px);
+
+    padding: 0 calc(var(--notePadding) - 4px);
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    line-height: 32px;
+
+    border-left: 4px solid #53c2a2;
+
+    @include breakpoint(sm) {
+      --notePadding: var(--pageMargin);
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    p {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    > p:first-child:before {
+      content: "Note:";
+      color: #53c2a2;
+      @include monospace;
+      font-style: normal;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-right: 0.5em;
+      padding-left: 24px;
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.2388 26.6404H19.9888V16.5904H16.2388V26.6404ZM16.2388 13.5429H19.9888V9.9829H16.2388V13.5429ZM18.1138 0.0666504C8.44877 0.0666504 0.61377 7.9029 0.61377 17.5667C0.61377 27.2317 8.44877 35.0667 18.1138 35.0667C27.7775 35.0667 35.6138 27.2317 35.6138 17.5667C35.6138 7.9029 27.7775 0.0666504 18.1138 0.0666504Z' fill='%2353c2a2'/%3E%3C/svg%3E%0A");
+    }
+
+    section > &,
+    .section > & {
+      margin-left: calc(-1 * var(--notePadding));
+      margin-right: calc(-1 * var(--notePadding));
+    }
+
+    @include darkMode {
+      color: $edb_light_grey;
+      border-left-color: #2c6454;
+
+      > p:first-child:before {
+        color: #2c6454;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.2388 26.6404H19.9888V16.5904H16.2388V26.6404ZM16.2388 13.5429H19.9888V9.9829H16.2388V13.5429ZM18.1138 0.0666504C8.44877 0.0666504 0.61377 7.9029 0.61377 17.5667C0.61377 27.2317 8.44877 35.0667 18.1138 35.0667C27.7775 35.0667 35.6138 27.2317 35.6138 17.5667C35.6138 7.9029 27.7775 0.0666504 18.1138 0.0666504Z' fill='%232c6454'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+
+  &.warning {
+    border-left-color: #eb7c7c;
+
+    > p:first-child:before {
+      content: "Warning:";
+      color: #eb7c7c;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 35 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.625 18.8376H19.375V8.78753H15.625V18.8376ZM15.625 25.7401H19.375V22.1801H15.625V25.7401ZM34.5538 26.2463L20.3513 1.64626C19.0838 -0.548752 15.9162 -0.548752 14.6487 1.64626L0.446193 26.2463C-0.821311 28.4413 0.762444 31.1851 3.29745 31.1851H31.7025C34.2376 31.1851 35.8213 28.4413 34.5538 26.2463Z' fill='%23eb7c7c'/%3E%3C/svg%3E%0A");
+    }
+
+    @include darkMode {
+      border-left-color: #793e3e;
+
+      > p:first-child:before {
+        color: #793e3e;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 35 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.625 18.8376H19.375V8.78753H15.625V18.8376ZM15.625 25.7401H19.375V22.1801H15.625V25.7401ZM34.5538 26.2463L20.3513 1.64626C19.0838 -0.548752 15.9162 -0.548752 14.6487 1.64626L0.446193 26.2463C-0.821311 28.4413 0.762444 31.1851 3.29745 31.1851H31.7025C34.2376 31.1851 35.8213 28.4413 34.5538 26.2463Z' fill='%23793e3e'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+}
+
+.nestedParagraph {
+  display: block;
+}
