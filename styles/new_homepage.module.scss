@@ -1,0 +1,1648 @@
+@import "./mixins.scss";
+
+$highlightColour: #0ccb93;
+
+.page {
+  background: none;
+
+  @include responsiveAll(--contentWidth, 1296px, 1168px, 896px, 688px, 100%);
+}
+
+.pageFooter {
+  background: none;
+  --footerSubscribeBgColour: #f7f7f7;
+  z-index: 1;
+}
+
+.content {
+  grid-column: content;
+  z-index: 1;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @include edgedbfont;
+    font-style: normal;
+    font-weight: $weight_bold;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: #4e4e4e;
+    margin: 0;
+
+    span {
+      color: $highlightColour;
+    }
+  }
+
+  .heroContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: calc(100vh - 135px - 60px);
+    @include responsive(md, height, calc(100vh - 104px - 60px));
+    @include responsive(sm, height, calc(100vh - 88px - 60px));
+    min-height: 500px;
+    @include responsive(sm, min-height, 400px);
+    width: 100vw;
+
+    left: 0px;
+  }
+  h1 {
+    margin: 0px;
+    @include responsiveAllXXL(
+      font-size,
+      158px,
+      126px,
+      110px,
+      78px,
+      78px,
+      38px
+    );
+    @include responsiveAllXXL(
+      line-height,
+      144px,
+      120px,
+      104px,
+      72px,
+      72px,
+      32px
+    );
+  }
+
+  h2 {
+    @include responsiveAll(font-size, 96px, 80px, 56px, 48px, 32px);
+    @include responsiveAll(line-height, 88px, 72px, 56px, 48px, 32px);
+
+    @include responsiveAllXXL(
+      margin-top,
+      // 298px,
+      226px,
+      202px,
+      180px,
+      135px,
+      104px,
+      72px
+    );
+
+    margin-bottom: 117px;
+    @include responsive(lg, margin-bottom, 63px);
+  }
+
+  h3 {
+    font-weight: $weight_semibold;
+    @include responsiveAll(font-size, 48px, 32px, 32px, 28px, 24px);
+    @include responsiveAll(line-height, 48px, 32px, 32px, 32px, 28px);
+
+    @include responsiveAllXXL(
+      margin-top,
+      160px,
+      150px,
+      88px,
+      112px,
+      112px,
+      98px
+    );
+  }
+
+  h4 {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: $weight_semibold;
+  }
+
+  p {
+    margin: 1em 0 0 0;
+  }
+
+  --arrowButtonBorderColour: #e6e6e6;
+  --arrowButtonSublabelColour: #c0c0c0;
+  --arrowButtonLabelColour: #4e4e4e;
+  --arrowColour: #{$highlightColour};
+  --arrowButtonHoverBackgroundColour: #{$highlightColour};
+
+  @include darkMode {
+    --arrowButtonBorderColour: #433c45;
+    --arrowButtonSublabelColour: #{$highlightColour};
+    --arrowButtonLabelColour: #e5e5e5;
+  }
+}
+
+.headerImage {
+  --headerAspect: 874 / 824;
+
+  // position: absolute;
+
+  --headerWidth: calc(250px + 10vw);
+  --headerHeight: calc(var(--headerWidth) * var(--headerAspect));
+  width: var(--headerWidth);
+  height: var(--headerHeight);
+  // top: calc(0.5 * var(--headerHeight));
+  @include sizedBgImage("/_images/homepage/collapsed_db" 825);
+  // @include responsiveAllXXL(max-width, 824px, 648px, 563px, 416px, 416px, 200px);
+  // @include responsiveAllXXL(
+  //   height,
+  //   824px * $aspect,
+  //   648px * $aspect,
+  //   563px * $aspect,
+  //   416px * $aspect,
+  //   416px * $aspect,
+  //   200px * $aspect
+  // );
+  // top: calc(50vw - 200px + 20vw);
+  // @include responsiveAllXXL(top, 266px, 176px, 180px, 200px, 148px, 108px);
+}
+
+.intro {
+  @include responsiveAll(font-size, 28px, 28px, 24px, 20px, 18px);
+  @include responsiveAll(line-height, 48px, 48px, 40px, 40px, 32px);
+  @include responsiveAll(max-width, 800px, 736px, 736px, 608px, 100%);
+
+  em {
+    font-weight: $weight_bold;
+    font-style: normal;
+  }
+
+  .installBlock {
+    margin-top: 28px;
+  }
+}
+
+.installBlock {
+  .installBlockTabs {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: -18px;
+  }
+
+  .installTab {
+    font-size: 16px;
+    line-height: 24px;
+    color: #4e4e4e;
+    padding: 10px 18px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .selectedTab {
+    font-weight: bold;
+    color: $highlightColour;
+  }
+
+  .terminal {
+    position: relative;
+    display: flex;
+    @include monospace;
+    white-space: nowrap;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4c4c4c;
+    background: #eee;
+    border-radius: 8px;
+    overflow-x: auto;
+
+    @include hideScrollbar;
+  }
+
+  .terminalInner {
+    display: flex;
+    padding: 20px 24px;
+    padding-right: 112px;
+  }
+
+  .terminalPrompt {
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+    margin-right: 1ch;
+  }
+
+  .terminalCopy {
+    position: sticky;
+    margin: 17px;
+    margin-left: auto;
+    right: 17px;
+    user-select: none;
+  }
+
+  @include breakpoint(sm) {
+    margin-left: calc(-1 * var(--pageMargin));
+    margin-right: calc(-1 * var(--pageMargin));
+
+    .installBlockTabs {
+      margin-left: 0;
+      justify-content: center;
+    }
+
+    .terminal {
+      border-radius: 0;
+    }
+  }
+}
+
+.cloudHostLogos {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @include responsiveAll(width, 992px, 992px, 912px, 656px, 224px);
+  @include responsiveAll(margin-top, 120px, 120px, 80px, 112px, 48px);
+
+  @include responsive(sm, column-gap, 32px);
+
+  a {
+    display: contents;
+  }
+
+  svg {
+    width: 136px;
+    height: 136px;
+    filter: contrast(0) brightness(159%);
+    transition: filter 0.3s;
+
+    @include breakpoint(lg) {
+      width: 96px;
+      height: 96px;
+    }
+
+    @include breakpoint(md) {
+      width: 72px;
+      height: 72px;
+    }
+
+    @include breakpoint(sm) {
+      width: 96px;
+      height: 96px;
+    }
+
+    @include hover {
+      filter: none;
+    }
+
+    :global(.touch) & {
+      filter: none;
+    }
+  }
+}
+
+.cloudHostLogosMessage {
+  font-size: 18px;
+  line-height: 20px;
+  color: #a6a6a6;
+  margin-top: 24px;
+  text-align: center;
+
+  :global(.no-touch) & {
+    display: none;
+  }
+}
+
+.tooltipWrapper {
+  position: relative;
+  display: flex;
+
+  .tooltipPopup {
+    position: absolute;
+    width: max-content;
+    top: 100%;
+    left: calc(50% + var(--offset));
+    transform: translateX(-50%);
+    font-size: 20px;
+    line-height: 48px;
+    color: #ffffff;
+    padding: 16px 32px;
+    background: #4e4e4e;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    @include breakpoint(lg) {
+      padding: 8px 24px;
+      font-size: 18px;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: #4e4e4e;
+      transform: rotate(45deg);
+      top: -7px;
+      left: calc(50% - 10px - var(--offset));
+    }
+  }
+
+  @include hover {
+    .tooltipPopup {
+      opacity: 1;
+    }
+  }
+}
+
+.sectionIntro {
+  @include responsiveAll(width, 608px, 544px, 544px, 528px, 100%);
+  p {
+    margin: 0;
+  }
+
+  font-size: 20px;
+  @include responsive(md, font-size, 18px);
+
+  line-height: 32px;
+
+  @include responsiveAll(margin-bottom, 104px, 122px, 98px, 118px, 44px);
+}
+
+h3.subsectionHeader {
+  padding-bottom: calc(72px - 1em);
+  @include responsive(lg, padding-bottom, calc(72px - 1em));
+
+  margin-top: 124px;
+  @include responsive(lg, padding-bottom, calc(72px - 1em));
+
+  max-width: 565px;
+  @include responsive(lg, max-width, 400px);
+}
+.subsectionIntro {
+  @include responsiveAll(width, 576px, 576px, 576px, 576px, 100%);
+
+  font-size: 20px;
+  @include responsive(md, font-size, 18px);
+
+  line-height: 32px;
+  @include responsive(md, line-height, 28px);
+
+  margin-bottom: 72px;
+  @include responsive(xl, margin-bottom, 48px);
+  @include responsive(sm, margin-bottom, 40px);
+}
+
+.migrationsButton {
+  @include responsiveAll(margin-bottom, 208px, 208px, 208px, 123px, 80px);
+  margin-top: 88px;
+}
+
+.darkBlock {
+  position: relative;
+  background: #2c1428;
+  color: #ccc;
+  overflow: hidden;
+
+  h1,
+  h2,
+  h3 {
+    color: #e5e5e5;
+  }
+}
+
+.edgeqlSection {
+  @include responsiveAll(--contentWidth, 1116px, 976px, 889px, 532px, 100%);
+}
+.edgeqlHeader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 150px !important;
+}
+
+.edgeqlText {
+  position: absolute;
+  // left: 0;
+  // width: 100%;
+
+  @include responsiveAll(height, 170px, 170px, 132px, 98px, 70px);
+  @include responsiveAll(
+    width,
+    170px * 5,
+    170px * 5,
+    132px * 5,
+    98px * 5,
+    70px * 5
+  );
+  @include responsiveAll(
+    top,
+    calc(50% - 85px),
+    calc(50% - 85px),
+    calc(50% - 66px),
+    calc(50% - 49px),
+    calc(50% - 35px)
+  );
+
+  @include sizedBgImage("/_images/homepage/edgeql_text" 700);
+
+  canvas {
+    top: -20% !important;
+    height: 140% !important;
+  }
+
+  html[data-darkreader-mode] & {
+    filter: none !important;
+  }
+}
+
+.featureBlock {
+  display: grid;
+  grid-template-columns: 614px 600px;
+  grid-template-rows: 1fr auto;
+  column-gap: 82px;
+  grid-template-areas:
+    "content example"
+    "link example";
+  // margin-bottom: 160px;
+  padding: 120px 0px;
+  @include responsive(xl, padding, 90px 0px);
+  @include responsive(lg, padding, 60px 0px);
+  @include responsive(md, padding, 30px 0px);
+  // @include responsive(md, margin-bottom, 90px);
+
+  &Content {
+    grid-area: content;
+
+    h3 {
+      text-align: left;
+      margin-top: 0;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 32px;
+    }
+  }
+
+  &Example {
+    grid-area: example;
+  }
+
+  &Link {
+    grid-area: link;
+    margin-top: 1em;
+  }
+
+  @include breakpoint(xl) {
+    grid-template-columns: 496px 600px;
+    column-gap: 72px;
+  }
+
+  @include breakpoint(lg) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "content"
+      "example"
+      "link";
+    width: 714px;
+    justify-items: center;
+
+    &Content {
+      width: 576px;
+
+      h3 {
+        text-align: left;
+      }
+
+      p {
+        font-size: 20px;
+        line-height: 32px;
+      }
+    }
+
+    &Example {
+      justify-self: stretch;
+      margin-top: 41px;
+    }
+
+    &Link {
+      margin-top: 52px;
+    }
+  }
+
+  @include breakpoint(md) {
+    width: 640px;
+    h3 {
+      text-align: left;
+    }
+
+    &Content {
+      width: 576px;
+
+      p {
+        font-size: 16px;
+        line-height: 32px;
+      }
+    }
+
+    &Example {
+      margin-top: 32px;
+    }
+
+    &Link {
+      // margin-top: 64px;
+      margin-top: 52px;
+      display: none;
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+
+    &Content {
+      width: 100%;
+      min-width: 0;
+    }
+
+    &Example {
+      width: calc(100% + var(--pageMargin) * 2);
+      margin-left: calc(-1 * var(--pageMargin));
+      margin-right: calc(-1 * var(--pageMargin));
+      min-width: 0;
+    }
+
+    &Link {
+      display: none;
+    }
+  }
+}
+
+.edgeqlExamples {
+  counter-reset: numberedHeaders codecell;
+
+  .numberedHeader {
+    display: flex;
+    align-items: center;
+    counter-increment: numberedHeaders;
+    padding-bottom: 50px;
+
+    h1,
+    h2,
+    h3 {
+      text-align: start;
+      margin-top: 0;
+    }
+
+    &:before {
+      content: counter(numberedHeaders, decimal-leading-zero);
+      @include edgedbfont;
+      font-style: normal;
+      font-weight: $weight_medium;
+      font-size: 160px;
+      letter-spacing: -0.03em;
+      color: #482e44;
+      width: 23px;
+      margin-left: -23px;
+
+      @include responsive(xl, font-size, 136px);
+
+      html[data-darkreader-mode] & {
+        opacity: 0.2;
+      }
+    }
+
+    @include breakpoint(sm) {
+      justify-content: center;
+      position: relative;
+
+      h1,
+      h2,
+      h3 {
+        text-align: center;
+      }
+
+      &:before {
+        position: absolute;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+        z-index: -1;
+      }
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+  }
+}
+
+.exampleBlock {
+  display: flex;
+  margin-bottom: 160px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
+
+  @include responsiveAll(column-gap, 102px, 94px, 43px, 0, 0);
+
+  @include breakpoint(md) {
+    width: 532px;
+    flex-direction: column;
+    margin-bottom: 142px;
+    row-gap: 56px;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+  }
+
+  .exampleText,
+  .exampleRepl {
+    min-width: 0;
+  }
+
+  .exampleText {
+    @include responsiveAll(width, 544px, 440px, 404px, 100%, 100%);
+
+    p {
+      font-size: 20px;
+      @include responsive(sm, font-size, 18px);
+      line-height: 32px;
+    }
+  }
+  .exampleRepl {
+    width: 442px;
+    margin-left: 24px;
+    counter-increment: codecell;
+
+    @include responsive(md, width, auto);
+    @include responsive(md, margin-right, 24px);
+  }
+
+  --codeCellBackgroundColour: rgba(0, 0, 0, 0.15);
+  --codeCellFocusedColour: #{$highlightColour};
+}
+
+.sqlComparison {
+  max-width: 100%;
+  width: 1024px;
+}
+
+.darkCodeBlock {
+  --codeBgColour: none;
+
+  align-self: start;
+  --codeBlockLineHeight: 32px;
+
+  @include raisedShadow(
+    #21142f,
+    8px,
+    false,
+    40px,
+    8px,
+    48px,
+    rgba(0, 0, 0, 0.15)
+  );
+
+  > div {
+    margin: 0;
+    font-size: 17px;
+  }
+
+  @include breakpoint(sm) {
+    &:after {
+      border-radius: 0;
+    }
+  }
+}
+
+.lightCodeBlock {
+  --codeBgColour: none;
+  background: none;
+  height: max-content;
+
+  & > div {
+    margin-top: 0;
+  }
+
+  @include raisedShadow(
+    #3a3a3a,
+    8px,
+    false,
+    40px,
+    8px,
+    48px,
+    rgba(0, 0, 0, 0.15)
+  );
+
+  @include breakpoint(sm) {
+    &:after {
+      border-radius: 0;
+    }
+  }
+}
+
+h3.librariesHeader {
+  @include breakpoint(sm) {
+    align-self: flex-start;
+    text-align: left;
+    padding-bottom: 0px;
+  }
+  @include breakpoint(sm) {
+    align-self: flex-start;
+    text-align: left;
+    padding-bottom: 0px;
+  }
+}
+.librariesList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 96px;
+  row-gap: 66px;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 54px;
+  width: 1072px;
+  margin-bottom: 262px;
+
+  li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    grid-template-areas:
+      ". title"
+      "logo usage"
+      ". links";
+    column-gap: 46px;
+
+    @include hover {
+      .logo {
+        filter: none;
+      }
+
+      .sunglasses {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+
+      .linksList {
+        color: #{$highlightColour};
+      }
+    }
+
+    &:nth-child(odd):last-child {
+      grid-column: 1 / span 2;
+      max-width: 50%;
+      justify-self: center;
+    }
+  }
+
+  .logo {
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    filter: contrast(0%) brightness(153%);
+    transition: filter 0.2s linear;
+  }
+
+  .deno {
+    .sunglasses {
+      transform: translateY(-28px);
+      opacity: 0;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+    }
+  }
+
+  h3 {
+    grid-area: title;
+    text-transform: none;
+    @include mainfont;
+    font-weight: $weight_bold;
+    text-align: left;
+    font-size: 20px;
+    line-height: 24px;
+    color: #e5e5e5;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .langModifier {
+    font-weight: normal;
+    padding-left: 8px;
+    color: #e5e5e5;
+    opacity: 0.5;
+  }
+
+  .libUsage {
+    grid-area: usage;
+    margin-left: -22px;
+    min-width: 0;
+
+    --codeBgColour: #21142f;
+    --codeBlockVerticalPadding: 12px;
+    --codeBlockHorizontalPadding: 22px;
+    --codeButtonInset: 12px;
+    --codeBlockLineHeight: 30px;
+    --copyCodeBg: #2e1e3e;
+
+    & > div {
+      margin: 0;
+    }
+  }
+
+  .linksList {
+    --pageLinkColour: #ffffff94;
+
+    a:hover {
+      color: #{$highlightColour};
+    }
+    // --pageLinkHoverColour: #{$highlightColour};
+
+    grid-area: links;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    margin-top: 18px;
+
+    a:not(:last-child) {
+      margin-right: 24px;
+
+      &:after {
+        display: inline-block;
+        content: " · ";
+        width: 24px;
+        text-align: center;
+        color: #4e4e4e;
+        margin-right: -24px;
+        pointer-events: none;
+      }
+    }
+  }
+
+  @include breakpoint(xl) {
+    margin-bottom: 222px;
+  }
+
+  @include breakpoint(lg) {
+    column-gap: 64px;
+    width: 880px;
+    margin-bottom: 132px;
+  }
+
+  @include breakpoint(md) {
+    column-gap: 48px;
+    row-gap: 48px;
+    width: 100%;
+
+    li {
+      grid-template-areas:
+        "logo title"
+        "usage usage"
+        "links links";
+      column-gap: 24px;
+    }
+
+    .logo {
+      height: 56px;
+      margin-bottom: 32px;
+    }
+
+    h3 {
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .libUsage {
+      margin-left: 0;
+    }
+
+    .linksList {
+      margin-top: 24px;
+      font-size: 18px;
+    }
+  }
+
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+    row-gap: 95px;
+    margin-bottom: 66px;
+
+    li {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "logo"
+        "title"
+        "usage"
+        "links";
+
+      &:nth-child(odd):last-child {
+        grid-column: auto;
+        max-width: 100%;
+        justify-self: auto;
+      }
+    }
+    .linksList {
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+
+    h3 {
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .libUsage {
+      margin: 0 calc(-1 * var(--pageMargin));
+      --codeBlockVerticalPadding: 21px;
+      --codeButtonInset: 21px;
+
+      & > div {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+// h2.workflowsHeader {
+// @include responsiveAll(margin-top, 178px, 128px, 104px, 88px, 53px);
+// @include responsiveAll(margin-bottom, 126px, 144px, 104px, 78px, 53px);
+// }
+.cloudHostsGrid {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  @include responsive(lg, justify-content, space-between);
+  flex-wrap: wrap;
+  width: 104px * 3 + 32px * 2;
+  margin-bottom: -15px;
+
+  a {
+    display: flex;
+  }
+
+  svg {
+    width: 104px;
+    height: 104px;
+    filter: contrast(0) brightness(159%);
+    transition: filter 0.3s;
+
+    @include hover {
+      filter: none;
+    }
+
+    :global(.touch) & {
+      filter: none;
+    }
+  }
+
+  @include breakpoint(lg) {
+    width: 96px * 6 + 16px * 5;
+
+    svg {
+      width: 96px;
+      height: 96px;
+    }
+  }
+
+  @include breakpoint(md) {
+    width: 72px * 6 + 37px * 5;
+
+    svg {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 96px * 2 + 32px * 1;
+    margin-bottom: 0;
+
+    a {
+      margin-bottom: 0;
+    }
+
+    svg {
+      width: 96px;
+      height: 96px;
+    }
+  }
+}
+
+.cloudHostsGridMessage {
+  font-size: 14px;
+  line-height: 16px;
+  color: #a6a6a6;
+  text-align: center;
+  margin-top: 32px;
+
+  @include responsive(lg, margin-top, 16px);
+}
+
+.edbCloud {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 200px 0px;
+
+  h3 {
+    font-size: 64px;
+    line-height: 72px;
+    margin-top: 0;
+  }
+
+  .comingSoon {
+    height: 38px;
+    border-radius: 20px;
+    background: $highlightColour;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    @include edgedbfont;
+    font-style: normal;
+    font-weight: $weight_bold;
+    font-size: 16px;
+    color: #f7f7f7;
+    margin-bottom: 13px;
+  }
+
+  p {
+    max-width: 640px;
+    font-size: 20px;
+    line-height: 32px;
+    margin: 40px 0;
+  }
+
+  @include breakpoint(lg) {
+    h3 {
+      font-size: 48px;
+    }
+
+    p {
+      margin: 20px 0;
+    }
+  }
+
+  @include breakpoint(md) {
+    h3 {
+      font-size: 40px;
+      line-height: 56px;
+    }
+
+    .comingSoon {
+      height: 32px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 16px;
+      max-width: 512px;
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+
+    h3 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 16px;
+      width: 100%;
+    }
+  }
+}
+
+.cloudSubscribe {
+  max-width: 384px;
+  display: flex;
+  justify-content: center;
+
+  a {
+    --startColor: #8b6cdf;
+    --endColor: #e176a3;
+    --gradient: linear-gradient(
+      90deg,
+      var(--startColor) 0%,
+      var(--endColor) 100%
+    );
+
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    height: 48px;
+    line-height: 48px;
+    font-weight: $weight_bold;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="100" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1.5" y="1.5" width="100%" height="100%" style="height:calc(100% - 3px); width:calc(100% - 3px)" rx="4.5" ry="4.5" stroke-width="3" fill="transparent" stroke="url(%23buttonGradient)"/></svg>');
+
+    span {
+      padding: 0 18px;
+      background: var(--startColor);
+      background: var(--gradient);
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @include hover {
+      background: var(--gradient);
+
+      span {
+        background: none;
+        background-clip: unset;
+        color: #fff;
+        -webkit-text-fill-color: unset;
+      }
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 384px;
+    max-width: 100%;
+  }
+}
+
+.cloudModel {
+  position: absolute;
+  width: 812px;
+  height: 548px;
+  top: calc(50% - 274px);
+
+  @include breakpoint(md) {
+    width: 658px;
+    height: 444px;
+    top: calc(50% - 222px);
+  }
+
+  @include breakpoint(sm) {
+    width: 287px;
+    height: 194px;
+    top: calc(50% - 97px);
+  }
+
+  @include sizedBgImage("/_images/homepage/cloud" 821);
+}
+
+.underTheHood {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  @include responsiveAllXXL(width, 1870px, 1678px, 1278px, 937px, 665px, 100%);
+
+  .numberedBlock {
+    position: relative;
+    z-index: 1;
+    --pageLinkColour: #{$highlightColour};
+    --pageLinkHoverColour: #{$highlightColour};
+
+    @include responsiveAll(width, 542px, 430px, 345px, 281px, 100%);
+    @include responsiveAll(padding-left, 78px, 78px, 49px, 25px, 9px);
+    @include responsiveAll(padding-top, 108px, 108px, 76px, 43px, 40px);
+
+    h4 {
+      text-align: left;
+    }
+
+    p {
+      margin-top: 8px;
+      line-height: 32px;
+    }
+
+    &:before {
+      counter-reset: numberedBlock var(--blockOrder);
+      content: counter(numberedBlock, decimal-leading-zero);
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      @include edgedbfont;
+      font-style: normal;
+      font-weight: $weight_bold;
+      letter-spacing: -0.03em;
+      color: #f7f7f7;
+
+      @include responsiveAll(font-size, 248px, 248px, 176px, 112px, 88px);
+      @include responsiveAll(line-height, 248px, 248px, 176px, 112px, 112px);
+
+      html[data-darkreader-mode] & {
+        opacity: 0.2;
+      }
+    }
+  }
+
+  .blocksCol {
+    display: flex;
+    flex-direction: column;
+    row-gap: 36px;
+
+    &:nth-child(2) {
+      padding-top: 147px;
+    }
+  }
+
+  @include breakpoint(lg) {
+    .blocksCol {
+      row-gap: 22px;
+
+      &:nth-child(2) {
+        padding-top: 0;
+      }
+    }
+  }
+
+  @include breakpoint(md) {
+    flex-direction: column;
+    row-gap: 22px;
+
+    .blocksCol {
+      display: contents;
+    }
+
+    .numberedBlock {
+      order: var(--blockOrder);
+    }
+  }
+}
+
+.underTheHoodModel {
+  position: absolute;
+  height: 100%;
+
+  @include responsiveAllXXL(width, 616px, 412px, 360px, 230px, 310px, 175px);
+  @include responsiveAllXXL(
+    left,
+    calc(50% - 308px),
+    calc(50% - 206px),
+    calc(50% - 180px),
+    calc(50% - 115px),
+    auto,
+    auto
+  );
+
+  & > div {
+    @include sizedBgImage("/_images/homepage/expanded_db" 620);
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    @include responsiveAllXXL(
+      margin,
+      calc((100vh - 697px) / -2) 0 calc((100vh - 1107px) / -2),
+      calc((100vh - 466px) / -2) 0 calc((100vh - 740px) / -2),
+      calc((100vh - 407px) / -2) 0 calc((100vh - 647px) / -2),
+      calc((100vh - 260px) / -2) 0 calc((100vh - 413px) / -2),
+      calc((100vh - 351px) / -2) 0 calc((100vh - 557px) / -2),
+      0
+    );
+
+    & > div {
+      position: relative;
+      width: 100%;
+
+      @include responsiveAllXXL(height, 1107px, 740px, 647px, 413px, 557px, 0);
+    }
+  }
+
+  &Fallback > div {
+    @include responsiveAllXXL(
+      margin,
+      calc((100vh - 1107px) / -2) 0,
+      calc((100vh - 740px) / -2) 0,
+      calc((100vh - 647px) / -2) 0,
+      calc((100vh - 413px) / -2) 0,
+      calc((100vh - 557px) / -2) 0,
+      0
+    );
+  }
+
+  @include breakpoint(md) {
+    right: 0;
+  }
+
+  @include breakpoint(sm) {
+    position: relative !important;
+    height: 311px;
+    margin: 0 auto;
+    margin-bottom: -22px;
+    margin-top: -234px;
+
+    div {
+      height: 100%;
+    }
+  }
+}
+
+h2.underTheHoodHeader {
+  @include breakpoint(sm) {
+    margin-top: 150px;
+  }
+}
+
+.benchmarksChart {
+  background: #ffffffa0;
+  border-radius: 8px;
+  img {
+    padding: 30px;
+    width: 100%;
+  }
+
+  // @include raisedShadow(#fff,
+  //   8px,
+  //   false,
+  //   40px,
+  //   8px,
+  //   64px,
+  //   rgba(0, 0, 0, 0.15));
+
+  max-width: 906px;
+  // height: 593px;
+  margin-bottom: 60px;
+
+  @include breakpoint(xl) {
+    margin-bottom: 24px;
+  }
+
+  @include breakpoint(lg) {
+    width: 906px;
+    // height: 528px;
+  }
+  @include breakpoint(md) {
+    width: 677px;
+    // height: 537px;
+  }
+  @include breakpoint(sm) {
+    width: 100%;
+    // height: 217px;
+  }
+}
+
+.getStartedInstall {
+  width: 735px;
+  margin-top: 40px;
+  margin-bottom: 120px;
+
+  @include breakpoint(md) {
+    width: 592px;
+    margin-top: 36px;
+    margin-bottom: 100px;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+  }
+}
+
+.learnCards {
+  display: grid;
+  width: 1152px;
+  grid-template-columns: 1fr 1fr;
+  // gap: 72px 80px;
+  gap: 50px 52px;
+
+  @include breakpoint(lg) {
+    width: 928px;
+    gap: 48px;
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: 1fr;
+    width: 592px;
+    gap: 56px;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+    gap: 26px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 30px 40px;
+    color: #4c4c4c;
+    font-size: 20px;
+    line-height: 32px;
+
+    @include raisedShadow(
+      #fff,
+      8px,
+      true,
+      40px,
+      8px,
+      48px,
+      rgba(0, 0, 0, 0.15)
+    );
+
+    & > * {
+      z-index: 1;
+      transition: color 0.15s;
+    }
+
+    svg {
+      flex-shrink: 0;
+      fill: #e2e2e2;
+      width: 62px;
+      margin-right: 40px;
+      transition: fill 0.15s;
+      height: 90px;
+    }
+
+    .cardTitle {
+      display: block;
+      font-weight: $weight_bold;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .expandingArrow {
+      position: absolute;
+      right: 12px;
+      bottom: 23px;
+      margin-right: 0;
+    }
+
+    .cardGradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 0;
+    }
+
+    &:nth-child(1) .cardGradient {
+      background: linear-gradient(90deg, #cc9add 8.06%, #ebad98 106.93%);
+    }
+    &:nth-child(2) .cardGradient {
+      background: linear-gradient(90deg, #dca3bb -6.93%, #b199f2 91.94%);
+    }
+    &:nth-child(3) .cardGradient {
+      background: linear-gradient(90deg, #cb9ade -6.93%, #8aa1f8 91.94%);
+    }
+    &:nth-child(4) .cardGradient {
+      background: linear-gradient(90deg, #b199f1 -6.93%, #5faaff 91.94%);
+    }
+
+    @include hover {
+      color: #fff;
+
+      svg {
+        fill: #fff;
+      }
+
+      --arrowColour: #fff;
+      --expandArrow: 1;
+
+      .cardGradient {
+        opacity: 1;
+      }
+    }
+
+    @include breakpoint(lg) {
+      font-size: 18px;
+    }
+
+    @include breakpoint(md) {
+      color: #fff;
+
+      svg {
+        fill: #fff;
+      }
+
+      --arrowColour: #fff;
+
+      .cardGradient {
+        opacity: 1;
+      }
+    }
+
+    @include breakpoint(sm) {
+      flex-direction: column;
+      padding-bottom: 56px;
+
+      svg {
+        margin-right: 0;
+        margin-bottom: 18px;
+      }
+
+      .cardTitle {
+        text-align: center;
+      }
+
+      p {
+        display: none;
+      }
+
+      .expandingArrow {
+        margin-bottom: 10px;
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+  }
+}
+
+.faq {
+  width: 672px + 52px;
+  margin: 0 auto;
+
+  details {
+    padding-left: 52px;
+
+    &[open] {
+      summary {
+        & > div:before {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+
+  ol {
+    padding-left: 22px;
+    li {
+      line-height: 31px;
+      @include responsive(md, line-height, 28px);
+      padding: 10px 0px 10px 12px;
+      @include responsive(md, padding, 8px 0px 8px 12px);
+    }
+  }
+
+  summary {
+    display: block;
+    padding: 20px 0;
+    cursor: pointer;
+    outline: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    & > div {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 24px;
+      margin: 0;
+      color: #4e4e4e;
+      text-align: start;
+
+      &:before {
+        display: block;
+        content: "";
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+        margin-left: -52px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url("data:image/svg+xml,%3Csvg width='11' height='17' viewBox='0 0 11 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.06091 0.43934C2.47512 -0.146447 1.52537 -0.146447 0.939586 0.43934C0.3538 1.02513 0.3538 1.97487 0.939586 2.56066L6.8788 8.49988L0.93934 14.4393C0.353553 15.0251 0.353553 15.9749 0.93934 16.5607C1.52513 17.1464 2.47487 17.1464 3.06066 16.5607L10.0445 9.57686C10.05 9.57151 10.0555 9.56611 10.0609 9.56066C10.6467 8.97487 10.6467 8.02513 10.0609 7.43934L3.06091 0.43934Z' fill='%234E4E4E'/%3E%3C/svg%3E%0A");
+        transition: transform 0.15s;
+      }
+    }
+
+    @include hover {
+      & > div {
+        color: $highlightColour;
+
+        &:before {
+          background-image: url("data:image/svg+xml,%3Csvg width='11' height='17' viewBox='0 0 11 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.06091 0.43934C2.47512 -0.146447 1.52537 -0.146447 0.939586 0.43934C0.3538 1.02513 0.3538 1.97487 0.939586 2.56066L6.8788 8.49988L0.93934 14.4393C0.353553 15.0251 0.353553 15.9749 0.93934 16.5607C1.52513 17.1464 2.47487 17.1464 3.06066 16.5607L10.0445 9.57686C10.05 9.57151 10.0555 9.56611 10.0609 9.56066C10.6467 8.97487 10.6467 8.02513 10.0609 7.43934L3.06091 0.43934Z' fill='%230ccb93'/%3E%3C/svg%3E%0A");
+        }
+      }
+    }
+  }
+
+  @include breakpoint(md) {
+    width: 100%;
+  }
+
+  @include breakpoint(sm) {
+    margin-left: auto;
+    margin-right: auto;
+
+    details {
+      padding-left: 0;
+    }
+
+    summary {
+      margin-left: 32px;
+      padding: 12px 0;
+
+      & > div {
+        font-size: 18px;
+      }
+    }
+  }
+}

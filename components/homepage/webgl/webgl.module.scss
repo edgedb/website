@@ -1,0 +1,84 @@
+.webglWrapper {
+  display: contents;
+}
+
+.canvas,
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particles {
+  height: 250%;
+  overflow: hidden;
+
+  div {
+    position: absolute;
+    background: var(--particleColour);
+  }
+
+  transform: translateY(calc(var(--scrollOffset) * -0.05px));
+
+  :global(.no-touch) & {
+    transform: translate(
+      calc(var(--mouseOffsetX) * -5px),
+      calc(var(--scrollOffset) * -0.05px + var(--mouseOffsetY) * -5px)
+    );
+  }
+
+  .hideParticles &,
+  html[data-darkreader-mode] & {
+    display: none;
+  }
+}
+
+.particlesDark {
+  div {
+    background: #fff;
+  }
+
+  z-index: 1;
+  opacity: 0.3;
+  mix-blend-mode: soft-light;
+}
+
+.model {
+  position: absolute;
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  canvas {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+  }
+
+  :global(.no-touch) & {
+    transform: translate(
+      calc(var(--mouseOffsetX) * -15px),
+      calc(var(--mouseOffsetY) * -15px)
+    );
+  }
+
+  &.hideFallback {
+    transform: none;
+
+    &,
+    & div {
+      background-image: none !important;
+    }
+  }
+
+  html[data-darkreader-mode] & {
+    filter: invert(0.8);
+  }
+}

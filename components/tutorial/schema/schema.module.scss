@@ -1,0 +1,58 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/settings.vars.scss";
+@import "../../code/mixins.scss";
+
+.schema {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: #e5e5e5;
+  opacity: 0;
+  transition: opacity 0.35s;
+
+  @include darkMode {
+    background: #202021;
+  }
+
+  &.expanded {
+    opacity: 1;
+  }
+}
+
+@supports (backdrop-filter: blur(30px)) {
+  .schema {
+    background: rgba(217, 217, 217, 0.6);
+    backdrop-filter: blur(30px);
+
+    @include darkMode {
+      background: rgba(20, 20, 20, 0.5);
+    }
+  }
+}
+
+.textSchema {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  overflow: auto;
+
+  pre {
+    margin: 0 auto;
+    padding: 30px;
+    padding-bottom: 90px;
+    height: max-content;
+    @include monospace;
+    font-size: 18px;
+    line-height: 36px;
+
+    :global {
+      @include tokenColours;
+    }
+  }
+}

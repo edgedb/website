@@ -1,0 +1,124 @@
+- name: Aljaž Mur Eržen
+  role: Compiler Engineer
+  country: Netherlands
+  github: https://github.com/aljazerzen
+  linkedin: https://www.linkedin.com/in/aljazerzen/
+  avatar: AljažMurEržen.jpg
+
+- name: Devon Campbell
+  role: Developer Advocate
+  country: USA
+  github: https://github.com/raddevon
+  linkedin: https://www.linkedin.com/in/raddevon
+  avatar: DevonCampbell.jpg
+
+- name: Dijana Pavlovic
+  role: Frontend Engineer
+  country: Serbia
+  github: https://github.com/DijanaPavlovic
+  linkedin: https://www.linkedin.com/in/dijana-pavlovic-958622108/
+  twitter: https://twitter.com/DijanaPavlovic_
+  avatar: DijanaPavlovic.jpg
+
+- name: Elvis Pranskevichus
+  role: Co-Founder / CTO
+  country: USA
+  github: https://github.com/elprans
+  linkedin: https://www.linkedin.com/in/elprans
+  twitter: https://twitter.com/elprans
+  avatar: ElvisPranskevichus.jpg
+
+- name: Eric Faust
+  role: Compiler Engineer
+  country: USA
+  github: https://github.com/efaust
+  avatar: EricFaust.jpg
+
+- name: Fantix King
+  role: Server / Cloud Engineer
+  country: Canada
+  github: https://github.com/fantix
+  linkedin: https://www.linkedin.com/in/fantix/
+  twitter: https://twitter.com/fantix
+  avatar: FantixKing.jpg
+
+- name: Frederick Moor
+  role: Cloud / Tools Engineer
+  country: USA
+  github: https://github.com/fmoor/
+  avatar: FrederickMoor.jpg
+
+- name: James Clarke
+  role: Frontend / Tools Engineer
+  country: UK
+  github: https://github.com/jaclarke
+  avatar: JamesClarke.jpg
+
+- name: Maria Kovalevsky
+  role: Executive Assistant / Operations Manager
+  country: Canada
+  linkedin: https://www.linkedin.com/in/maria-kovalevsky/
+  avatar: MariaKovalevsky.jpg
+
+- name: Michael Sullivan
+  role: Compiler Engineer
+  country: USA
+  github: https://github.com/msullivan
+  linkedin: https://www.linkedin.com/in/msully4321
+  avatar: MichaelSullivan.jpg
+
+- name: Nikolai Sidnev
+  role: Cloud Engineer
+  country: Canada
+  github: https://github.com/nsidnev
+  linkedin: https://www.linkedin.com/in/nsidnev/
+  avatar: NikolaiSidnev.jpg
+
+- name: Paul Colomiets
+  role: Server / Tools Engineer
+  country: Ukraine
+  github: https://github.com/tailhook
+  linkedin: https://linkedin.com/in/paul-colomiets
+  twitter: https://twitter.com/PaulColomiets
+  avatar: PaulColomiets.jpg
+
+- name: Quin Lynch
+  role: Tools Engineer
+  country: Canada
+  github: https://github.com/quinchs
+  linkedin: https://www.linkedin.com/in/quinlynch/
+  avatar: QuinLynch.jpg
+
+- name: Roman Yarosh
+  role: Head of Design
+  country: Canada
+  github: https://github.com/shougan
+  avatar: RomanYarosh.jpg
+
+- name: Victor Petrovykh
+  role: Compiler Engineer
+  country: Canada
+  github: https://github.com/vpetrovykh
+  linkedin: https://www.linkedin.com/in/victor-petrovykh-1658017a/
+  avatar: VictorPetrovykh.jpg
+
+- name: Yury Selivanov
+  role: Co-Founder / CEO
+  country: USA
+  github: https://github.com/1st1
+  linkedin: https://www.linkedin.com/in/yselivanov/
+  twitter: https://twitter.com/1st1
+  avatar: YurySelivanov.jpg
+
+- name: Zack Elan
+  role: Cloud Engineer
+  country: USA
+  github: https://github.com/zackelan
+  avatar: ZackElan.jpg
+
+- name: Zhibo Chen
+  role: Compiler Engineer
+  country: USA
+  github: https://github.com/zchenb
+  linkedin: https://www.linkedin.com/in/zhibo-chen-8052a7133
+  avatar: ZhiboChen.jpg

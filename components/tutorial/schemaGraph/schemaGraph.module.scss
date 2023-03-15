@@ -1,0 +1,205 @@
+@import "../../../styles/mixins.scss";
+@import "../../code/mixins.scss";
+
+.schemaGraph {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  color: #fff;
+  min-height: 0;
+  display: flex;
+
+  --schemagraph-background: none;
+
+  --schemagraph-object-background: #ffffff;
+  --schemagraph-object-colour: #333333;
+  --schemagraph-object-header-background: #716fe1;
+  --schemagraph-object-header-colour: #ffffff;
+  --schemagraph-object-abstract-header-background: #999999;
+  --schemagraph-object-selected-highlight: #047cff;
+  --schemagraph-object-links-background: #f5f5f5;
+  --schemagraph-object-links-selected-background: #f3c8d7;
+  --schemagraph-object-links-hover-background: rgba(243, 200, 215, 0.4);
+  --schemagraph-linkprop-background: #ededed;
+  --schemagraph-link-stroke: #d685a2;
+  --schemagraph-link-selected-stroke: #d685a2;
+  --schemagraph-link-inherit-stroke: #9a9a9a;
+
+  --schemasidepanel-background: #f0f0f0;
+  --schemasidepanel-colour: #444444;
+
+  --schemasidepanel-tabs-background: #d4d4d4;
+  --schemasidepanel-tabs-border: #e5e5e5;
+  --schemasidepanel-tab-selected-background: #f0f0f0;
+  --schemasidepanel-tab-colour: #333333;
+  --schemasidepanel-tab-icon-background: #8c8c8c;
+  --schemasidepanel-tab-icon-colour: #fafafa;
+
+  --schemasidepanel-tag-background: #d4d4d4;
+  --schemasidepanel-tag-color: #333333;
+
+  --schemasidepanel-subheading: #999999;
+  --schemasidepanel-separator: #cdcdcd;
+  --schemasidepanel-block-separator: #e5e5e5;
+  --schemasidepanel-icon: #8f8f8f;
+  --schemasidepanel-codeblock-background: #e6e6e6;
+  --schemasidepanel-link: #1f8aed;
+
+  --schemaminimap-background: #e5e5e5;
+  --schemaminimap-object: #1f8aed;
+  --schemaminimap-abstract: #cccccc;
+  --schemaminimap-viewport: rgba(255, 255, 255, 0.45);
+  --schemaminimap-colour: #4c4c4c;
+  --schemaminimap-button-background: #d4d4d4;
+
+  @include darkMode {
+    --schemagraph-object-background: #313131;
+    --schemagraph-object-colour: #c4c4c4;
+    --schemagraph-object-header-background: #1b4584;
+    --schemagraph-object-header-colour: #c4c4c4;
+    --schemagraph-object-abstract-header-background: #4d4d4d;
+    --schemagraph-object-selected-highlight: #056bca;
+    --schemagraph-object-links-background: #2b2b2b;
+    --schemagraph-object-links-selected-background: #543758;
+    --schemagraph-object-links-hover-background: rgba(84, 55, 88, 0.4);
+    --schemagraph-linkprop-background: #272727;
+    --schemagraph-link-stroke: #734b79;
+    --schemagraph-link-selected-stroke: #ac75b5;
+    --schemagraph-link-inherit-stroke: #474747;
+
+    --schemasidepanel-background: #272727;
+    --schemasidepanel-colour: #c4c4c4;
+
+    --schemasidepanel-tabs-background: #141414;
+    --schemasidepanel-tabs-border: #1e1e1e;
+    --schemasidepanel-tab-selected-background: #272727;
+    --schemasidepanel-tab-colour: #8c8c8c;
+    --schemasidepanel-tab-icon-background: #666666;
+    --schemasidepanel-tab-icon-colour: #000000;
+
+    --schemasidepanel-tag-background: #4d4d4d;
+    --schemasidepanel-tag-color: #141414;
+
+    --schemasidepanel-subheading: #6b6b6b;
+    --schemasidepanel-separator: #404040;
+    --schemasidepanel-block-separator: #1e1e1e;
+    --schemasidepanel-icon: #8f8f8f;
+    --schemasidepanel-codeblock-background: #191919;
+    --schemasidepanel-link: #3a82c4;
+
+    --schemaminimap-background: #1f1f1f;
+    --schemaminimap-object: #3a82c4;
+    --schemaminimap-abstract: #686868;
+    --schemaminimap-viewport: rgba(140, 140, 140, 0.2);
+    --schemaminimap-colour: #8f8f8f;
+    --schemaminimap-button-background: #191919;
+  }
+}
+
+.graph {
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+    transition: opacity 0.25s ease-out;
+  }
+}
+
+.minimap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f0f0f0;
+  border-radius: 0 0 0 8px;
+  padding: 12px 12px 0 12px !important;
+  width: 185px;
+  box-sizing: content-box;
+  opacity: 0.4;
+  user-select: none;
+
+  button {
+    height: 22px;
+    font-weight: 500;
+    font-size: 13px;
+    display: inline-flex;
+    border-radius: 6px;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & > div {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  & > div > button {
+    padding: 0;
+    height: 24px;
+    width: 24px;
+
+    &:last-child {
+      margin-left: 6px;
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  @include darkMode {
+    background: #272727;
+  }
+}
+
+.code {
+  :global {
+    @include tokenColours;
+  }
+}
+
+.recenter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 48px;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: #eea663;
+  font-weight: $weight_semibold;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+
+  svg {
+    fill: currentColor;
+    margin-right: 10px;
+  }
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @include darkMode {
+    color: #b27236;
+  }
+}
+
+@include breakpoint(sm) {
+  .schemaSidepanel,
+  .sidepanelToggle {
+    display: none;
+  }
+
+  .sidepanelOpen .recenter {
+    left: 50%;
+  }
+}

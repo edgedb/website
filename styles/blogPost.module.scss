@@ -1,0 +1,327 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.page {
+  --overhang: 24px;
+  --tocFontWeight: 400;
+  --tocFontWeightActive: 400;
+  --tocFontSize: 14px;
+  --headerLinkPopupBg: #f7f7f7;
+}
+
+.postHeader {
+  width: var(--contentWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .publishedOn {
+    @include publishedDate;
+  }
+
+  & > h1 {
+    font-size: 42px;
+    @include responsive(xl, font-size, 32px);
+
+    line-height: 40px;
+    @include responsive(lg, line-height, 32px);
+    @include responsive(sm, line-height, 40px);
+
+    @include responsive(sm, font-weight, 800);
+
+    margin: 18px 0px;
+    @include responsive(md, margin, 10px 0px);
+  }
+}
+
+.pageContent {
+  grid-column: content / span 2;
+}
+
+.postContent {
+  .section {
+    width: 100% !important;
+
+    & > * {
+      width: var(--contentWidth);
+      margin: 12px 0px;
+    }
+
+    & > p {
+      display: inline-block;
+    }
+
+    p {
+      font-size: 20px;
+      @include responsive(xl, font-size, 18px);
+      @include responsive(md, font-size, 16px);
+
+      line-height: 40px;
+      @include responsive(xl, line-height, 32px);
+      @include responsive(sm, line-height, 28px);
+    }
+
+    & > h2 {
+      font-size: 30px;
+      @include responsive(sm, font-size, 24px);
+
+      line-height: 32px;
+      @include responsive(sm, line-height, 32px);
+
+      margin: 48px 0px 20px 0px;
+      @include responsive(xl, margin, 43px 0px 12px 0px);
+      @include responsive(sm, margin, 48px 0px 12px 0px);
+    }
+
+    & > h3 {
+      font-size: 23px;
+      @include responsive(sm, font-size, 19px);
+
+      line-height: 32px;
+
+      margin: 28px 0px 4px 0px;
+      @include responsive(xl, margin, 23px 0px 8px 0px);
+      @include responsive(sm, margin, 32px 0px 8px 0px);
+    }
+
+    aside {
+      width: calc(100% - var(--contentWidth) - 40px);
+      float: right;
+      max-width: 360px;
+
+      background: #f7f7f7;
+      font-size: 16px;
+      padding: 0 20px;
+      border-radius: $radius;
+      margin-top: 20px;
+
+      line-height: 40px;
+      @include responsive(xl, line-height, 32px);
+      @include responsive(sm, line-height, 28px);
+
+      code {
+        background-color: #fff;
+      }
+
+      a > code {
+        @include hover {
+          background-color: $edb_mid_blue;
+        }
+      }
+
+      &.nobg {
+        background: none;
+      }
+    }
+
+    figcaption {
+      font-size: 15px;
+      color: #747474;
+      text-align: center;
+      margin: -32px auto 44px auto;
+      max-width: 60%;
+      @include responsive(sm, max-width, calc(100% - 60px));
+      line-height: 20px;
+    }
+
+    :not(aside) {
+      &.note,
+      &.important,
+      &.warning {
+        width: calc(var(--contentWidth) + var(--overhang) * 2);
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+    }
+
+    @include breakpoint(lg) {
+      aside {
+        display: inline-block;
+        float: none;
+        width: calc(var(--contentWidth) + var(--overhang) * 2);
+        margin-top: 0;
+        margin-left: calc(-1 * var(--overhang));
+        margin-right: 0;
+        padding: 0 var(--overhang);
+        max-width: unset;
+      }
+    }
+
+    .picture {
+      margin: 2em 0;
+      border-radius: $radius;
+    }
+
+    .codeBlock,
+    .fullWidth {
+      width: calc(var(--contentWidth) + var(--overhang) * 2);
+      margin-left: calc(-1 * var(--overhang));
+
+      font-size: 18px;
+      @include responsive(xl, font-size, 16px);
+      @include responsive(sm, font-size, 14px);
+    }
+
+    .codeBlock {
+      --codeBlockVerticalPadding: 24px;
+      --codeBlockHorizontalPadding: var(--overhang);
+      border-radius: $radius;
+      margin-top: 20px;
+      display: inline-block;
+    }
+    .fullWidth {
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+  }
+
+  table {
+    margin-top: 1em;
+  }
+
+  .blockquote {
+    margin: 2em 0;
+    opacity: 0.9;
+    border-left: 2px solid $edb_blue;
+    font-size: 95%;
+    line-height: 32px;
+
+    .quote {
+      font-style: italic;
+      p {
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+    }
+
+    .attribution {
+      font-weight: $weight_bold;
+      margin-top: -1em;
+      p {
+        padding-left: 2em;
+        &:before {
+          content: "— ";
+        }
+      }
+    }
+  }
+
+  .footnote {
+    font-size: 90%;
+
+    .nested_paragraph {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    &:target {
+      background: lighten($edb_mid_blue, 40%);
+      padding: 0 0.5em;
+      margin-left: -0.5em;
+      margin-right: -0.5em;
+      border-radius: $radius_sm;
+    }
+  }
+
+  :not(.footnote) + .footnote {
+    margin-top: 134px;
+    position: relative;
+
+    &:before {
+      position: absolute;
+      content: "";
+      display: block;
+      bottom: 100%;
+      width: 40px;
+      height: 4px;
+      background: #8e8e8e;
+      margin-top: 100px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.postFooter {
+  grid-column: content;
+}
+
+.leadImage {
+  width: calc(100% + var(--bannerOverhang) * 2);
+  margin: 30px 0;
+  border-radius: $radius;
+}
+
+.githubBtn {
+  background-color: #eff3f6;
+  background-image: linear-gradient(180deg, #fafbfc, #eff3f6 90%);
+  border-color: rgba(27, 31, 35, 0.2);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: $weight_semibold;
+  color: #222;
+  line-height: 16px;
+  vertical-align: bottom;
+  cursor: pointer;
+  border: 1px solid #c5c9cc;
+  border-radius: 0.25em;
+  outline: 0;
+  display: inline-flex;
+  align-items: center;
+
+  &.huge {
+    padding: 8px 11px;
+    font-size: 15px;
+  }
+
+  @include hover {
+    color: #222;
+    background-color: #e6ebf1;
+    background-image: linear-gradient(180deg, #f0f3f6, #e6ebf1 90%);
+    border-color: #a5a9ac;
+    border-color: rgba(27, 31, 35, 0.35);
+    text-decoration: none;
+  }
+
+  svg {
+    display: block;
+    margin-right: 0.5em;
+    path {
+      fill: #222;
+    }
+  }
+}
+
+.page {
+  @include responsiveAll(--contentWidth, 736px, 624px, 608px, 608px, 100%);
+  @include responsiveAll(
+    --bannerOverhang,
+    100px,
+    100px,
+    50px,
+    30px,
+    var(--pageMargin)
+  );
+}
+
+@include breakpoint(sm) {
+  .page {
+    --leftSidebarWidth: 0;
+    --rightSidebarWidth: 0;
+    --overhang: var(--pageMargin);
+  }
+
+  .leadImage {
+    border-radius: 0;
+  }
+
+  .postContent {
+    .section {
+      aside,
+      .codeBlock,
+      .fullWidth {
+        border-radius: 0;
+      }
+    }
+  }
+}

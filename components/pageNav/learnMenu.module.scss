@@ -1,0 +1,196 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/settings.vars.scss";
+
+.learnMenu {
+  position: relative;
+  cursor: default;
+
+  &:hover {
+    .menuButton {
+      color: $edb_link_green;
+
+      span {
+        border-color: currentColor;
+      }
+    }
+
+    .popupPanelWrapper {
+      opacity: 1;
+      pointer-events: unset;
+    }
+  }
+}
+
+.popupPanelWrapper {
+  $width: 592px + 20px * 2;
+
+  display: block !important;
+  position: absolute;
+  width: $width;
+  padding: 20px !important;
+  top: calc(100% - 10px);
+  left: calc(50% - #{$width / 2});
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.popupPanel {
+  --panelBackgroundColour: #f6f6f6;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panelBackgroundColour);
+  border-radius: 8px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+
+  .arrow {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: calc(50% - 10px);
+    top: -8px;
+    background-color: var(--panelBackgroundColour);
+    border-radius: 4px;
+    transform: rotate(45deg);
+  }
+
+  @include darkMode {
+    --panelBackgroundColour: #191919;
+  }
+}
+
+.primaryLinks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 2px;
+  column-gap: 8px;
+  flex-grow: 1;
+  margin: 24px;
+}
+
+.primaryLink {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  padding-top: 14px;
+  border-radius: 6px;
+
+  .linkTitle {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 24px;
+    color: #4e4e4e;
+    margin-bottom: 7px;
+
+    svg {
+      width: 16px;
+      fill: $edb_link_green;
+      margin-right: 8px;
+    }
+  }
+
+  p {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 0;
+    margin: 0;
+    color: #4d4d4d !important;
+  }
+
+  &:hover {
+    background: #fff;
+
+    .linkTitle {
+      color: $edb_link_green;
+    }
+  }
+
+  @include darkMode {
+    .linkTitle {
+      color: #9c9c9c;
+    }
+
+    p {
+      color: #9c9c9c !important;
+    }
+
+    &:hover {
+      background: #242424;
+
+      .linkTitle {
+        color: $edb_link_green;
+      }
+    }
+  }
+}
+
+.secondaryLinks {
+  flex-shrink: 0;
+  height: 104px;
+  background: #ebebeb;
+  border-radius: 0 0 8px 8px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include darkMode {
+    background: #141414;
+  }
+}
+
+.secondaryLink {
+  display: flex;
+  flex: 1;
+  border-radius: 7px;
+
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  color: #4d4d4d;
+  padding: 16px;
+
+  svg {
+    fill: #b1b1b1;
+    width: 32px;
+    height: 26px;
+    margin-right: -8px;
+    margin-bottom: 4px;
+  }
+
+  @include hover {
+    color: $edb_link_green;
+    background-color: #f7f7f7;
+
+    svg {
+      fill: $edb_link_green;
+    }
+
+    @include darkMode {
+      background-color: #252525;
+    }
+  }
+
+  @include darkMode {
+    color: #9c9c9c;
+
+    svg {
+      fill: #4c4c4c;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .learnMenu {
+    display: none !important;
+  }
+}

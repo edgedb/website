@@ -1,0 +1,73 @@
+title: Aggregation
+
+columns:
+- lang: edgeql
+  body: |
+    SELECT
+      User {
+        name,
+        # Calculate the total issue spent_time for
+        # this user with the "sum" aggregate.
+        total_time_spent := sum(
+          # The expression ".<owner[IS Issue]" means:
+          # follow the link "owner" backwards from the
+          # target User to the specified source,
+          # specifically Issue in this case.
+          User.<owner[IS Issue]
+              .time_spent_log.spent_time
+        ),
+        # Count the total number of OPEN issues.
+        total_open := count(
+          User.<owner[IS Issue]
+
+          # Filter criteria can be specified for
+          # any input to aggregate functions.
+          FILTER .status.name = 'OPEN'
+        ),
+
+        open_issue_numbers := array_agg(
+          # A whole subquery can be given as input
+          # to aggregate functions.
+          (
+            SELECT
+              User.<owner[IS Issue]
+            FILTER
+              .status.name = 'OPEN'
+            ORDER BY
+              .number
+          ).number
+        ),
+      }
+    ORDER BY
+      User.name;
+
+- lang: json
+  body: |
+    // An example JSON result of the query.
+    [
+      {
+        "name": "Alice",
+        "total_time_spent": 500,
+        "total_open": 0,
+        "open_issue_numbers": []
+      },
+      {
+        "name": "Bob",
+        "total_time_spent": 1200,
+        "total_open": 2,
+        "open_issue_numbers": [79, 83]
+      },
+      {
+        "name": "Carol",
+        "total_time_spent": 2000,
+        "total_open": 1,
+        "open_issue_numbers": [65]
+      },
+      {
+        "name": "Dave",
+        "total_time_spent": 600,
+        "total_open": 3,
+        "open_issue_numbers": [91, 92, 95]
+      },
+      ...
+    ]

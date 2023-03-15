@@ -1,0 +1,89 @@
+@import "../../../styles/mixins.scss";
+
+.nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: 100px;
+}
+
+.button {
+  --linkColour: #{$edb_mid_blue};
+
+  display: flex;
+  flex-direction: column;
+  color: var(--linkColour);
+  font-weight: $weight_semibold;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 10px 12px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  margin: 12px;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    margin: -1px;
+    margin-right: 1px;
+  }
+
+  @include hover {
+    color: var(--linkColour);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    color: #8f8f8f;
+    border-color: transparent;
+  }
+
+  .nextCat {
+    font-weight: $weight_extrabold;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #4d4d4d;
+    margin-top: 1px;
+    margin-bottom: -6px;
+  }
+
+  &.next {
+    svg {
+      transform: rotate(180deg);
+      margin-right: -1px;
+      margin-left: 1px;
+    }
+
+    @include hover {
+      background: var(--linkColour);
+      border-color: var(--linkColour);
+      color: var(--pageBackgroundColour);
+
+      .nextCat {
+        color: var(--pageBackgroundColour);
+      }
+    }
+  }
+
+  @include darkMode {
+    --linkColour: #{$edb_dark_blue};
+
+    &.disabled {
+      color: #9c9c9c;
+    }
+
+    .nextCat {
+      color: #9c9c9c;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .nav {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,63 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: block;
+  @include responsive(md, margin-bottom, 66px);
+  color: inherit;
+
+  &:hover {
+    cursor: pointer;
+
+    .platform,
+    .platform span {
+      color: #0ccb93;
+      border-color: #0ccb93;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .platform {
+    font-weight: 700;
+    font-size: 28px;
+    position: relative;
+    @include responsive(md, font-size, 24px);
+
+    span {
+      position: absolute;
+      color: #b3b3b3;
+      border: 2px solid #b3b3b3;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      border-radius: 2px;
+      padding: 3px 6px;
+      margin-left: 8px;
+      top: 7px;
+      @include responsive(md, bottom, 32px);
+      @include responsive(md, left, 0);
+      @include responsive(md, margin-left, 0);
+      @include responsive(md, padding, 2px 4px);
+      @include responsive(sm, font-size, 13px);
+      text-transform: capitalize;
+      @include responsive(md, margin-bottom, 8px);
+      @include responsive(sm, margin-bottom, 5px);
+      @include responsive(md, top, unset);
+    }
+  }
+
+  .date {
+    color: #b3b3b3;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 300;
+    color: #737373;
+    margin-bottom: 10px;
+    @include responsive(md, font-size, 16px);
+    @include responsive(md, margin-bottom, 8px);
+  }
+}

@@ -1,0 +1,116 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.toc {
+  list-style-type: none;
+  margin: 10px 0;
+  padding: 0;
+  font-size: var(--tocFontSize, 16px);
+  font-weight: var(--tocFontWeight, $weight_semibold);
+  line-height: 20px;
+  color: var(--tocFontColour, #a2a2a2);
+
+  a {
+    display: contents;
+    color: inherit !important;
+
+    &:first-child,
+    &:last-child {
+      .line {
+        height: 50%;
+      }
+    }
+
+    &:first-child .line {
+      top: 50%;
+    }
+  }
+
+  li {
+    padding: var(--tocLinePadding, 12px 0 12px 25px);
+    position: relative;
+
+    .ring,
+    .line,
+    .dot {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      fill: var(--pageBackgroundColour, #fff);
+      stroke: var(--tocLineColour, #e5e5e5);
+      stroke-width: var(--tocLineWidth, 2);
+    }
+
+    .ring,
+    .dot {
+      top: 50%;
+      margin-top: -8px;
+    }
+
+    .line {
+      height: 100%;
+    }
+
+    .dot {
+      stroke-width: 0;
+      fill: none;
+    }
+
+    @include hover {
+      color: var(--tocHoverFontColour, $edb_mid_blue);
+
+      .dot {
+        fill: var(--tocHoverDotColour, #e5e5e5);
+      }
+    }
+
+    &.active {
+      color: var(--tocActiveFontColour, $edb_mid_blue) !important;
+      font-weight: var(--tocFontWeightActive, $weight_bold);
+
+      .dot {
+        fill: var(--tocActiveDotColour, #a2a2a2) !important;
+      }
+    }
+  }
+
+  .badge {
+    background: #0077f9;
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: #fff;
+    font-size: 90%;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  .faded {
+    opacity: 0.4;
+  }
+
+  &.rightAlign {
+    li {
+      text-align: right;
+      padding-right: 25px;
+      padding-left: 0;
+
+      .ring,
+      .line,
+      .dot {
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+
+  @include darkMode {
+    --tocFontColour: #9c9c9c;
+    --tocLineColour: #4d4d4d;
+    --tocActiveFontColour: #{$edb_dark_link_blue};
+    --tocHoverFontColour: #{$edb_dark_link_blue};
+    --tocHoverDotColour: #4d4d4d;
+    --tocActiveDotColour: #69696b;
+  }
+}

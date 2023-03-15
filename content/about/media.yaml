@@ -1,0 +1,53 @@
+- platform: contributor
+  desc: Eric Anderson (@ericmander) has a conversation with Yury Selivanov (@1st1), the co-founder of EdgeDB. EdgeDB is the world’s first “graph-relational database.
+  type: Podcast
+  date: 2022/03/16
+  link: https://www.contributor.fyi/edgedb
+
+- platform: devtools.fm
+  desc: This week we're joined by Colin McDonnel, the head of devrel at EdgeDB a relational database with an object-oriented data model and a powerful queru language.
+  type: Podcast
+  date: 2022/05/20
+  link: https://player.fm/series/devtoolsfm/colin-mcdonnell-zod-trpc-edgedb
+
+- platform: OPENVIEW
+  desc: New Approaches To the Old-School Relational Database.
+  type: News
+  date: 2022/08/02
+  link: https://openviewpartners.com/blog/new-approaches-to-the-old-school-relational-database/?utm_source=YurySelivanov&utm_medium=LinkedIn&utm_campaign=RelationalDatabase
+
+- platform: CRN
+  desc: 10 Cool Tech Companies That Raised Funding In November 2022
+  type: News
+  date: 2022/12/02
+  link: https://www.crn.com/news/channel-news/10-cool-tech-companies-that-raised-funding-in-november-2022
+
+- platform: TechCrunch
+  desc: EdgeDB raises $15M ahead of the launch of its cloud database service.
+  type: News
+  date: 2022/11/07
+  link: https://techcrunch.com/2022/11/07/edgedb-raises-15m-ahead-of-the-launch-of-its-cloud-database-service/
+
+- platform: siliconANGLE
+  desc: Graph-relational database startup EdgeDB raises $15M in early-stage funding
+  type: News
+  date: 2022/11/07
+  link: https://siliconangle.com/2022/11/07/graph-relational-database-startup-edgedb-raises-15m-series-funding/
+
+- platform: TechTarget
+  desc: EdgeDB raises $15M for open source graph-relational database
+  type: News
+  date: 2022/11/07
+  link: https://www.techtarget.com/searchdatamanagement/news/252526995/EdgeDB-raises-15M-for-open-source-graph-relational-database
+
+- platform: TechCrunch
+  desc: EdgeDB wants to modernize databases for cutting-edge apps
+  type: News
+  date: 2022/04/22
+  link: https://techcrunch.com/2022/04/22/edgedb-wants-to-modernize-databases-for-cutting-edge-apps/
+
+- platform: TalkPython
+  desc: EdgeDB - Building a database in Python
+  type: Podcast
+  date: 2022/02/16
+  link: https://talkpython.fm/episodes/show/355/edgedb-building-a-database-in-python

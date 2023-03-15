@@ -1,0 +1,88 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.blogToC {
+  grid-column: left-sidebar;
+  align-self: start;
+  justify-self: flex-start;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: sticky;
+  top: 0px;
+  height: 100vh;
+  overflow: hidden;
+  margin-right: var(--overhang);
+  padding-right: 30px;
+  margin-bottom: 80px;
+
+  max-width: 265px;
+
+  &.hide {
+    visibility: hidden;
+  }
+
+  .iconLinks {
+    display: flex;
+    padding: 15px 0;
+    justify-content: center;
+  }
+
+  .iconLink {
+    color: #c0c5cb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    cursor: pointer;
+
+    svg {
+      display: block;
+      width: 25px;
+      height: 25px;
+
+      path {
+        fill: currentColor;
+      }
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @include hover {
+      color: #8e8e8e;
+    }
+  }
+}
+
+@include breakpoint(xxl) {
+  .blogToC {
+    max-width: 225px;
+  }
+}
+
+@include breakpoint(xl) {
+  .blogToC {
+    max-width: 190px;
+  }
+}
+
+@include breakpoint(lg) {
+  .blogToC {
+    max-width: 190px;
+    margin-left: -20px;
+    padding-right: 14px;
+  }
+}
+
+@include breakpoint(md) {
+  .blogToC {
+    display: none;
+    margin-left: 0px;
+  }
+}

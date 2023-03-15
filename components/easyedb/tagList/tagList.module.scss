@@ -1,0 +1,27 @@
+@import "../../../styles/mixins.scss";
+
+.tags {
+  --tagColour: #595959;
+  --tagBg: #ebebeb;
+
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Sometype Mono", monospace;
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--tagColour);
+
+  span {
+    background: var(--tagBg);
+    border-radius: 2px;
+    padding: 0 8px;
+    margin-top: 7px;
+    margin-right: 8px;
+  }
+
+  @include darkMode {
+    --tagColour: #808080;
+    --tagBg: #222222;
+  }
+}

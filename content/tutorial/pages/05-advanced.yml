@@ -1,0 +1,378 @@
+title: "Advanced EdgeQL"
+slug: "advanced-edgeql"
+categories:
+  - category: "Introspection"
+    slug: "introspection"
+    pages:
+      - title: "Describe Command"
+        slug: "describe-command"
+        cells:
+          - kind: text
+            text: |
+              EdgeDB schema is fully introspectable. There are two
+              approaches to introspection corresponding to two different
+              use-cases: human-oriented and query-oriented.
+
+              For human-oriented introspection the goal is to quickly
+              see some useful information about the database structure
+              expressed as either DDL, SDL or a human-readable text
+              summary. The `describe` command does exactly that. By
+              default it produces the DDL command needed to create the
+              schema object in question:
+
+          - kind: edgeql
+            text: |
+              describe object Account;
+
+          - kind: text
+            text: |
+              It is also possible to get an SDL snippet or even see an entire
+              module as SDL:
+
+          - kind: edgeql
+            text: |
+              describe object Account as sdl;
+
+          - kind: edgeql
+            text: |
+              describe module default as sdl;
+
+          - kind: text
+            text: |
+              To see more detailed information, such as all the inherited
+              links and properties, etc. use the `text` mode:
+
+          - kind: edgeql
+            text: |
+              describe object Account as text;
+
+      - title: Introspection Queries
+        slug: "introspection-queries"
+        cells:
+          - kind: text
+            text: |
+              The down side of the `describe` command is that it cannot be
+              used in a query. However, it is possible to query the schema
+              objects directly. Let's query the `ObjectType` corresponding
+              to the `Account`:
+
+          - kind: edgeql
+            text: |
+              with module schema
+              select ObjectType {
+                name,
+                properties: {
+                  name,
+                  target: {
+                    name
+                  }
+                },
+                links: {
+                  name,
+                  target: {
+                    name
+                  }
+                }
+              } filter .name like '%::Account';
+
+          - kind: text
+            text: |
+              To discover what other schema objects can be queried you can
+              use the `describe` command or consult the documentation:
+
+          - kind: edgeql
+            text: |
+              describe module schema as sdl;
+
+      - title: Using introspect
+        slug: "using-introspect"
+        cells:
+          - kind: text
+            text: |
+              The `introspect` operator gets the schema object
+              corresponding to a given type. This object can be used
+              in introspection queries, like the ones from the
+              previous section. Let's try introspecting `Person`:
+
+          - kind: edgeql
+            text: |
+              select (introspect Person) {
+                name,
+                properties: {
+                  name,
+                  target: {
+                    name
+                  }
+                },
+                links: {
+                  name,
+                  target: {
+                    name
+                  }
+                }
+              };
+
+          - kind: text
+            text: |
+              This operator can also work with expressions, statically
+              inferring the expression type and getting the schema
+              object that corresponds to it. In order to do that an
+              additional keyword `typeof` is required:
+
+          - kind: edgeql
+            text: |
+              select (introspect typeof Movie.actors) {
+                name,
+                properties: {
+                  name,
+                  target: {
+                    name
+                  }
+                },
+                links: {
+                  name,
+                  target: {
+                    name
+                  }
+                }
+              };
+
+      - title: Run-Time Types
+        slug: "run-time-types"
+        cells:
+          - kind: text
+            text: |
+              All objects in EdgeDB have a `__type__` link which
+              points to the schema type that the object is actually
+              implementing. This can be used for introspection queries
+              or to just add the object type information to a query.
+              Let's fetch all media with their ids and corresponding
+              types:
+
+          - kind: edgeql
+            text: |
+              select Content {
+                id,
+                __type__: {
+                  name
+                }
+              };
+
+          - kind: text
+            text: |
+              Note that this is different from `introspect` as it
+              provides run-time type information for concrete objects,
+              whereas the `introspect` expression is resolving types
+              statically. Compare this usage of `introspect` to the
+              previous query:
+
+          - kind: edgeql
+            text: |
+              select introspect Content {
+                name
+              };
+
+      - title: Using is
+        slug: "using-is"
+        cells:
+          - kind: text
+            text: |
+              Like many other programming languages EdgeQL has an
+              operator that checks whether a given object is an
+              instance of a particular type. This is a run-time check
+              and it takes inheritance into consideration. Try
+              applying it to different `Content` objects:
+
+          - kind: edgeql
+            text: |
+              select Content {
+                id,
+                __type__: {
+                  name
+                },
+                is_uploaded_type := Content is Show
+              };
+
+  - category: "User-Defined Functions"
+    slug: "user-def-functions"
+    pages:
+      - title: "Basic Functions"
+        slug: "basic-functions"
+        cells:
+          - kind: text
+            text: |
+              EdgeDB allows users to create their own custom functions
+              using EdgeQL. Currently only non-aggregate functions
+              (without any `set of` parameters) can be created by the
+              user. Let's create a simple function that converts a word
+              into "pig Latin":
+
+          - kind: edgeql
+            text: |
+              create function pig_latin(val: str) -> str
+                using (
+                  select val[1:] ++ val[0] ++ 'ay'
+                );
+
+          - kind: text
+            text: |
+              And now we can try it out:
+
+          - kind: edgeql
+            text: |
+              select pig_latin("hello");
+
+      - title: Named-Only Arguments
+        slug: named-only-arguments
+        cells:
+          - kind: text
+            text: |
+              It is possible to create a function that requires certain
+              arguments to be named-only. This approach is useful if a
+              function has many parameters that can be omitted. Let's
+              create a function that adds a prefix and suffix to a string:
+
+          - kind: edgeql
+            text: |
+              create function code_rename(
+                val: str,
+                named only prefix: str = '',
+                named only suffix: str = ''
+              ) -> str
+                using (
+                  select prefix ++ val ++ suffix
+                );
+
+          - kind: text
+            text: |
+              And now we can try it out:
+
+          - kind: edgeql
+            text: |
+              select code_rename("count", prefix := 'my_');
+
+          - kind: edgeql
+            text: |
+              select code_rename("count", suffix := '_words');
+
+      # - title: Variadic Arguments
+      #   slug: variadic-arguments
+      #   cells:
+      #     - kind: text
+      #       text: |
+      #         Sometimes you need a function that takes an arbitrary
+      #         number of arguments. These are the so-called *variadic*
+      #         functions or, more precisely, functions with variadic
+      #         arguments. Only one argument can be designated as
+      #         variadic. Within the function body the variadic argument
+      #         becomes an array. Let's write a function that takes some
+      #         arguments and adds all the even ones while subtracting
+      #         all the odd ones:
+
+      #     - kind: edgeql
+      #       text: |
+      #         create function add_sub(variadic vals: int64) -> int64
+      #           using (
+      #             select sum(
+      #               (
+      #                 for tup in enumerate(array_unpack(vals))
+      #                 union (1 if tup.0 % 2 = 0 else -1) * tup.1
+      #               )
+      #             )
+      #           );
+
+      #     - kind: text
+      #       text: |
+      #         And now we can try it out:
+
+      #     - kind: edgeql
+      #       text: |
+      #         select add_sub(1, 2, 5);
+
+  - category: "Constraints"
+    slug: "constraints"
+    pages:
+      - title: Property Constraint
+        slug: prop-constraint
+        cells:
+          - kind: text
+            text: |
+              Typically constraints are placed on properties.
+              Constraints prevent undesirable data from being
+              inserted. They also stop any updates that would violate
+              the constraint condition. An example of this is an
+              `exclusive` constraint on `username`:
+
+          - kind: edgeql
+            text: |
+              describe object Account as sdl;
+
+          - kind: text
+            text: |
+              Let's try creating a new user that could clash with an
+              existing one:
+
+          - kind: edgeql
+            expectError: true
+            text: |
+              insert Account {
+                username := 'Alice'
+              };
+
+          - kind: text
+            text: |
+              Feel free to experiment with the above command, perhaps
+              to make an `update` that would violate the exclusive
+              username of another `Account`.
+
+      # - title: Type Constraint
+      #   slug: type-constraint
+      #   cells:
+      #     - kind: text
+      #       text: |
+      #         Sometimes it makes sense for a constraint to involve a
+      #         combination of properties instead of any single one of
+      #         them separately. This can be addressed by adding a
+      #         constraint to the type itself. For example, consider
+      #         this `Service` type, which has a limitation on how good,
+      #         fast and cheap it can be:
+
+          # - kind: edgeql
+          #   text: |
+          #     create type Service {
+          #       create required property cheap -> bool {
+          #         set default := false;
+          #       };
+          #       create required property fast -> bool {
+          #         set default := false;
+          #       };
+          #       create required property good -> bool {
+          #         set default := false;
+          #       };
+          #       create constraint std::expression on (
+          #         not (.good and .fast and .cheap)
+          #       );
+          #       create required property name -> str;
+          #     };
+
+          # - kind: text
+          #   text: |
+          #     Let's try creating some `Service` objects:
+
+          # - kind: edgeql
+          #   text: |
+          #     insert Service {
+          #         name := 'Premium',
+          #         good := true,
+          #         fast := true
+          #     };
+
+          # - kind: edgeql
+          #   expectError: true
+          #   text: |
+          #     insert Service {
+          #         name := 'Impossible',
+          #         good := true,
+          #         fast := true,
+          #         cheap := true
+          #     };

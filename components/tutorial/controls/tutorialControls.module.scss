@@ -1,0 +1,15 @@
+@import "../../../styles/mixins.scss";
+
+button.menuButton {
+  display: none;
+
+  svg {
+    margin: 0;
+  }
+}
+
+@include breakpoint(md) {
+  button.menuButton {
+    display: flex;
+  }
+}

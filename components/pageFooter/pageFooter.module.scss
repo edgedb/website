@@ -1,0 +1,217 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.pageFooter {
+  background-color: #ebebeb;
+  padding-top: 140px;
+  padding-bottom: 30px;
+  display: flex;
+
+  &.minimal {
+    background-color: unset;
+  }
+
+  @include darkMode {
+    background-color: #333437;
+
+    &.minimal {
+      background-color: unset;
+    }
+  }
+}
+
+.footerContent {
+  grid-column: content;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-bottom: 70px;
+  min-width: 0;
+  width: 100%;
+
+  font-size: 16px;
+  line-height: 40px;
+  color: #4d4d4d;
+
+  @include responsive(md, margin-bottom, 30px);
+
+  @include darkMode {
+    color: #9c9c9c;
+  }
+}
+
+.heading {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.linksGrid {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  @include responsive(xl, width, 460px);
+}
+
+.linksGroup {
+  display: flex;
+  flex-direction: column;
+  width: 136px;
+  margin-bottom: 32px;
+
+  a {
+    opacity: 0.8;
+    color: inherit !important;
+    text-decoration: none;
+  }
+}
+
+.subscribe {
+  width: 380px;
+
+  @include responsive(sm, width, min(100%, 380px));
+
+  --errorColour: #e72525;
+
+  .subscribeInput {
+    line-height: 32px;
+
+    .successMsg {
+      color: $edb_mid_blue;
+      font-weight: $weight_bold;
+      line-height: 22px;
+    }
+
+    .errorMsg {
+      color: var(--errorColour);
+      margin-bottom: 6px;
+    }
+
+    form {
+      display: flex;
+      min-width: 0;
+
+      &.error {
+        input {
+          border-color: var(--errorColour);
+        }
+
+        button {
+          background-color: var(--errorColour);
+        }
+      }
+    }
+
+    input {
+      background-color: var(--footerSubscribeBgColour, #fff);
+      border: none;
+      border-radius: 4px 0 0 4px;
+      line-height: 32px;
+      padding: 0 10px;
+      font-size: 14px;
+      flex-grow: 1;
+      min-width: 0;
+      outline: 0;
+      border: 2px solid transparent;
+
+      &::placeholder {
+        color: #bdbdbd;
+      }
+    }
+
+    button {
+      background-color: #0ccb93;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      line-height: 32px;
+      padding: 0 12px;
+      font-weight: $weight_semibold;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #ffffff;
+      cursor: pointer;
+
+      &:active {
+        background-color: #056bca;
+      }
+    }
+
+    @include darkMode {
+      --errorColour: #bc3f3f;
+
+      .successMsg {
+        color: $edb_dark_blue;
+      }
+
+      input {
+        background-color: #212121;
+        color: #bdbdbd;
+      }
+
+      button {
+        background-color: $edb_dark_blue;
+        color: #1f2021;
+      }
+    }
+  }
+  .message {
+    line-height: 26px;
+    opacity: 0.6;
+    margin-top: 10px;
+  }
+}
+
+.copyright {
+  grid-column: content;
+  text-align: center;
+  font-size: 14px;
+  line-height: 32px;
+  color: #4f4f4f;
+
+  @include darkMode {
+    color: inherit;
+  }
+
+  a {
+    color: inherit !important;
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
+    margin: 0 4px;
+    cursor: pointer;
+  }
+}
+
+@include breakpoint(md) {
+  .footerContent {
+    flex-direction: column;
+    align-items: center;
+    max-width: 520px;
+  }
+
+  .linksGrid {
+    margin-left: 30px;
+    width: 520px;
+    margin-bottom: 12px;
+  }
+
+  .subscribe {
+    .heading {
+      text-align: center;
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .linksGrid {
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+}

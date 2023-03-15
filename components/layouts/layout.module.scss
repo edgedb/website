@@ -1,0 +1,140 @@
+@import "../../styles/mixins.scss";
+
+.mainLayout,
+.docsLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  --pageBackgroundColour: var(--pageLightBg);
+
+  background-color: var(--pageBackgroundColour);
+
+  @include darkMode {
+    --pageBackgroundColour: var(--pageDarkBg);
+  }
+}
+
+.docsLayoutRoot {
+  --docsHeaderHeight: 64px;
+  @include responsive(xl, --docsHeaderHeight, 48px);
+}
+
+.pageChildren {
+  padding-top: 42px;
+  @include responsive(md, padding-top, 26px);
+}
+
+.docsNav {
+  grid-column: left-sidebar;
+  position: sticky;
+  top: calc(var(--docsHeaderHeight) + var(--globalBannerHeight, 0px));
+  height: calc(
+    100vh - (var(--docsHeaderHeight) + var(--globalBannerHeight, 0px))
+  );
+
+  @include responsive(md, z-index, $zindexPageHeader);
+}
+
+.docsContent {
+  grid-column: content;
+  min-width: 0;
+
+  margin-top: 111px;
+  @include responsive(xl, margin-top, 92px);
+  @include responsive(sm, margin-top, 70px);
+
+  p {
+    line-height: 36px;
+    @include responsive(lg, line-height, 32px);
+    @include responsive(md, line-height, 28px);
+    @include responsive(sm, line-height, 24px);
+
+    font-size: 20px;
+    @include responsive(xl, font-size, 18px);
+    @include responsive(lg, font-size, 16px);
+    @include responsive(sm, font-size, 14px);
+
+    margin: 24px 0px;
+    @include responsive(xl, margin, 16px 0px);
+  }
+
+  ol,
+  ul {
+    p {
+      line-height: 32px;
+      @include responsive(lg, line-height, 28px);
+      @include responsive(md, line-height, 24px);
+      @include responsive(sm, line-height, 20px);
+    }
+  }
+
+  table {
+    p {
+      font-size: 17px;
+      @include responsive(lg, font-size, 15px);
+      @include responsive(sm, font-size, 14px);
+    }
+    code {
+      font-size: 16px;
+      @include responsive(lg, font-size, 14px);
+      @include responsive(sm, font-size, 13px);
+    }
+  }
+}
+
+.docsSidebar {
+  grid-column: docs-sidebar;
+  @include responsive(lg, display, none);
+  --tocFontWeight: #{$weight_regular};
+  --tocFontWeightActive: #{$weight_regular};
+  --tocFontSize: 14px;
+  --tocLinePadding: 8px 0px 8px 25px;
+}
+
+.docsSidebarSticky {
+  height: calc(100vh - var(--docsHeaderHeight) - 76px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: sticky;
+  top: calc(38px + var(--docsHeaderHeight));
+  overflow: hidden;
+}
+
+.docsFooterWrapper {
+  border-top: 2px solid #d7d7d7;
+  padding: 0 var(--overhang);
+  padding-top: 20px;
+  padding-bottom: 200px;
+  margin: 0 calc(-1 * var(--overhang));
+
+  & > div:last-child {
+    text-align: start;
+
+    @include responsive(sm, text-align, center);
+  }
+
+  @include responsive(sm, border-top, none);
+
+  @include darkMode {
+    border-top-color: #4c4c4c;
+  }
+}
+
+div.docsFooter {
+  flex-direction: column;
+  align-items: start;
+  max-width: 100%;
+
+  & > div:first-child {
+    width: 100%;
+
+    & > div {
+      width: max-content;
+    }
+  }
+
+  @include responsive(sm, align-items, center);
+}

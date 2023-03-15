@@ -1,0 +1,346 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.page {
+  --contentWidth: 100%;
+}
+
+.content {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 20px;
+  line-height: 32px;
+
+  h1 {
+    @include edgedbfont;
+  }
+
+  h2 {
+    @include edgedbfont;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: #8f8f8f;
+  }
+}
+
+.downloadButtons {
+  display: flex;
+  margin-top: 110px;
+  margin-bottom: 140px;
+  max-width: 100%;
+
+  a {
+    display: flex;
+    width: 412px;
+    max-width: 100%;
+    padding-top: 95px;
+    padding-bottom: 72px;
+    flex-direction: column;
+    align-items: center;
+    font-weight: $weight_bold;
+    text-align: center;
+    color: #676767 !important;
+    margin-right: 60px;
+
+    cursor: pointer;
+
+    @include raisedShadow(#f7f7f7, 6px);
+
+    svg {
+      color: $edb_link_green;
+      width: 42px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 350px;
+  row-gap: 88px;
+  margin-top: 110px;
+  margin-bottom: 150px;
+}
+
+.paletteItem {
+  display: flex;
+  color: #676767;
+  align-items: center;
+  width: 210px;
+
+  .swatch {
+    width: 96px;
+    height: 96px;
+    border-radius: 48px;
+    border: 1px solid transparent;
+  }
+
+  .paletteInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  .copyButton {
+    background: #f7f7f7;
+    margin: 0;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+}
+
+.logoCards {
+  display: grid;
+  grid-gap: 60px;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  width: 100%;
+  margin-bottom: 170px;
+}
+
+.logoCard {
+  height: 480px;
+
+  border: 8px solid #f7f7f7;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 135px;
+
+  color: #4c4c4c;
+
+  svg {
+    width: 140px;
+    height: auto;
+  }
+
+  span {
+    font-size: 20px;
+    line-height: 32px;
+    opacity: 0.3;
+    margin-top: 63px;
+    margin-bottom: 20px;
+  }
+
+  .logoSmall {
+    width: 30px;
+  }
+}
+
+.minMargins {
+  margin-top: 120px;
+  margin-bottom: 230px;
+  overflow: hidden;
+  max-width: calc(100% + 2 * var(--pageMargin));
+  margin-left: calc(-1 * var(--pageMargin));
+  margin-right: calc(-1 * var(--pageMargin));
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: #{878 / (384 + (2 * 24)) * 100%};
+  }
+}
+
+.placements {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 144px;
+  margin-bottom: 340px;
+
+  :first-child {
+    margin-right: 280px;
+  }
+
+  :nth-child(2) {
+    margin-top: 4px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.dontsBlock {
+  background: #f7f7f7;
+  padding-top: 100px;
+  padding-bottom: 160px;
+}
+
+.logoDonts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 96px;
+  row-gap: 112px;
+  align-items: center;
+  margin-top: 110px;
+
+  img {
+    justify-self: center;
+  }
+
+  span {
+    margin-top: 22px;
+
+    &:nth-of-type(3) {
+      margin-top: 12px;
+    }
+
+    &:nth-of-type(4) {
+      margin-top: -4px;
+    }
+  }
+}
+
+@include breakpoint(xxl) {
+  .downloadButtons {
+    margin-top: 42px;
+    margin-bottom: 115px;
+
+    a {
+      width: 402px;
+      padding-top: 79px;
+      padding-bottom: 56px;
+    }
+  }
+
+  .palette {
+    column-gap: 260px;
+    margin-bottom: 140px;
+  }
+
+  .minMargins {
+    margin-bottom: 200px;
+  }
+
+  .placements {
+    margin-bottom: 315px;
+  }
+}
+
+@include breakpoint(xl) {
+  .downloadButtons {
+    a {
+      width: 345px;
+      padding-top: 63px;
+      padding-bottom: 48px;
+    }
+  }
+
+  .logoCards {
+    grid-gap: 40px;
+    margin-bottom: 120px;
+  }
+
+  .placements {
+    margin-bottom: 220px;
+  }
+}
+
+@include breakpoint(lg) {
+  .downloadButtons {
+    a {
+      width: 325px;
+    }
+  }
+
+  .palette {
+    column-gap: 205px;
+  }
+
+  .logoCards {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px;
+  }
+
+  .placements {
+    flex-direction: column;
+    align-items: center;
+
+    :first-child {
+      margin-right: 0;
+      margin-bottom: 130px;
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .content {
+    font-size: 18px;
+  }
+
+  .downloadButtons {
+    flex-direction: column;
+
+    a {
+      margin-right: 0;
+      margin-bottom: 42px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .palette {
+    grid-template-columns: 1fr;
+    row-gap: 54px;
+    margin-top: 80px;
+    margin-bottom: 74px;
+  }
+
+  .logoCards {
+    grid-template-columns: 1fr;
+    margin-bottom: 107px;
+  }
+
+  .minMargins {
+    margin-top: 54px;
+    margin-bottom: 120px;
+  }
+
+  .placements {
+    margin-top: 82px;
+    margin-bottom: 120px;
+  }
+
+  .dontsBlock {
+    padding-top: 60px;
+    padding-bottom: 120px;
+  }
+
+  .logoDonts {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    margin-top: 90px;
+
+    span {
+      justify-self: center;
+      margin-top: 32px;
+      margin-bottom: 90px;
+
+      &:nth-of-type(3) {
+        margin-top: 32px;
+      }
+
+      &:nth-of-type(4) {
+        margin-top: 32px;
+      }
+    }
+  }
+}

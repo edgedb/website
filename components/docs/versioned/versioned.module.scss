@@ -1,0 +1,46 @@
+@import "../../../styles/mixins.scss";
+
+.hiddenSection {
+  position: relative;
+
+  .content {
+    mask-image: linear-gradient(#000, transparent);
+    pointer-events: none;
+    max-height: 160px;
+  }
+
+  .showMore {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    background: var(--pageLightBg);
+    border-radius: 16px;
+
+    span {
+      display: block;
+      font-size: 14px;
+      line-height: 32px;
+      padding: 0 16px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    @include darkMode {
+      background: var(--pageDarkBg);
+
+      span {
+        background: rgba(255, 255, 255, 0.04);
+      }
+    }
+  }
+
+  &.overhang {
+    margin: 0 calc(-1 * var(--overhang));
+
+    .content {
+      --overhang: 0px;
+    }
+  }
+}

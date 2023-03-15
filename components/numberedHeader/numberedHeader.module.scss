@@ -1,0 +1,89 @@
+@import "../../styles/mixins.scss";
+
+.overlapColor {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  font-family: Sometype Mono;
+  font-weight: 700;
+  font-size: 23px;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f37a88;
+  margin-top: 0;
+
+  margin-bottom: 75px;
+  @include responsive(sm, margin-bottom, 30px);
+
+  .number {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    counter-increment: my-section;
+    content: counter(my-section, decimal-leading-zero);
+
+    @include mainfont;
+    font-weight: $weight_extrabold;
+    font-size: 150px;
+    @include responsive(sm, font-size, 100px);
+    line-height: 150px;
+    letter-spacing: -0.05em;
+    color: #f2f2f2;
+  }
+
+  .text {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    padding-top: 63px;
+    line-height: 30px;
+    font-size: 24px;
+    @include responsive(sm, font-size, 16px);
+  }
+}
+
+.floatGray {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  font-family: Sometype Mono;
+  font-weight: 700;
+  font-size: 23px;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f37a88;
+  margin-top: 0;
+
+  margin-bottom: 75px;
+  @include responsive(sm, margin-bottom, 30px);
+
+  .number {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    counter-increment: my-section;
+    content: counter(my-section, decimal-leading-zero);
+
+    @include mainfont;
+    font-weight: $weight_extrabold;
+    font-size: 150px;
+    @include responsive(sm, font-size, 100px);
+    line-height: 150px;
+    letter-spacing: -0.05em;
+    color: #f2f2f2;
+  }
+
+  .text {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    text-align: center;
+    padding-top: 63px;
+    line-height: 30px;
+    font-size: 24px;
+    @include responsive(sm, font-size, 16px);
+  }
+}

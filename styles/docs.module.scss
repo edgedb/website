@@ -1,0 +1,786 @@
+@import "./mixins.scss";
+@import "./settings.vars.scss";
+
+.root {
+  --headerAnchorOffset: calc(var(--docsHeaderHeight) + 32px);
+}
+
+.page {
+  --leftSidebarWidth: 260px;
+
+  --contentWidth: 704px;
+  @include responsive(xl, --contentWidth, 616px);
+  @include responsive(lg, --contentWidth, 552px);
+
+  --docsSidebarWidth: 200px;
+  @include responsive(lg, --docsSidebarWidth, 0px);
+
+  :global(.globalPageWrapper) {
+    grid-template-columns:
+      [left-sidebar] minmax(0, var(--leftSidebarWidth))
+      1fr
+      [content] minmax(auto, var(--contentWidth))
+      1fr
+      [docs-sidebar] var(--docsSidebarWidth);
+  }
+
+  --codeBgColour: #ededed;
+
+  --overhang: 32px;
+  @include responsive(sm, --overhang, 0px);
+
+  @include darkMode {
+    --codeBgColour: #212121;
+  }
+
+  @include responsive(lg, --leftSidebarWidth, 240px);
+  @include responsive(md, --leftSidebarWidth, 0px);
+
+  h1 {
+    margin-top: 0px;
+
+    @include responsive(sm, font-size, 30px);
+  }
+
+  figure {
+    margin: 12px 0px;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  figcaption {
+    font-size: 15px;
+    color: #747474;
+    text-align: center;
+    margin: 0px auto 0px auto;
+    max-width: 60%;
+    @include responsive(sm, max-width, calc(100% - 60px));
+    line-height: 20px;
+  }
+
+  dd {
+    padding-bottom: 15px;
+  }
+  dt {
+    padding-top: 10px;
+  }
+}
+
+.fullWidth {
+  --blockPadding: var(--overhang);
+  @include raisedShadow(#fff, 8px, false, 40px, 8px, 64px);
+  border-radius: 8px;
+  width: calc(var(--contentWidth) + var(--overhang) * 2);
+  margin: 1.5em calc(-1 * var(--blockPadding));
+
+  @include breakpoint(sm) {
+    --blockPadding: var(--pageMargin);
+    width: calc(100% + 2 * var(--pageMargin));
+    position: relative;
+    margin: 16px calc(-1 * var(--blockPadding)) 0px
+      calc(-1 * var(--blockPadding));
+    border-radius: 0px;
+    // &:before {
+    //   display: none;
+    // }
+  }
+}
+
+div.themeSwitcher {
+  top: calc(
+    var(--globalBannerHeight, 0px) + ((var(--docsHeaderHeight) / 2) - 16px)
+  );
+
+  @include responsive(md, display, none);
+}
+
+.footer {
+  background: transparent !important;
+}
+
+.section {
+  // empty class for content nav to work with
+  display: block;
+}
+
+.sectionIntro {
+  .tableWrapper {
+    width: max-content;
+  }
+}
+
+.sectionIntroHeader {
+  display: flex;
+  align-items: center;
+
+  margin-top: -55px;
+  margin-bottom: -38px;
+
+  h1 {
+    margin: 0;
+  }
+
+  @include responsive(xl, margin-top, -12px);
+  @include responsive(xl, margin-bottom, -20px);
+
+  @include responsive(lg, margin-top, -44px);
+
+  @include breakpoint(sm) {
+    flex-direction: column;
+    margin-top: -46px;
+    margin-bottom: 15px;
+
+    h1 {
+      text-align: center;
+    }
+  }
+}
+
+.footerNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 calc(-1 * (var(--overhang) + 8px));
+  margin-bottom: 128px;
+  margin-top: 113px;
+
+  & > * {
+    margin: 0 8px;
+    max-width: 50%;
+  }
+
+  @include breakpoint(sm) {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+}
+
+.terminalCodeBlock {
+  display: contents;
+  --codeBgColour: #333;
+  --copyCodeBg: #111;
+  --codeBlockHighlightColour: #232323;
+
+  @include darkMode {
+    --codeBgColour: #212121;
+    --copyCodeBg: #2c2d2e;
+    --codeBlockHighlightColour: unset;
+  }
+}
+
+.raisedCodeBlock {
+  @include raisedShadow(#fff, 8px, false, 40px, 8px, 64px);
+
+  --blockPadding: var(--overhang);
+
+  margin: 1.5em calc(-1 * var(--blockPadding));
+  margin-bottom: 2em;
+
+  --codeBgColour: #fff;
+  --copyCodeBg: #f7f7f7;
+  --codeBlockHorizontalPadding: var(--blockPadding);
+
+  > :first-child {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  @include darkMode {
+    --codeBgColour: #212121;
+    --copyCodeBg: #2c2d2e;
+
+    &:after {
+      background-color: #212121;
+    }
+  }
+
+  @include breakpoint(sm) {
+    --blockPadding: var(--pageMargin);
+    margin: 1.5em calc(-1 * var(--blockPadding));
+
+    &:before {
+      display: none;
+    }
+
+    .codeBlock {
+      border-radius: 0;
+    }
+  }
+}
+
+.shadowedTable {
+  @include raisedShadow(#fff, 8px, false, 40px, 8px, 64px);
+  margin: 1.5em calc(-1 * var(--overhang));
+  margin-bottom: 2em;
+
+  max-width: unset;
+  width: calc(100% + 2 * var(--overhang));
+
+  @include breakpoint(sm) {
+    margin: 1.5em calc(-1 * var(--pageMargin));
+    width: calc(100% + 2 * var(--pageMargin));
+
+    &:before {
+      display: none;
+    }
+  }
+
+  table {
+    border-style: hidden;
+    border-collapse: collapse;
+
+    td,
+    th {
+      background: #fff;
+      border: 2px solid #eaeaea;
+      &:first-child {
+        border-top-width: 0px;
+      }
+    }
+  }
+
+  .codeBlock {
+    margin-bottom: 16px;
+  }
+
+  @include darkMode {
+    &:after {
+      background-color: #212121;
+    }
+
+    td,
+    th {
+      background: #212121;
+      border-color: #2c2d2e;
+    }
+  }
+}
+
+.funcoptable {
+  .descRef {
+    @include monospace;
+    font-size: 18px;
+    @include responsive(xl, font-size, 16px);
+
+    line-height: 18px;
+    color: #333333;
+
+    :global(.oppsymbol) {
+      background: #f2f2f2;
+      border-radius: 3px;
+      color: #238ff2;
+      padding: 0.1em 0.2em;
+    }
+
+    @include darkMode {
+      color: #b3b3b3;
+
+      :global(.oppsymbol) {
+        background: #1c1c1c;
+        color: $edb_dark_blue;
+      }
+    }
+  }
+
+  a {
+    border-radius: 4px;
+    padding: 0.2em 0.3em;
+
+    @include hover {
+      background-color: #238ff2;
+      span:not(:global(.oppsymbol)) {
+        color: #fff;
+      }
+
+      @include darkMode {
+        background-color: $edb_dark_blue;
+        span:not(:global(.oppsymbol)) {
+          color: #1c1c1c;
+        }
+      }
+    }
+  }
+
+  td:first-child p {
+    width: max-content;
+  }
+
+  @include responsive(sm, display, none);
+}
+
+div.seealsoSpacer {
+  padding: 68px 0px 60px 0px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.vertHeaderTable {
+  tr:first-child td:not(:first-child) p {
+    writing-mode: vertical-rl;
+  }
+
+  tr td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+
+    p {
+      width: 10em;
+    }
+  }
+}
+
+.desc {
+  --descVMargin: 104px;
+  margin: var(--descVMargin) calc(-1 * var(--overhang));
+
+  pointer-events: none;
+  z-index: 1;
+
+  --codeBgColour: #f7f7f7;
+
+  @include responsive(xl, --descVMargin, 96px);
+  @include responsive(lg, --descVMargin, 88px);
+
+  .descAnchor {
+    height: var(--headerAnchorOffset, 32px);
+    margin: calc(-1 * var(--headerAnchorOffset, 32px)) 0 0;
+  }
+
+  .descBlock {
+    @include raisedShadow(#fff, 8px, false, 40px, 8px, 52px);
+
+    pointer-events: auto;
+  }
+
+  .descSigHeader {
+    position: relative;
+    height: 40px;
+    background: #e9e9e9;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    padding: 0 16px;
+    cursor: default;
+
+    @include hover {
+      .descHeaderLink {
+        opacity: 1;
+      }
+    }
+  }
+
+  .descSigType {
+    display: flex;
+    align-items: center;
+    border-right: 2px solid #f7f7f7;
+    padding-right: 16px;
+
+    font-style: italic;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #838383;
+    text-transform: capitalize;
+  }
+
+  .descSigName {
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+
+    @include monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+
+    white-space: nowrap;
+    overflow-x: auto;
+    @include hideScrollbar;
+
+    &.isDescRef {
+      color: #8e8e8e;
+      font-weight: 400;
+    }
+
+    :global(.oppsymbol),
+    :global(.funcname) {
+      color: #333;
+      font-weight: 500;
+    }
+  }
+
+  .descHeaderLink {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .descHeaderLinkFade {
+    margin-right: -8px;
+    padding-left: 16px;
+    background: linear-gradient(
+      to right,
+      rgba(232, 232, 232, 0),
+      #e9e9e9 18px
+    );
+  }
+
+  .descSigHeaderArrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    width: 8px;
+    fill: #999;
+    transform: translateY(-50%) rotate(180deg);
+    display: none;
+  }
+
+  .descContent {
+    padding: 32px;
+
+    & > p {
+      margin: 12px 0px;
+    }
+
+    > :first-child {
+      margin-top: 0px;
+    }
+    > :last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  .descSigBlock {
+    display: flex;
+    margin: 32px;
+    margin-bottom: 0;
+    padding: 24px 32px;
+    background-color: #f7f7f7;
+    border-radius: 6px;
+    line-height: 30px;
+    overflow-x: auto;
+  }
+
+  @include breakpoint(sm) {
+    margin: 16px calc(-1 * (var(--pageMargin) + 8px));
+
+    .descBlock {
+      padding: 0 8px;
+    }
+
+    .descBlock:before {
+      left: 24px;
+      right: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .descHeaderLink {
+      display: none;
+    }
+
+    .descSigHeaderArrow {
+      display: block;
+    }
+
+    .descContent {
+      display: none;
+      padding: 16px var(--pageMargin);
+      padding-top: 0px;
+
+      .codeBlock {
+        margin-left: calc(16px - var(--pageMargin));
+        margin-right: calc(16px - var(--pageMargin));
+      }
+    }
+
+    .descSigBlock {
+      display: none;
+      padding: 8px 16px;
+      margin: 0 16px;
+      margin-bottom: 16px;
+    }
+
+    &.open {
+      .descContent,
+      .descSigBlock {
+        display: block;
+      }
+
+      .descSigHeaderArrow {
+        transform: translateY(-50%) rotate(-90deg);
+      }
+    }
+
+    .descSigHeader {
+      background: none !important;
+      height: unset;
+      min-height: 88px;
+      padding: 16px var(--pageMargin);
+      flex-direction: column;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .descSigType {
+      font-size: 12px;
+      line-height: 12px;
+      color: #9c9c9c;
+      border-right: none;
+    }
+
+    .descSigName {
+      padding-left: 0;
+      margin-top: 10px;
+      white-space: normal;
+    }
+  }
+
+  .descSig {
+    @include monospace;
+
+    flex-shrink: 0;
+    padding-right: 32px;
+
+    font-size: 16px;
+    @include responsive(xl, font-size, 15px);
+    @include responsive(sm, font-size, 14px);
+
+    > span {
+      display: block;
+
+      padding-left: 4em;
+      text-indent: -4em;
+
+      &.noToken {
+        font-weight: $weight_medium;
+        color: var(--syntaxText);
+      }
+
+      :global {
+        .funcparams {
+          .parenthesis,
+          .funcarg {
+            &:after {
+              content: " ";
+              white-space: normal;
+              font-size: 0;
+              line-height: 0;
+            }
+          }
+        }
+
+        .token {
+          color: var(--syntaxText);
+
+          &.module-prefix .token {
+            color: #777;
+          }
+
+          &.generictype {
+            color: var(--syntaxRed);
+          }
+
+          &.oppsymbol {
+            font-weight: $weight_medium;
+            background-color: #e1e1e1;
+            color: var(--syntaxRed);
+            border-radius: $radius_sm;
+            padding: 0.1em 0.25em;
+          }
+
+          &.funcarg {
+            white-space: nowrap;
+            &:after {
+              content: " ";
+              white-space: normal;
+              font-size: 0;
+              line-height: 0;
+            }
+          }
+
+          &.argname {
+            color: var(--syntaxGreen);
+          }
+
+          &.return {
+            color: var(--syntaxRed);
+          }
+
+          &.keyword {
+            color: var(--syntaxPurple);
+          }
+
+          &.type {
+            color: var(--syntaxBlue);
+          }
+
+          &.composite {
+            color: var(--syntaxOrange);
+          }
+
+          &.funcname {
+            font-weight: $weight_medium;
+          }
+        }
+      }
+
+      &:global(.longsig) {
+        :global {
+          .funcparams {
+            .parenthesis,
+            .funcarg {
+              &:after {
+                content: "\A"; // linefeed char
+                white-space: pre;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .fields {
+    background-color: $edb_code_bg;
+    border-radius: $radius;
+    padding: 20px;
+    margin: 10px 0;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      font-size: 90%;
+
+      .fieldName {
+        margin-top: 1em;
+        padding-bottom: 0.5em;
+        font-weight: $weight_medium;
+        padding-right: 20px;
+        color: #777;
+        @include monospace;
+      }
+
+      &:first-child .fieldName {
+        margin-top: 0;
+      }
+
+      .fieldName,
+      .fieldBody {
+        p {
+          margin: 0;
+          padding: 0;
+        }
+
+        .nestedParagraph {
+          margin-bottom: 0.5em;
+        }
+
+        & > ul {
+          list-style: none;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        li {
+          p {
+            text-indent: -1.5em;
+
+            * {
+              text-indent: 0;
+            }
+          }
+        }
+
+        li:not(:first-child) {
+          margin-top: 0.5em;
+        }
+      }
+
+      code {
+        background-color: darken($edb_code_bg, 5%);
+      }
+
+      strong > code {
+        background-color: transparent;
+      }
+    }
+  }
+
+  @include darkMode {
+    --codeBgColour: #2d2d2d;
+    --copyCodeBg: #212121;
+
+    .descBlock:after {
+      background: #212121;
+    }
+
+    .descSigHeader {
+      background: #1c1c1c;
+    }
+
+    .descHeaderLinkFade {
+      background: linear-gradient(to right, rgba(28, 28, 28, 0), #1c1c1c 18px);
+    }
+
+    .descSigType {
+      border-right-color: #2d2d2d;
+    }
+
+    .descSigName {
+      color: #b3b3b3;
+
+      &.isDescRef {
+        color: #6c6c6c;
+      }
+
+      :global(.oppsymbol),
+      :global(.funcname) {
+        color: #b3b3b3;
+      }
+    }
+
+    .descSigBlock {
+      background-color: #2d2d2d;
+    }
+
+    .descSig > span :global(.token.oppsymbol) {
+      background-color: $edb_dark_code_bg;
+    }
+
+    .fields {
+      background-color: $edb_dark_code_bg;
+
+      .field code {
+        background-color: darken($edb_dark_code_bg, 5%);
+      }
+    }
+  }
+}
+
+ul.tickList {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    line-height: 32px;
+    padding-left: 48px;
+    margin: 40px 32px;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: left center;
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='1' y='1' width='30' height='30' rx='5' stroke='%231F8AED' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.0003 21.9769L24.6101 13.2672C25.3803 12.488 25.3723 11.2262 24.6021 10.4471C23.8193 9.65512 22.5322 9.64689 21.7493 10.4388L14.0001 18.278L10.2507 14.4851C9.46781 13.6932 8.18073 13.7014 7.39786 14.4934C6.62765 15.2725 6.6197 16.5343 7.38991 17.3135L12.5776 22.5614C13.3604 23.3532 14.6392 23.3533 15.4221 22.5616L16.0003 21.9769Z' fill='%231F8AED'/%3E%3C/svg%3E%0A");
+
+    @include breakpoint(sm) {
+      margin-left: 0;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@import "../../../styles/mixins.scss";
+
+.additionalMethods{
+  display:block;
+}
+.installOptions {
+  display: block;
+  background: none;
+  border: none;
+  margin: 100px auto 50px auto;
+  padding: 0;
+  font-size: 20px;
+  // font-weight: 700;
+  color: $edb_dark_grey;
+  cursor: pointer;
+  // span {
+  //   text-decoration: underline dashed 2px;
+  // }
+}
+
+.tabs {
+  margin-top: 40px;
+}
+
+.tabContents {
+  display: none;
+  flex-direction: column;
+
+  &.active {
+    display: flex;
+  }
+
+  & > h3 {
+    display: none;
+  }
+}
+
+.installKindSelect {
+  display: block;
+  margin: 40px auto 30px auto;
+  @include mainfont();
+  font-size: 16px;
+  line-height: 24px;
+  color: #4e4e4e;
+  padding: 6px;
+  padding-right: 40px;
+  border: 2px solid #dbdbdb;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center right 14px;
+  background-image: url("data:image/svg+xml,%3Csvg width='9' height='9' viewBox='0 0 9 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.42698 1.30257L4.96326 7.79089C4.65414 8.36983 3.88165 8.36983 3.57253 7.79089L0.108817 1.30257C-0.200301 0.723637 0.185945 -3.52859e-05 0.804182 -3.52859e-05H7.73161C8.34985 -3.52859e-05 8.7361 0.723637 8.42698 1.30257Z' fill='%238F8F8F'/%3E%3C/svg%3E%0A");
+}
+
+@include breakpoint(sm) {
+  .installOptions {
+    font-size: 20px;
+    margin: 0px auto;
+  }
+}

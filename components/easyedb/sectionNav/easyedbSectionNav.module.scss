@@ -1,0 +1,71 @@
+@import "../../../styles/mixins.scss";
+
+.sectionNavWrapper {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 124px * (1 - var(--scrollProgress)));
+  user-select: none;
+  margin-top: -53px;
+
+  margin-left: var(--overhang);
+  margin-right: calc((100vw - var(--pageMaxWidth)) / -2 - var(--pageMargin));
+
+  transition: opacity 0.2s;
+
+  --topMaxMargin: 96px;
+
+  ul {
+    padding: 0 24px;
+    margin: auto;
+    min-width: 176px;
+    width: 288px;
+
+    --tocFontWeight: #{$weight_regular};
+    --tocFontColour: #9f9f9f;
+    --tocHoverFontColour: #0cad9a;
+    --tocActiveFontColour: #0cad9a;
+    --tocFontWeightActive: #{weight_regular};
+    --tocActiveDotColour: #0cad9a;
+
+    @include darkMode {
+      --tocFontColour: #8e8e8e;
+      --tocHoverFontColour: #009280;
+      --tocActiveFontColour: #009280;
+      --tocActiveDotColour: #13665c;
+    }
+  }
+
+  &.hideNav {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include breakpoint(xl) {
+    --topMaxMargin: 48px;
+  }
+}
+
+.scrollIntersector {
+  position: absolute;
+  height: 124px;
+  top: -124px;
+  width: 100%;
+}
+
+.paddingBlockTop,
+.paddingBlockBottom {
+  height: calc(
+    24px + ((var(--topMaxMargin) - 24px) * (1 - var(--scrollProgress)))
+  );
+}
+
+.paddingBlockTop {
+  flex-shrink: 0;
+}
+
+.paddingBlockBottom {
+  min-height: 24px;
+}

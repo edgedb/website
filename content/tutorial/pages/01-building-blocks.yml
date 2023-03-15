@@ -1,0 +1,866 @@
+title: "Building Blocks"
+slug: "building-blocks"
+categories:
+  - category: "Introduction"
+    slug: "intro"
+    pages:
+      - title: Hello
+        slug: "hello"
+        cells:
+          - kind: text
+            text: |
+              Hello there!
+
+              You've reached our interactive tutorial, the fastest way to try
+              out EdgeDB without [installing it](/install) — just hit the
+              "Run" button to see the result!  You can also click on "Schema"
+              to see how the sample database is put together.
+
+              (By the way, once you're done this tutorial feel free to check
+              some other resources: our [Easy EdgeDB textbook](/easy-edgedb),
+              [cheatsheets](/docs/guides/cheatsheet/index), and [blog posts](/blog)
+              on why we put EdgeDB together and where we're going from here.)
+
+              This first example just uses `select` to return a string.
+              Click "Run" to return it!
+
+          - kind: edgeql
+            text: |
+              select "This is a query fetching a string";
+
+          - kind: text
+            text: |
+              Now change the contents of the string and run it again.
+
+  - category: "Scalars"
+    slug: "scalars"
+    pages:
+      - title: Basic Scalars
+        slug: "basic-scalars"
+        cells:
+          - kind: text
+            text: |
+              Data in **EdgeDB** is composed from: numbers, booleans,
+              text, date, time, or JSON. So let's start with learning
+              what these scalar types are and how they interact with
+              each other.
+
+              The boolean values are represented by the words "true" and
+              "false" (case-insensitive). Try selecting a boolean literal:
+
+          - kind: edgeql
+            text: |
+              select true;
+
+          - kind: text
+            text: |
+              String literals are anything put inside either a pair
+              of single or double quotes. They also support special
+              escaped characters, such as "\n" for a new-line or even
+              unicode. Try them out:
+
+          - kind: edgeql
+            text: |
+              select 'Hello world 🚀';
+
+          - kind: text
+            text: |
+              Bytes are very similar to strings in structure, but the
+              bytes literals start with a **b** prefix. Since the
+              characters inside the bytes literal are supposed to
+              represent one byte each, no special unicode characters
+              (like emojis) are allowed. Try them out:
+
+          - kind: edgeql
+            text: |
+              select b'byte-string';
+
+          - kind: text
+            text: |
+              Numbers can be divided into 2 categories based on
+              whether they are of fixed finite size in memory or
+              unlimited. By default number literals are taken to
+              represent the fixed size integer or floating-point
+              numbers used in many programming languages. Try them out:
+
+          - kind: edgeql
+            text: |
+              select 123;
+
+          - kind: text
+            text: |
+              Integers that are too large to fit into 64 bits will
+              result in an error:
+
+          - kind: edgeql
+            expectError: true
+            text: |
+              select 123456789012345678901234567890;
+
+          - kind: text
+            text: |
+              However, if you add **n** at the end of this very big
+              integer, EdgeDB will know that this is supposed to be a
+              number without any upper limit. Try adding the **n** at
+              the end of it to make the error go away.
+
+              Similarly, the **n** suffix tells EdgeDB to treat
+              floating point numbers as if they had infinite
+              precision. Try the following example with and without
+              the **n** suffix:
+
+          - kind: edgeql
+            text: |
+              select 123456789012345678901234567890.12345678901234567890;
+
+      - title: Casting
+        slug: "casting"
+        cells:
+          - kind: text
+            text: |
+              There are other scalars that don't have their own dedicated
+              literals, but can instead be represented by casting some
+              literal into the appropriate type. These are: `uuid`,
+              `datetime`, `duration`, and `json`. In order to cast one
+              value into a particular scalar type you need to put
+              `<new-type>` before the value. Try out a few casts:
+
+          - kind: edgeql
+            text: |
+              select <uuid>'d8dc151a-d043-4cca-be53-9dfaf57eb871';
+
+          - kind: edgeql
+            text: |
+              select <datetime>'2020-03-15 12:34:56+00';
+
+          - kind: edgeql
+            text: |
+              select <duration>'1h 23m';
+
+          - kind: text
+            text: |
+              Note that casting from one scalar type to another is a
+              generic operation and can be performed between many (but not
+              all) types. For example, every type can be cast to and from
+              a string (`str`), except for `bytes`, which cannot be cast
+              into anything else. Most types can also be cast into `json`.
+
+              It is also possible to chain cast operations one after the
+              other. They will be evaluated from right to left (from the
+              cast adjacent to the value and moving out).
+
+              The full list of all the basic scalar types is: `bool`,
+              `bytes`, `uuid`, `str`, `json`, `datetime`, `duration`,
+              `int16`, `int32`, `int64`, `float32`, `float64`, `decimal`,
+              `bigint`. Try out a few casts:
+
+          - kind: edgeql
+            text: |
+              select <json>false;
+
+          - kind: edgeql
+            text: |
+              select <json><str>false;
+
+          - kind: edgeql
+            text: |
+              select <int64><json>2;
+
+      - title: Arrays
+        slug: "arrays"
+        cells:
+          - kind: text
+            text: |
+              Closely related to scalars are arrays, which are ordered
+              collections of scalar values. All elements in an array
+              have to be the same type:
+
+          - kind: edgeql
+            text: |
+              select [1, 1, 2, 3, 5];
+
+          - kind: text
+            text: |
+              Array elements can be accessed by giving an index (starting
+              with 0) enclosed in `[` `]`:
+
+          - kind: edgeql
+            text: |
+              # access index 4 of the array [1, 1, 2, 3, 5]
+              select [1, 1, 2, 3, 5] [4];
+
+          - kind: text
+            text: |
+              You can also cast arrays from one type to another by
+              using a "nested" cast notation:
+
+          - kind: edgeql
+            text: |
+              select <array<str>>[1, 2, 3];
+
+      - title: Tuples
+        slug: "tuples"
+        cells:
+          - kind: text
+            text: |
+              Tuples, like arrays, are ordered collections of scalar
+              values, but the elements don't have to be the same type.
+              In fact, tuple elements can be any type including arrays
+              and tuples:
+
+          - kind: edgeql
+            text: |
+              select (1, "Hello", true);
+
+          - kind: text
+            text: |
+              Tuple elements can be accessed by specifying an index after a `.`:
+
+          - kind: edgeql
+            text: |
+              select (1, "Hello", true).0;
+
+          - kind: text
+            text: |
+              Tuples can also give names to their elements. In that case
+              the tuple elements can be accessed by either name or index:
+
+          - kind: edgeql
+            text: |
+              select (val := 1, text := "Hello", flag := true);
+
+          - kind: edgeql
+            text: |
+              # access by name
+              select (val := 1, text := "Hello", flag := true).text;
+
+          - kind: edgeql
+            text: |
+              # access by index
+              select (val := 1, text := "Hello", flag := true).1;
+
+          - kind: text
+            text: |
+              You can also use casts to change the type of the
+              elements inside tuples by using a "nested" cast
+              notation:
+
+          - kind: edgeql
+            text: |
+              select <tuple<str, str, bool>>(1, "Hello", "true");
+
+      - title: JSON
+        slug: "json"
+        cells:
+          - kind: text
+            text: |
+              As was previously mentioned, only `bytes` cannot be cast
+              into `json`. However, arrays and tuples can be cast into
+              `json` just fine, even if they contain other nested
+              structures. Regular tuples and arrays both become JSON
+              arrays, but named tuples become JSON Objects. Try the
+              following cast of a complex nested structure:
+
+          - kind: edgeql
+            text: |
+              select <json>(
+                title := 'Example',
+                values := [1, 1, 2, 3, 5],
+                mixed := (
+                  false, 'some text', (x := 3, y := 5)
+                )
+              );
+
+      - title: Local Date/Time
+        slug: "cal"
+        cells:
+          - kind: text
+            text: |
+              There's another group of built-in types that deal with date and
+              time representation. These types are part of the `cal` module
+              and they are all timezone-unaware. There are  types representing
+              date and time in various combinations: `local_datetime`,
+              `local_date`, `local_time`. They represent values that could be
+              displayed on a wall clock or calendar without needing any
+              specific time-zone information. Alarms, holiday dates, or even
+              regular business hours could naturally be represented by these
+              types. Consider things like "Pi Day" or "alarm at 8:30 AM":
+
+          - kind: edgeql
+            text: |
+              # "cal::" refers to the "cal" module
+              select <cal::local_date>"2020-03-14";
+
+          - kind: edgeql
+            text: |
+              select <cal::local_time>"08:30";
+
+          - kind: text
+            text: |
+              There are also types representing different kinds of relative
+              durations: `relative_duration`, `date_duration`. Both of these
+              types specify the duration in relative terms such as months,
+              days, hours, etc. These values are not absolute like `duration`,
+              because not all months have the same number of days and not all
+              days have the same number of seconds.
+
+          - kind: text
+            text: |
+               What makes `date_duration` different from `relative_duration`
+               is the granularity. Whereas `relative_duration` can be
+               specified in units all the way down to microseconds,
+               `date_duration` cannot be specified in units smaller than a
+               day. They are analogous to `float64` and `int64` in that way.
+
+          - kind: edgeql
+            text: |
+              select <cal::relative_duration>'3 weeks 45 minutes';
+
+          - kind: edgeql
+            text: |
+              select <cal::date_duration>'2 weeks 5 days';
+
+
+  - category: "Operators"
+    slug: "operators"
+    pages:
+      - title: Logical and Comparison
+        slug: "logical-and-comparison"
+        cells:
+          - kind: text
+            text: |
+              The are 3 logical operators in EdgeQL: `and`, `or`, and
+              `not`. These only work on boolean values:
+
+          - kind: edgeql
+            text: |
+              select true and false;
+
+          - kind: text
+            text: |
+              However, there are other operators that produce a boolean
+              result, such as various equality and inequality comparison
+              operators: `=`, `!=`, `>`, `<`, `>=`, `<=`. These can be
+              combined with logical operators:
+
+          - kind: edgeql
+            text: |
+              select 1 < 3 and 3 <= 100;
+
+          - kind: text
+            text: |
+              Note that it's not just numeric types that can be compared
+              to each other, but also all other scalar types as well as
+              arrays and tuples. However, both operands must be of the
+              same type in order to be compared (`str` can be compared to
+              other `str`, but not to `int64` or a `bool`):
+
+          - kind: edgeql
+            text: |
+              select 'Hello' != 'world';
+
+          - kind: edgeql
+            text: |
+              # strings are ordered lexicographically
+              select 'Hello' < 'world';
+
+          - kind: edgeql
+            text: |
+              # ordered by value
+              select <duration>'15m' < <duration>'1h';
+
+      - title: Arithmetic
+        slug: "arithmetic"
+        cells:
+          - kind: text
+            text: |
+              All the basic arithmetical operators are available for the
+              numeric types as you would expect:
+
+          - kind: edgeql
+            text: |
+              select 1 + 23;
+
+          - kind: edgeql
+            text: |
+              # 2 to the power of 5
+              select 2 ^ 5;
+
+          - kind: edgeql
+            text: |
+              # Square root of 2
+              select 2 ^ 0.5;
+
+          - kind: text
+            text: |
+              There's a caveat that you cannot mix limited and unlimited
+              numerical scalars in any operation. This is done
+              deliberately so that you cannot accidentally end up
+              switching between these types and get results that
+              are potentially not portable between EdgeDB and other
+              systems that don't implement `bigint` or `decimal`:
+
+          - kind: edgeql
+            text: |
+              # This is OK.
+              select 2n + 3.3n;
+
+          - kind: edgeql
+            text: |
+              # This is also OK due to explicit cast.
+              select 2 + <float64>3.3n;
+
+          - kind: edgeql
+            expectError: true
+            text: |
+              # This is an error.
+              select 2.2 + 3.3n;
+
+      - title: Date & Time Operations
+        slug: "datetime-arithmetic"
+        cells:
+          - kind: text
+            text: |
+              Date and time types support the addition or subtraction
+              of various durations. Note that this operation produces
+              the result of the same type as the other operand:
+
+          - kind: edgeql
+            text: |
+              select <datetime>'2020-03-15 12:34:56+00' +
+                     <cal::relative_duration>'2h 15m';
+
+          - kind: edgeql
+            text: |
+              select <cal::local_datetime>'2020-03-15 12:34:56' +
+                     <duration>'2h 15m';
+
+          - kind: edgeql
+            text: |
+              select <cal::local_time>'12:34:56' + <duration>'2h 15m';
+
+          - kind: edgeql
+            text: |
+              select <cal::local_date>'2020-03-15' - <cal::date_duration>'2 days';
+
+          - kind: text
+            text: |
+              Of course, durations can be added and subtracted from each other:
+
+          - kind: edgeql
+            text: |
+              select <duration>'24h' - <duration>'3h 20m';
+
+          - kind: edgeql
+            text: |
+              select <cal::date_duration>'2 weeks' -
+                     <cal::date_duration>'3 days';
+
+          - kind: text
+            text: |
+              When different kinds of durations are mixed the result is a
+              `relative_duration`:
+
+          - kind: edgeql
+            text: |
+              select <duration>'24h' - <cal::relative_duration>'3h 20m';
+
+          - kind: edgeql
+            text: |
+              select <cal::date_duration>'2 weeks' -
+                     <cal::relative_duration>'3 days';
+
+          - kind: text
+            text: |
+              Finally, it's possible to subtract one `datetime` value
+              from another to get a `duration`:
+
+          - kind: edgeql
+            text: |
+              select <datetime>'2020-03-15 12:34:56+00' -
+                     <datetime>'2020-03-15 11:45:16+00';
+
+          - kind: text
+            text: |
+              When calculating the difference between two `local_datetime` or
+              `local_time` values the result is a `relative_duration`:
+
+          - kind: edgeql
+            text: |
+              select <cal::local_datetime>'2020-03-15 12:34:56' -
+                     <cal::local_datetime>'2020-03-15 11:45:16';
+
+          - kind: text
+            text: |
+              When subtracting one `local_date` from another the result is
+              a `date_duration`:
+
+          - kind: edgeql
+            text: |
+              select <cal::local_date>'2022-10-25' -
+                     <cal::local_date>'2020-03-15';
+
+      - title: Indexing
+        slug: "indexing"
+        cells:
+          - kind: text
+            text: |
+              There are 3 types that share the same way of accessing an
+              element based on the index: `str`, `bytes`, and arrays. All
+              of these types use the `[...]` operator to access their
+              elements:
+
+          - kind: edgeql
+            text: |
+              select 'Hello'[0];
+
+          - kind: edgeql
+            text: |
+              select b'byte-string'[0];
+
+          - kind: edgeql
+            text: |
+              select [1, 2, 3][0];
+
+          - kind: text
+            text: |
+              Note that tuples don't use the same mechanism for accessing
+              their elements. Their method of using the `.` is similar to
+              object types, which will be covered in the next tutorial
+              section.
+
+      - title: Slicing
+        slug: "slicing"
+        cells:
+          - kind: text
+            text: |
+              The same 3 types that share the indexing operator (`str`,
+              `bytes`, and arrays) also share the ability to cut out a
+              slice of values between given two indexes. The operator
+              returns all the elements starting with the first index value
+              given and up to, but not including the second index value:
+
+          - kind: edgeql
+            text: |
+              select 'Hello'[1:3];
+
+          - kind: edgeql
+            text: |
+              select b'byte-string'[1:3];
+
+          - kind: edgeql
+            text: |
+              select [1, 2, 3][1:3];
+
+          - kind: text
+            text: |
+              If a negative value is given as an index, it is interpreted
+              to indicate an element relative to the end of the string or
+              array:
+
+          - kind: edgeql
+            text: |
+              select 'Hello'[1:-1];
+
+      - title: Concatenation
+        slug: "concatenation"
+        cells:
+          - kind: text
+            text: |
+              The same 3 types that share indexing operator (`str`,
+              `bytes`, and arrays) also share the ability to concatenate
+              two values. The `++` operator is used for that purpose:
+
+          - kind: edgeql
+            text: |
+              select 'Hello' ++ ' world';
+
+          - kind: edgeql
+            text: |
+              select b'byte' ++ b'-string';
+
+          - kind: edgeql
+            text: |
+              select [1, 1] ++ [2, 3];
+
+          - kind: text
+            text: |
+              Note that tuples don't have any concatenation operator.
+
+  - category: "Sets"
+    slug: "working-with-sets"
+    pages:
+      - title: Everything Is a Set
+        slug: "everything-is-a-set"
+        cells:
+          - kind: text
+            text: |
+              Ultimately all queries in EdgeDB return sets (or multi-sets)
+              of results. In fact, all values are treated as sets as well,
+              so that a literal `1` is taken to mean the set `{1}`. You
+              may have noticed that in all the previous query examples.
+
+              All elements of a set in EdgeDB have to be of the same type.
+
+              You can construct a set using set literal `{...}` notation:
+
+          - kind: edgeql
+            text: |
+              select {1, 2, 3, 4};
+
+      - title: Functions on Elements
+        slug: "functions-on-elements"
+        cells:
+          - kind: text
+            text: |
+              Functions in EdgeDB can operate on whole sets or on
+              individual elements. This boils down to how the function
+              parameters are defined, whether they are using `SET OF`
+              modifier (indicating that the parameter will take a set as
+              a whole) or not, although for built-in functions this is
+              usually intuitive.
+
+              Let's try to use a simple element-wise function `len`
+              (string or array length):
+
+          - kind: edgeql
+            text: |
+              select len('Hello world!');
+
+          - kind: text
+            text: |
+              When a function which treats its parameters in
+              element-wise fashion is applied to a set, a new set is
+              constructed by applying the function to each original
+              element separately. Try different sets as inputs to
+              `len`:
+
+          - kind: edgeql
+            text: |
+              select len({'Hello', 'world!'});
+
+          - kind: text
+            text: |
+              If there are more than one element-wise function parameters,
+              then the function is applied to the Cartesian product of the
+              input sets. Try out different combinations using `str_repeat`:
+
+          - kind: edgeql
+            text: |
+              select str_repeat({'a', 'b'}, {1, 2, 3});
+
+      - title: Functions on Sets
+        slug: "functions-on-sets"
+        cells:
+          - kind: text
+            text: |
+              There are functions in EdgeDB that operate on whole sets.
+              These are commonly known as "aggregate functions" in other
+              databases.
+
+              Try out a few built-in aggregate functions:
+
+          - kind: edgeql
+            text: |
+              select count({'Hello', 'world'});
+
+          - kind: edgeql
+            text: |
+              select min({23, 7, 41});
+
+          - kind: edgeql
+            text: |
+              select max({23, 7, 41});
+
+      - title: Set Operators
+        slug: "set-operators"
+        cells:
+          - kind: text
+            text: |
+              There are a couple of basic set operators in EdgeQL:
+              `union` and `distinct`.
+
+              `union` merges two multi-sets together. This may result
+              in duplicate entries:
+
+          - kind: edgeql
+            text: |
+              select {1, 2, 3, 4} union {1, 4, 5};
+
+          - kind: text
+            text: |
+              `distinct` gets rid of duplicate entries producing a
+              proper set:
+
+          - kind: edgeql
+            text: |
+              select distinct ({1, 2, 3, 4} union {1, 4, 5});
+
+          - kind: text
+            text: |
+              Sets cannot be elements of other sets in EdgeQL, so
+              instead the nested syntax is equivalent to a `union`.
+              This is also consistent with the notion that everything
+              is a set, including singleton literal values:
+
+          - kind: edgeql
+            text: |
+              select {1, {2}, {3, 4}};
+
+          - kind: edgeql
+            text: |
+              select {1, 2, 3, 4, {1, 4, 5}};
+
+      - title: Membership Operator
+        slug: "membership-operator"
+        cells:
+          - kind: text
+            text: |
+              The `in` operator in EdgeQL tests whether a given
+              *element* is present in a *set*. This operator has
+              features of a function that works on elements and of a
+              function that works on sets. More strictly the result of
+              `A in B` is a set of boolean values indicating for each
+              element of `A` whether or not it is in `B`:
+
+          - kind: edgeql
+            text: |
+              select {2} in {1, 4, 5};
+
+          - kind: edgeql
+            text: |
+              select {1, 2} in {1, 4, 5};
+
+          - kind: text
+            text: |
+              To check whether one set is a subset of another you can
+              combine the `in` operator with the `all` built-in
+              function, effectively computing whether all elements of
+              the set `A` are in `B`:
+
+          - kind: edgeql
+            text: |
+              select all({1, 2} in {1, 4, 5});
+
+      - title: There Is No NULL
+        slug: "no-null"
+        cells:
+          - kind: text
+            text: |
+              There is no `NULL` value in EdgeDB unlike in many other
+              databases or programming languages. This is deliberate,
+              as `NULL` scalars create [all sorts of problems](
+              https://www.edgedb.com/blog/we-can-do-better-than-sql#null-a-bag-of-surprises)
+              when interacting with other data and operations.
+
+              Instead of the `NULL` scalar value EdgeDB uses an empty
+              set `{}` to denote the absence of data. The advantage
+              of using the empty set is that it works exactly like
+              every other set in every way. Its behavior is
+              well-defined and consistent across all operators and
+              functions.
+
+              For example, "count" will give the number of elements in
+              an empty set:
+
+          - kind: edgeql
+            text: |
+              select count({});
+
+          - kind: text
+            text: |
+              The `exists` operator returns `false` if the set is
+              empty and `true` otherwise:
+
+          - kind: edgeql
+            text: |
+              select exists {};
+
+          - kind: text
+            text: |
+              Usually it is necessary to provide the type of the empty
+              set using a cast, when the type is relevant and cannot
+              be assumed (like in `insert` queries):
+
+          - kind: edgeql
+            text: |
+              select <int64>{};
+
+          - kind: text
+            text: |
+              When an empty set is used as an element-wise operand or
+              element-wise parameter of a function, the result is
+              always an empty set too (albeit of whatever the return
+              type is). This is because the Cartesian product of the
+              empty set with anything else is still an empty set:
+
+          - kind: edgeql
+            text: |
+              select len(<str>{});
+
+          - kind: edgeql
+            text: |
+              select 1 + <int64>{};
+
+          - kind: edgeql
+            text: |
+              select str_repeat({'a', 'b'}, <int64>{});
+
+          - kind: text
+            text: |
+              Because of its ability of making any Cartesian product
+              into another empty set, there are some gotchas when an
+              empty set is used where an array or tuple element are
+              expected:
+
+          - kind: edgeql
+            text: |
+              select [1, 2, <int64>{}];
+
+          - kind: edgeql
+            text: |
+              select (1, 'Hello', <int64>{});
+
+          - kind: text
+            text: |
+              Typically, if you want to splice 0 or 1 elements into an
+              array the "array_agg" function and concatenation should
+              be used. Try the following example with different values
+              specified for `x`:
+
+          - kind: edgeql
+            text: |
+              with x := <int64>{}
+              select [1, 2] ++ array_agg(x) ++ [98, 99];
+
+      - title: Coalescing
+        slug: "coalescing"
+        cells:
+          - kind: text
+            text: |
+              There are cases when you may want to return some special
+              value instead of an empty set. This is possible to do
+              with the coalescing operator - `??`. This operator
+              returns the first operand if it's not empty and the
+              second operand otherwise:
+
+          - kind: edgeql
+            text: |
+              select <int64>{} ?? 3;
+
+          - kind: text
+            text: |
+              Similarly there are versions of the comparison operators
+              `?=` and `?!=` that allow comparing to an empty set.
+              These operators always return a boolean value with the
+              rule that an empty set is equal to another empty set and
+              nothing else (other values work the same as for `=` and
+              `!=`). Try it out and compare to plain `=` and `!=`:
+
+          - kind: edgeql
+            text: |
+              select <int64>{} ?!= 3;
+
+          - kind: edgeql
+            text: |
+              select <int64>{} != 3;

@@ -1,0 +1,227 @@
+@import "../../styles/mixins.scss";
+
+.codeExplainer {
+  margin-top: 38px;
+  @include responsive(md, margin-top, 0px);
+
+  margin-bottom: 54px;
+  @include responsive(md, margin-bottom, 36px);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+}
+
+.tabsWrapper {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-grow: 1;
+  margin: 0 8px;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0px,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+  user-select: none;
+
+  @include hideScrollbar;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: 32px;
+  font-weight: 500;
+  font-size: 16px;
+  @include monospace;
+  color: #4e4e4e;
+  padding: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 8px;
+
+  &.selectedTab {
+    background-color: #fdf07d;
+  }
+
+  span {
+    height: 33px;
+    line-height: 32px;
+  }
+
+  @include hover {
+    color: #fff;
+    background-color: #0ccb93;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include darkMode {
+    color: #e5e5e5;
+    background-color: transparent;
+
+    &.selectedTab {
+      background-color: #dcb62f;
+      color: #2c1428;
+    }
+  }
+}
+
+.codeBlock {
+  position: relative;
+  margin-top: 22px;
+
+  @include raisedShadow(#ececec, 8px, false, 40px, 8px, 64px);
+
+  .codeBlockInner {
+    min-height: 298px;
+    overflow: hidden;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2px;
+  }
+
+  .code,
+  .explanation {
+    margin: 0;
+    overflow-y: auto;
+    border-radius: 0;
+
+    --codeBlockVerticalPadding: 26px;
+    --codeBlockHorizontalPadding: 32px;
+  }
+
+  .explanation {
+    white-space: pre-wrap;
+    background: var(--codeBgColour, #f6f6f6);
+    @include monospace;
+
+    font-size: 15px;
+    @include responsive(lg, font-size, 14px);
+    @include responsive(sm, font-size, 13px);
+
+    line-height: 25px;
+    @include responsive(lg, line-height, 22px);
+    @include responsive(sm, line-height, 20px);
+    color: #525252;
+    padding: var(--codeBlockVerticalPadding) var(--codeBlockHorizontalPadding);
+  }
+
+  @include breakpoint(md) {
+    .codeBlockInner {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, auto);
+    }
+  }
+
+  @include breakpoint(sm) {
+    margin-left: calc(-1 * var(--pageMargin));
+    margin-right: calc(-1 * var(--pageMargin));
+    width: calc(100% + 2 * var(--pageMargin));
+    margin-top: 14px;
+
+    &:before {
+      display: none;
+    }
+
+    .codeBlockInner {
+      border-radius: 0;
+    }
+
+    .explanation {
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  @include darkMode {
+    &:after {
+      background-color: #1b0e19;
+    }
+
+    .code,
+    .explanation {
+      --codeBgColour: #312236;
+      --copyCodeBg: #1b0e19;
+    }
+  }
+}
+
+.leftArrow,
+.rightArrow {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin: 0 -20px;
+  color: #0ccb93;
+  cursor: pointer;
+  z-index: 1;
+
+  svg {
+    width: 12px;
+    height: 24px;
+  }
+
+  &.inactive {
+    pointer-events: none;
+    color: rgba(0, 0, 0, 0.2);
+  }
+
+  @include darkMode {
+    &.inactive {
+      color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.rightArrow {
+  svg {
+    transform: rotate(180deg);
+  }
+}
+
+// @include breakpoint(sm) {
+//   .codeBlock {
+//     display: block;
+//     height: auto;
+//     margin-left: calc(-1 * var(--pageMargin));
+//     margin-right: calc(-1 * var(--pageMargin));
+//     width: calc(100% + 2 * var(--pageMargin));
+//     margin-top: 14px;
+
+//     &:before {
+//       display: none;
+//     }
+
+//     .code,
+//     .explanation {
+//       border-radius: 0px;
+//     }
+//     .code {
+//       border-bottom: 2px solid #00000020;
+//     }
+//   }
+// }

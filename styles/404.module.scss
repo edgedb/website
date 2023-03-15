@@ -1,0 +1,62 @@
+@import "./mixins.scss";
+
+.wrapper {
+  flex-grow: 1;
+}
+
+.content {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 80px;
+    margin: 50px 0 120px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &:before {
+      content: "404";
+      font-family: "Sometype Mono", monospace;
+      font-size: 400px;
+      line-height: 140px;
+      color: #e0e0e0;
+    }
+  }
+}
+
+.links {
+  width: 100%;
+  max-width: 640px;
+}
+
+@include breakpoint(md) {
+  .content {
+    h1 {
+      font-size: 60px;
+
+      &:before {
+        font-size: 200px;
+        line-height: 40px;
+      }
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .content {
+    h1 {
+      font-size: 40px;
+      margin-bottom: 60px;
+
+      &:before {
+        font-size: 140px;
+        line-height: 0px;
+      }
+    }
+  }
+}

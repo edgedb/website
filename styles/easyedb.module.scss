@@ -1,0 +1,208 @@
+@import "./mixins.scss";
+@import "settings.vars.scss";
+
+.page {
+  --codeBgColour: #e5e5e5;
+
+  --contentWidth: 830px;
+  --leftSidebarWidth: 1fr;
+  --rightSidebarWidth: var(--leftSidebarWidth);
+
+  --pageLinkColour: #009280;
+  --pageLinkHoverColour: #0cad9a;
+
+  --overhang: 40px;
+
+  p {
+    color: #1a1a1a;
+  }
+
+  @include darkMode {
+    --codeBgColour: #242424;
+
+    p {
+      color: #cccccc;
+    }
+  }
+}
+
+.searchButtons {
+  margin-left: calc(-1 * var(--overhang));
+  z-index: 1;
+
+  @include responsive(lg, margin-left, 0px);
+}
+
+.footer {
+  background-color: unset !important;
+}
+
+.pageContent {
+  grid-column: content;
+
+  h1 {
+    text-align: center;
+    font-weight: $weight_extrabold;
+    justify-content: center;
+  }
+}
+
+.section {
+  display: block;
+}
+
+.leadImage {
+  width: calc(100% + var(--overhang) * 2);
+  margin: 30px calc(-1 * var(--overhang));
+  border-radius: $radius;
+}
+
+.raisedCodeBlock {
+  .codeBlock {
+    background: none;
+  }
+  --codeBlockHorizontalPadding: 30px;
+  --codeBlockVerticalPadding: 20px;
+  --overhang: 55px;
+  --bgColour: #fff;
+  --copyCodeBg: #f7f7f7;
+
+  margin: 2em 0;
+  margin-bottom: 2.5em;
+
+  width: calc(100% + (2 * var(--overhang)));
+  margin-left: calc(-1 * var(--overhang));
+
+  @include raisedShadow(var(--bgColour), 8px, false, 20px);
+
+  @include darkMode {
+    --bgColour: #1f1f1f;
+  }
+}
+
+.toc {
+  grid-column: left-sidebar;
+}
+
+.sectionNav {
+  grid-column: right-sidebar;
+}
+
+.chapterNo {
+  font-family: "Sometype Mono", monospace;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #999999;
+}
+
+.chapterTags {
+  justify-content: center;
+}
+
+.blockquote {
+  padding-left: 32px;
+  border-left: 8px solid #60c6ba;
+  color: #666666;
+  margin: 70px 0;
+
+  @include responsive(xl, margin, 60px 0);
+  @include responsive(lg, margin, 34px 0);
+  @include responsive(md, margin, 28px 0);
+  @include responsive(sm, margin, 38px 0);
+
+  p {
+    color: inherit !important;
+    white-space: pre-line;
+  }
+
+  b {
+    color: #4c4c4c;
+  }
+
+  @include darkMode {
+    color: #808080;
+    border-left-color: #009280;
+
+    b {
+      color: #b4b4b4;
+    }
+  }
+}
+
+.chapterFooterNav {
+  grid-column: content;
+
+  --accentColour: #60c6ba;
+
+  @include darkMode {
+    --accentColour: #009280;
+  }
+}
+
+@include breakpoint(xxl) {
+}
+
+@include breakpoint(xl) {
+  .page {
+    --contentWidth: 750px;
+  }
+
+  .raisedCodeBlock {
+    --overhang: 30px;
+  }
+}
+
+@include breakpoint(lg) {
+  .page {
+    --contentWidth: 640px;
+
+    line-height: 32px;
+  }
+
+  .sectionNav {
+    display: none;
+  }
+}
+
+@include breakpoint(md) {
+  .page {
+    --contentWidth: 680px;
+    overflow-x: hidden;
+  }
+
+  .leadImage {
+    width: 100vw;
+    margin-left: calc((100vw - var(--contentWidth)) / -2);
+    border-radius: 0;
+  }
+
+  .raisedCodeBlock {
+    --overhang: 0px;
+    --codeBlockHorizontalPadding: unset;
+    --codeBlockVerticalPadding: unset;
+  }
+
+  div.themeSwitcher {
+    display: none;
+  }
+}
+
+@include breakpoint(sm) {
+  .page {
+    --contentWidth: 100%;
+    --overhang: var(--pageMargin);
+  }
+
+  .leadImage {
+    width: calc((100% + var(--pageMargin) * 2) * 1.54);
+    margin-left: calc((-1.54 * var(--pageMargin)) - 27%);
+  }
+
+  .blockquote {
+    margin-left: calc(-1 * var(--pageMargin));
+  }
+}

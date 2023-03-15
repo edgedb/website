@@ -1,0 +1,97 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.versionSwitcherWrapper {
+  position: relative;
+  color: #4f5362;
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 208px;
+
+  @include darkMode {
+    color: #9c9c9c;
+  }
+}
+
+.versionSwitcher {
+  height: 40px;
+  background: #ededed;
+  border-radius: $radius_sm;
+  padding: 10px;
+  padding-left: 14px;
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  @include darkMode {
+    background: #212121;
+  }
+
+  .dropdownArrow {
+    transform: rotate(-90deg);
+    margin-left: auto;
+    width: 7px;
+    opacity: 0.8;
+    margin-right: 5px;
+  }
+}
+
+.tag {
+  display: inline-block;
+  color: $edb_green;
+  font-size: 10px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  line-height: 20px;
+  padding: 0 5px;
+  margin-left: 8px;
+
+  @include darkMode {
+    color: #159f6f;
+  }
+
+  &.dev {
+    color: #d48d0b;
+
+    @include darkMode {
+      color: #bf800d;
+    }
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: $radius_sm;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition: transform 0.15s, opacity 0.15s;
+
+  &.open {
+    opacity: 1;
+    transform: none;
+    pointer-events: all;
+  }
+
+  @include darkMode {
+    background: #212121;
+  }
+
+  .item {
+    padding: 10px 14px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+}

@@ -1,0 +1,89 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.decoratedSection {
+  position: relative;
+  color: var(--fontColor, #cccccc);
+
+  margin: 17px 0 64px 32px;
+  @include responsive(sm, margin-left, 20px);
+
+  @include responsiveAllXXL(
+    width,
+    calc(50% - 102px),
+    calc(50% - 67px),
+    calc(50% - 67px),
+    calc(50% - 40px),
+    100%,
+    100%
+  );
+
+  .header {
+    display: flex;
+    @include responsive(sm, margin-bottom, 24px);
+
+    .decoration {
+      @include edgedbfont;
+      font-size: 164px;
+      font-weight: 700;
+      position: absolute;
+      margin: 0;
+      top: -8px;
+      left: -44px;
+      color: var(--decorationColor, #482e44);
+      @include responsive(md, font-size, 112px);
+      @include responsive(sm, font-size, 88px);
+      @include responsive(md, left, -28px);
+      @include responsive(md, top, 8px);
+      @include responsive(sm, left, -12px);
+      @include responsive(sm, top, 0);
+      z-index: -1;
+    }
+
+    .title {
+      color: var(--titleColor, #e5e5e5);
+      @include responsive(md, padding-top, 0);
+    }
+  }
+
+  .children {
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.decorationBefore {
+  width: 100%;
+  margin: auto;
+  margin-top: 60px;
+
+  .header {
+    .decoration {
+      font-size: 80px;
+      position: static;
+      @include responsive(md, left, -12px);
+      @include responsive(md, top, 0);
+      margin-right: 8px;
+    }
+  }
+
+  .children {
+    p {
+      margin: 16px 0;
+    }
+  }
+
+  @include breakpoint(md) {
+    .header {
+      .decoration {
+        position: absolute;
+      }
+    }
+  }
+}

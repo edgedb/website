@@ -1,0 +1,264 @@
+title: "Basic Queries"
+slug: "basic-queries"
+categories:
+  - category: "Objects"
+    slug: "objects"
+    pages:
+      - title: Properties
+        slug: "properties"
+        cells:
+          - kind: text
+            text: |
+              We've pre-populated a tutorial database modeling a movie
+              app with data for this part of the tutorial. Let's explore
+              it by using some basic queries.
+
+              Objects in EdgeDB can have properties, which are just the
+              values associated with the objects. For example, to query
+              all the account names try:
+
+          - kind: edgeql
+            text: |
+              select Account.username;
+
+          - kind: text
+            text: |
+              It's also possible to get the object properties in a
+              JSON-like structure by using shapes. For example, to query
+              all the account names try:
+
+          - kind: edgeql
+            text: |
+              select Account { username };
+
+      - title: Links
+        slug: "links"
+        cells:
+          - kind: text
+            text: |
+              There can also be various relationships between objects
+              in EdgeDB. They are called links and accessing them is
+              very similar to accessing properties. However, an
+              important thing to remember is that following links
+              always results in a set of objects (without duplicates),
+              unlike properties. For example, to query all the stuff
+              on the watchlists of all the users try:
+
+          - kind: edgeql
+            text: |
+              select Account.watchlist { title };
+
+          - kind: text
+            text: |
+              Links in EdgeDB are directional, but they can be
+              traversed in reverse direction and refer to the object
+              at the start of a link by using the `.<` instead of `.`.
+              We call this a *backlink*. When following a backlink it's also
+              necessary to specify the type of the object at the source
+              using `[is SomeType]`. For example, to get all those
+              users who have some `Content` on their watchlists try:
+
+          - kind: edgeql
+            text: |
+              select Content.<watchlist[is Account] { username };
+
+      - title: Paths
+        slug: "paths"
+        cells:
+          - kind: text
+            text: |
+              Together the sequence of links and property navigation
+              creates a path expression. Each path expression denotes
+              a set of objects (if it terminates with a link) or
+              scalars (if it terminates with a property):
+
+          - kind: edgeql
+            text: |
+              select Account.watchlist { title };
+
+          - kind: edgeql
+            text: |
+              select Account.username;
+
+  - category: "Filters"
+    slug: "config"
+    pages:
+      - title: By Property
+        slug: by-property
+        cells:
+          - kind: text
+            text: |
+              Object properties can be used to filter the results. For
+              example, to query only the `Account` matching a specific username
+              try:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: { title }
+              } filter Account.username = 'Alice';
+
+          - kind: text
+            text: |
+              When specifying properties in `filter` clause a shorthand can
+              be used. Instead of giving the full path to the property,
+              you can just start with a `.` and enter the property name
+              directly:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: { title }
+              } filter .username = 'Alice';
+
+          - kind: text
+            text: |
+              It's possible to refer to a link in a `filter` in the same way
+              that properties are referred to. For example, to get all the
+              accounts that have a specific movie on the `watchlist` try:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username
+              } filter .watchlist.title = 'Dune'
+              order by .username;
+
+      - title: By Expression
+        slug: by-expression
+        cells:
+          - kind: text
+            text: |
+              As was mentioned earlier, it's possible to follow a
+              backlink by using the `.<` instead of `.`. When doing
+              that it's also necessary to specify the type of the
+              object at the start using `[is SomeType]` if you want to
+              access any of the links or properties. This can be used
+              in a filter as well. For example, to get all movies from
+              Alice's `watchlist`, try:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                title
+              } filter .<watchlist[is Account].username = 'Alice';
+
+          - kind: text
+            text: |
+              The filter expression must evaluate to some boolean
+              value or a set of boolean values for each element of the
+              filtered set. If it evaluates to a set of booleans all
+              objects that have at least one `true` value in their
+              filter expression set will be included. This is why
+              filtering movies by matching the `name` of one of the
+              `actors` can be done like this:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                title,
+                release_year
+              } filter .actors.name = 'Josh Brolin';
+
+          - kind: text
+            text: |
+              ...or like this:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                title,
+                release_year
+              } filter 'Josh Brolin' in .actors.name;
+
+          - kind: text
+            text: |
+              You can use more complex expressions to filter the
+              results. The only condition is that it should be
+              possible to evaluate these expressions for each element
+              (typically an object) of the filtered set. Try the
+              following query for selecting movies that have titles
+              starting with "The" or star Scarlett Johansson:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                title
+              } filter
+                .title like 'The %'
+                or
+                .actors.name = 'Scarlett Johansson';
+
+  - category: "Aggregates"
+    slug: "aggregate-functions"
+    pages:
+      - title: Generic
+        slug: "generic"
+        cells:
+          - kind: text
+            text: |
+              One of the simple, but powerful built-in functions is
+              `count`. It's a function that takes a set of anything as its
+              input and returns the number of elements in that set. Try
+              counting all `Content` objects:
+
+          - kind: edgeql
+            text: |
+              select count(Content);
+
+          - kind: text
+            text: |
+              Since all values in EdgeDB can be compared to other
+              values of the same type you can find a "minimum" and a
+              "maximum" value by using `min` and `max`, respectively:
+
+          - kind: edgeql
+            text: |
+              select min({-3, 2, 1, -3});
+
+          - kind: edgeql
+            text: |
+              # the strings are compared lexicographically
+              select max(Person.name);
+
+          - kind: text
+            text: |
+              Another pair of useful functions is `array_agg` and
+              `array_unpack` which convert a set to an array and
+              vice versa, respectively. Try them out:
+
+          - kind: edgeql
+            text: |
+              select array_agg({-3, 2, 1, -3});
+
+      - title: Math
+        slug: "math"
+        cells:
+          - kind: text
+            text: |
+              In the `math` built-in module there are a few aggregate
+              functions useful for calculating statistics. There is
+              `mean` for calculating the arithmetic mean of a set.
+              Since this function belongs to the `math` module, the
+              module name needs to be specified when calling it:
+
+          - kind: edgeql
+            text: |
+              select math::mean({1, 3, 5});
+
+          - kind: text
+            text: |
+              There are `stddev` and `stddev_pop` for calculating the
+              sample and population standard deviation, respectively.
+              Similarly, there are `var` and `var_pop` for calculating
+              sample and population variance. Try them out:
+
+          - kind: edgeql
+            text: |
+              select math::stddev({1, 3, 5});
+
+          - kind: edgeql
+            text: |
+              select math::var({1, 3, 5});

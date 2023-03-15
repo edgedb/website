@@ -1,0 +1,207 @@
+@import "./fonts.scss";
+
+@import "./mixins.scss";
+@import "./settings.vars.scss";
+
+:root {
+  --leftSidebarWidth: 1fr;
+  --contentWidth: 1040px;
+  --rightSidebarWidth: 1fr;
+  --pageMargin: 64px;
+
+  --codeBgColour: #{$edb_code_bg};
+  --codeBgColourTransparent: #{transparentize($edb_code_bg, 1)};
+
+  --pageLinkColour: #{$edb_mid_blue};
+  --pageLinkHoverColour: #{$edb_blue};
+
+  --syntaxGreen: #1a8f66;
+  --syntaxPurple: #be65cd;
+  --syntaxBlue: #0075d2;
+  --syntaxOrange: #d78100;
+  --syntaxRed: #e72525;
+  --syntaxText: #333333;
+  --syntaxComment: #7f7f7f;
+  --syntaxSynopsis: #7f7f7f;
+  --syntaxOptional: #999;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--lightBg, #fff);
+}
+
+html {
+  @include mainfont;
+  background-color: #fff;
+
+  font-weight: $weight_regular;
+  font-size: 20px;
+  line-height: 40px;
+  color: $edb_dark_grey;
+  -webkit-text-size-adjust: 100%;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scroll-padding-top: var(--headerAnchorOffset, 32px);
+}
+
+input,
+button {
+  @include mainfont;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  margin-top: 2em;
+}
+
+h1 {
+  font-weight: $weight_bold;
+  font-size: 54px;
+  line-height: 66px;
+  margin: 28px 0;
+}
+
+.subheading {
+  font-size: 26px;
+  line-height: 40px;
+}
+
+a {
+  color: var(--pageLinkColour);
+  text-decoration: none;
+
+  .no-touch &:hover {
+    & > code {
+      background: var(--pageLinkColour);
+      color: #fff;
+    }
+  }
+
+  .no-touch a:hover {
+    color: var(--pageLinkHoverColour);
+  }
+}
+
+code {
+  @include monospace;
+  background-color: var(--codeBgColour);
+  border-radius: $radius_sm;
+  padding: 1px 0.3em 2px 0.3em;
+  font-size: 95%;
+  overflow-wrap: break-word;
+}
+
+.globalPageWrapper {
+  --pageMaxWidth: 2060px;
+
+  display: grid;
+  grid-template-columns:
+    [left-sidebar] minmax(0, var(--leftSidebarWidth))
+    [content] minmax(auto, var(--contentWidth))
+    [right-sidebar] minmax(0, var(--rightSidebarWidth));
+  width: 100%;
+  max-width: var(--pageMaxWidth);
+  padding: 0 var(--pageMargin);
+  margin: 0 auto;
+}
+
+a,
+button {
+  outline: 0;
+}
+
+@include breakpoint(xxl) {
+  .globalPageWrapper {
+    --pageMaxWidth: 1950px;
+  }
+}
+
+@include breakpoint(xl) {
+  :root {
+    --contentWidth: 860px;
+  }
+
+  .globalPageWrapper {
+    --pageMaxWidth: 1470px;
+  }
+
+  html {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 54px;
+    margin: 24px 0;
+  }
+}
+
+@include breakpoint(lg) {
+  :root {
+    --pageMargin: 40px;
+  }
+}
+
+@include breakpoint(sm) {
+  :root {
+    --pageMargin: 24px;
+  }
+
+  html {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.75em;
+  }
+
+  dd {
+    margin-left: 1.75em;
+  }
+}
+
+@mixin darkStyles {
+  --codeBgColour: #{$edb_dark_code_bg};
+  --codeBgColourTransparent: #{transparentize($edb_dark_code_bg, 1)};
+
+  --pageLinkColour: #{$edb_dark_link_blue};
+  --pageLinkHoverColour: #{$edb_dark_blue};
+
+  background-color: var(--darkBg, #2c2d2e);
+  color: $edb_light_grey;
+
+  --syntaxGreen: #07a66d;
+  --syntaxPurple: #ac86f6;
+  --syntaxBlue: #369ff2;
+  --syntaxOrange: #f4e470;
+  --syntaxRed: #f13f4a;
+  --syntaxText: #e5e5e5;
+  --syntaxComment: #7f7f7f;
+}
+
+[data-theme="dark"] {
+  @include darkStyles;
+}
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    @include darkStyles;
+  }
+}

@@ -1,0 +1,131 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/settings.vars.scss";
+
+.title {
+  font-family: "Sometype Mono", monospace;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  height: 320px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+
+  & > * {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  svg {
+    width: 112px;
+    height: 112px;
+    fill: #e5e5e5;
+  }
+
+  @include darkMode {
+    svg {
+      fill: #242424;
+    }
+  }
+}
+
+.quiz {
+  padding-left: 0;
+  counter-reset: quiz;
+
+  li {
+    display: block;
+    margin-bottom: 2.5em;
+    counter-increment: quiz;
+  }
+}
+
+.question,
+.answer {
+  display: flex;
+  padding: 24px 32px;
+  font-size: 18px;
+
+  & > div {
+    width: 100%;
+
+    & > * {
+      margin-bottom: 18px;
+    }
+  }
+}
+
+.question {
+  background: #fff;
+  border-radius: 8px;
+  line-height: 32px;
+  font-size: 18px;
+  border-bottom-left-radius: 0;
+
+  --codeBgColour: #ededed;
+
+  & > div > p:first-child {
+    &:before {
+      content: counter(quiz) ". ";
+    }
+  }
+
+  .open & {
+    border-bottom-right-radius: 0;
+  }
+
+  @include darkMode {
+    background: #1f1f1f;
+
+    --codeBgColour: #191919;
+  }
+}
+
+.answer {
+  background: #e4edec;
+  border-bottom-right-radius: 8px;
+  font-size: 18px;
+  line-height: 38px;
+
+  --codeBgColour: #d6dedd;
+
+  @include darkMode {
+    background: #202726;
+
+    --codeBgColour: #1a1f1e;
+  }
+}
+
+.toggleAnswer {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  font-weight: $weight_semibold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+  background: #60c6ba;
+  padding: 8px 12px;
+  border-radius: 0 0 8px 8px;
+  cursor: pointer;
+
+  svg {
+    margin-left: 8px;
+  }
+
+  .open & {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  @include darkMode {
+    background: #009280;
+    color: #1f1f1f;
+  }
+}

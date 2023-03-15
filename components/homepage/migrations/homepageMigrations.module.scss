@@ -1,0 +1,321 @@
+@import "../../../styles/mixins.scss";
+@import "../../code/mixins.scss";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include breakpoint(sm) {
+    width: 100%;
+  }
+}
+
+.container {
+  position: relative;
+  width: 896px;
+  height: 426px;
+  margin-top: 72px;
+
+  @include breakpoint(md) {
+    width: 688px;
+  }
+
+  @include breakpoint(sm) {
+    width: calc(100% + var(--pageMargin) * 2);
+    margin-left: calc(-1 * var(--pageMargin));
+    margin-right: calc(-1 * var(--pageMargin));
+    height: auto;
+  }
+}
+
+.editorPanel {
+  position: absolute;
+  top: 0;
+  width: 552px;
+
+  @include breakpoint(sm) {
+    width: 100%;
+    position: static;
+  }
+}
+
+.editorTabs {
+  display: flex;
+
+  .editorTab {
+    height: 32px;
+    background: var(--editorContentBg, #fff);
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 32px;
+    color: #858585;
+    margin-right: 2px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  @include breakpoint(sm) {
+    padding-left: 12px;
+  }
+}
+
+.schemaTab {
+  transition: background-color 0.2s;
+
+  .showGenMigration & {
+    background: #e8e8e8;
+  }
+}
+
+.migrationTab {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s, transform 0.2s;
+
+  .showGenMigration & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.editorContentContainer {
+  display: grid;
+  position: relative;
+
+  @include raisedShadow(none, 0, false);
+}
+
+.schemaEdit {
+  .schemaNewLineMarker & {
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      top: 12px + (32px * 3);
+      left: 0;
+      width: 100%;
+      height: 32px;
+      background: #ecfbf6;
+    }
+
+    &:after {
+      width: 5px;
+      background: #0ccb93;
+    }
+  }
+}
+
+.editorContent {
+  grid-area: 1 / 1;
+  display: flex;
+  @include monospace;
+  font-size: 16px;
+  line-height: 32px;
+  margin: 0;
+  padding: 12px;
+  padding-left: 24px;
+  background: var(--editorContentBg, #fff);
+  border-radius: 0 8px 8px 8px;
+  min-width: 0;
+  position: relative;
+  overflow-x: auto;
+
+  @include breakpoint(sm) {
+    border-radius: 0;
+  }
+
+  .editorLineNumbers {
+    margin-right: 22px;
+    text-align: right;
+    font-weight: 500;
+    color: #b3b3b3;
+    z-index: 1;
+  }
+
+  .editorCode {
+    :global {
+      @include tokenColours;
+    }
+    z-index: 1;
+  }
+
+  .cursor {
+    width: 2px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-bottom: -6px;
+    animation: blink-animation 1s steps(2, start) infinite;
+    display: none;
+
+    .showEditorCursor & {
+      display: inline-block;
+    }
+  }
+}
+
+.genMigration {
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+
+  .showGenMigration & {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+.terminal {
+  position: absolute;
+  width: 552px;
+  height: 321px;
+  left: 344px;
+  top: 96px;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s, transform 0.2s;
+
+  @include raisedShadow(
+    #3a3a3a,
+    8px,
+    false,
+    40px,
+    8px,
+    32px,
+    rgba(0, 0, 0, 0.5)
+  );
+
+  .showTerminal & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .terminalHeader {
+    height: 32px;
+    background-color: #4d4d4d;
+    border-radius: 8px 8px 0 0;
+    background-image: radial-gradient(
+        circle at 16px 50%,
+        #888,
+        #888 5px,
+        transparent 5.5px
+      ),
+      radial-gradient(circle at 32px 50%, #888, #888 5px, transparent 5.5px),
+      radial-gradient(circle at 48px 50%, #888, #888 5px, transparent 5.5px);
+  }
+
+  .terminalOverflowWrapper {
+    display: flex;
+    align-items: flex-end;
+    overflow-y: hidden;
+    overflow-x: auto;
+    padding: 12px 18px;
+    height: calc(100% - 32px);
+  }
+
+  .terminalInner {
+    min-height: 100%;
+    min-width: 516px;
+    @include monospace;
+    font-size: 16px;
+    line-height: 32px;
+    color: #fff;
+    white-space: pre-wrap;
+    margin: 0;
+  }
+
+  .prompt {
+    color: #a1a1a1;
+  }
+
+  .terminalYellow {
+    color: #ffcf3e;
+    font-weight: bold;
+  }
+
+  .terminalGreen {
+    color: #0ccb93;
+  }
+
+  .terminalBold {
+    font-weight: bold;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 1ch;
+    height: 24px;
+    background: #7e7e7e;
+    margin-bottom: -7px;
+    animation: blink-animation 1s steps(2, start) infinite;
+  }
+
+  @include breakpoint(md) {
+    left: 136px;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+    position: static;
+
+    &:after {
+      border-radius: 0;
+    }
+
+    .terminalHeader {
+      border-radius: 0;
+    }
+  }
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.controlKeypoint {
+  padding: 16px 2px;
+  max-width: 52px;
+  cursor: pointer;
+  flex-grow: 1;
+
+  & > div {
+    height: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #e8e8e8;
+
+    & > div {
+      height: 4px;
+      background: #0ccb93;
+    }
+  }
+}
+
+.controlPlayPause {
+  display: flex;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: #0ccb93;
+  border-radius: 12px;
+  margin-right: 22px;
+  cursor: pointer;
+
+  @include responsive(sm, margin-right, 12px);
+
+  svg {
+    fill: #fff;
+  }
+}

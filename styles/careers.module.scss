@@ -1,0 +1,971 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.page {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.pageFooter {
+  background-color: #fff;
+  --footerSubscribeBgColour: #f7f7f7;
+}
+
+.content {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+
+  h1 {
+    margin: 0;
+    margin-top: 160px;
+    text-align: center;
+  }
+
+  .subheader {
+    @include monoSubheader;
+  }
+}
+
+.balloons {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 50vw;
+  z-index: 0;
+
+  div {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background-size: 100%;
+  }
+
+  div:nth-child(1) {
+    --size: 825px;
+    top: 370px;
+    left: -1325px;
+    @include sizedBgImage("/_images/careers/balloon_left_1" 825);
+  }
+
+  div:nth-child(2) {
+    --size: 527px;
+    top: 184px;
+    left: -973px;
+    @include sizedBgImage("/_images/careers/balloon_left_2" 530, false);
+    filter: blur(4px);
+    z-index: -1;
+  }
+
+  div:nth-child(3) {
+    --size: 209px;
+    top: 56px;
+    left: -510px;
+    @include sizedBgImage("/_images/careers/balloon_left_3" null, false);
+    filter: blur(8px);
+    z-index: -2;
+  }
+
+  div:nth-child(4) {
+    --size: 670px;
+    top: 566px;
+    left: 568px;
+    @include sizedBgImage("/_images/careers/balloon_right_1" 670);
+  }
+
+  div:nth-child(5) {
+    --size: 450px;
+    top: 405px;
+    left: 820px;
+    @include sizedBgImage("/_images/careers/balloon_right_2" 450, false);
+    filter: blur(2px);
+    z-index: -1;
+  }
+
+  div:nth-child(6) {
+    --size: 316px;
+    top: 224px;
+    left: 503px;
+    @include sizedBgImage("/_images/careers/balloon_right_3" 315, false);
+    filter: blur(4px);
+    z-index: -2;
+  }
+
+  div:nth-child(7) {
+    --size: 132px;
+    top: 240px;
+    left: 265px;
+    @include sizedBgImage("/_images/careers/balloon_right_4", false);
+    filter: blur(10px);
+    z-index: -3;
+  }
+}
+
+.intro {
+  font-size: 20px;
+  line-height: 32px;
+  width: 370px;
+  margin-top: 80px;
+  margin-bottom: 96px;
+}
+
+.positions {
+  display: flex;
+  margin: 0 -32px;
+  margin-bottom: 126px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 1440px;
+}
+
+@mixin pinIcon($colour: "1F8AED") {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='18' viewBox='0 0 13 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.64194 17.2102C7.25129 17.7612 6.437 17.7612 6.04635 17.2102C3.12266 13.0859 0.870117 9.04217 0.870117 6C0.870117 2.68629 3.54478 0 6.84414 0C10.1435 0 12.8182 2.68629 12.8182 6C12.8182 9.04217 10.5656 13.0859 7.64194 17.2102ZM6.84413 9.15788C8.58064 9.15788 9.98835 7.74404 9.98835 5.99998C9.98835 4.25593 8.58064 2.84209 6.84413 2.84209C5.10762 2.84209 3.6999 4.25593 3.6999 5.99998C3.6999 7.74404 5.10762 9.15788 6.84413 9.15788Z' fill='%23#{$colour}'/%3E%3C/svg%3E%0A");
+}
+
+.positionCard {
+  display: block;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  min-height: 248px;
+  width: 416px;
+  margin: 0 32px;
+  margin-bottom: 64px;
+
+  @include raisedShadow(#f7f7f7, 6px);
+
+  span {
+    font-weight: $weight_bold;
+    font-size: 23px;
+    line-height: 32px;
+    color: #676767;
+  }
+
+  .location {
+    @include monospace;
+    font-size: 14px;
+    line-height: 24px;
+    color: #9c9c9c;
+    padding-left: 22px;
+    margin-bottom: 32px;
+
+    @include pinIcon;
+  }
+
+  .readmore {
+    font-weight: $weight_bold;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: $edb_mid_blue;
+    padding-top: 20px;
+    margin-top: auto;
+  }
+}
+
+.benefitsBlock {
+  display: flex;
+  justify-content: space-between;
+  width: 1300px;
+  margin-top: 72px;
+  margin-bottom: 132px;
+}
+
+.benefitsCard {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  line-height: 32px;
+
+  h3 {
+    font-size: 20px;
+    line-height: 24px;
+    color: #4e4d57;
+    margin: 28px 0;
+  }
+
+  svg {
+    align-self: center;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.cardSlider {
+  --cardWidth: 875px;
+  --cardHPadding: 135px;
+
+  position: relative;
+  width: calc(var(--cardWidth) + var(--cardHPadding) * 2);
+  margin-bottom: 248px;
+
+  @include raisedShadow(#f7f7f7, 6px, false);
+
+  h2 {
+    margin-top: 123px;
+  }
+
+  .cardsWrapper {
+    width: 100%;
+    overflow: hidden;
+
+    &.disableTransition .cards {
+      transition: none;
+    }
+  }
+
+  .cards {
+    display: flex;
+    transform: var(--cardsOffset);
+    transition: transform 0.5s 0.12s ease-in-out;
+  }
+
+  .bgNumbers {
+    transition-delay: 0s;
+    height: 0;
+  }
+
+  .headerUnderlines {
+    transition-delay: 0.18s;
+    height: 0;
+
+    .card h3 {
+      visibility: hidden;
+      user-select: none;
+
+      &:after {
+        position: absolute;
+        content: "";
+        visibility: visible;
+        height: 2px;
+        width: 104px;
+        background: #9f9fa5;
+        left: calc(50% - 52px);
+        bottom: -25px;
+      }
+    }
+  }
+
+  .card {
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 500px;
+    padding: 0 var(--cardHPadding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+
+    svg {
+      width: 100%;
+      user-select: none;
+
+      text {
+        font-family: "Sometype Mono";
+        font-weight: 700;
+        font-size: 145px;
+        fill: #fff;
+      }
+    }
+
+    h3 {
+      position: relative;
+      font-weight: $weight_bold;
+      font-size: 23px;
+      line-height: 48px;
+      color: #4e4d57;
+      margin-top: 80px;
+      margin-bottom: 25px;
+    }
+
+    p {
+      width: 440px;
+      font-size: 23px;
+      line-height: 40px;
+      margin-top: 27px;
+    }
+  }
+
+  .leftArrow,
+  .rightArrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    svg {
+      color: $edb_mid_blue;
+    }
+
+    @include hover {
+      svg {
+        color: $edb_blue;
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+
+      svg {
+        color: #cacaca;
+      }
+    }
+  }
+
+  .rightArrow {
+    right: 0;
+
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    padding: 82px 0 58px 0;
+
+    .dot {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+
+      &:before,
+      &:after {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 8px;
+        margin: 8px;
+      }
+
+      &:before {
+        width: 10px;
+        height: 10px;
+        margin: 11px;
+        background: #d9d9d9;
+        transition: transform 0.15s linear;
+        transition-delay: 0.15s;
+      }
+
+      &:after {
+        background: $edb_mid_blue;
+        transform: scale(0);
+        transition: transform 0.15s linear;
+      }
+
+      &.active {
+        &:before {
+          transform: scale(0);
+          transition-delay: 0.3s;
+          transition-duration: 0s;
+        }
+        &:after {
+          transform: scale(1);
+          transition-delay: 0.15s;
+        }
+      }
+    }
+  }
+}
+
+.detailsPage {
+  .backButton {
+    display: flex;
+    font-weight: $weight_bold;
+    font-size: 18px;
+    height: 40px;
+    color: $edb_mid_blue;
+    border: 2px solid currentColor;
+    border-radius: 6px;
+    padding: 0 13px;
+    align-items: center;
+    margin-top: 102px;
+    margin-bottom: 77px;
+
+    svg {
+      fill: currentColor;
+      margin-left: -6px;
+      margin-right: 4px;
+    }
+  }
+
+  .jobTitle {
+    font-weight: $weight_bold;
+    font-size: 26px;
+    line-height: 40px;
+    text-align: center;
+    color: inherit;
+    font-family: inherit;
+    margin-top: 0;
+  }
+
+  .jobLocation {
+    display: flex;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8f8f8f;
+    padding-left: 45px;
+    min-height: 40px;
+    align-items: center;
+    margin-top: 16px;
+
+    background-size: auto 40px;
+    @include pinIcon("e6e6e6");
+  }
+
+  .jobDescription {
+    width: 768px;
+    margin-top: 66px;
+    margin-bottom: 88px;
+    font-size: 23px;
+    line-height: 40px;
+
+    h1 {
+      font-weight: $weight_bold;
+      font-size: inherit;
+      line-height: inherit;
+      text-align: start;
+      margin-top: 64px;
+    }
+  }
+
+  .applyButton {
+    background: $edb_mid_blue;
+    padding: 13px 17px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 24px;
+    color: #ffffff !important;
+    margin-bottom: 200px;
+  }
+}
+
+@include breakpoint(xxl) {
+  .content {
+    h1 {
+      margin-top: 48px;
+    }
+  }
+
+  .intro {
+    margin-top: 58px;
+    margin-bottom: 88px;
+  }
+
+  .positions {
+    margin-bottom: 100px;
+  }
+
+  .detailsPage {
+    .backButton {
+      margin-top: 72px;
+      margin-bottom: 60px;
+    }
+
+    .jobDescription {
+      width: 624px;
+      margin-top: 50px;
+      font-size: 20px;
+      line-height: 32px;
+
+      h1 {
+        margin-top: 56px;
+      }
+    }
+  }
+
+  .balloons {
+    div:nth-child(1) {
+      --size: 679px;
+      top: 337px;
+      left: -1125px;
+      @include sizedBgImage("/_images/careers/balloon_left_1" 680);
+    }
+
+    div:nth-child(2) {
+      --size: 434px;
+      top: 184px;
+      left: -834px;
+      @include sizedBgImage("/_images/careers/balloon_left_2" 430, false);
+    }
+
+    div:nth-child(3) {
+      --size: 155px;
+      top: 85px;
+      left: -402px;
+    }
+
+    div:nth-child(4) {
+      --size: 568px;
+      top: 505px;
+      left: 467px;
+    }
+
+    div:nth-child(5) {
+      --size: 382px;
+      top: 369px;
+      left: 679px;
+      @include sizedBgImage("/_images/careers/balloon_right_2" 380, false);
+    }
+
+    div:nth-child(6) {
+      --size: 268px;
+      top: 216px;
+      left: 411px;
+    }
+
+    div:nth-child(7) {
+      --size: 86px;
+      top: 162px;
+      left: 192px;
+    }
+  }
+}
+
+@include breakpoint(xl) {
+  .intro {
+    margin-top: 26px;
+    margin-bottom: 64px;
+  }
+
+  .positions {
+    margin: 0 -24px;
+    margin-bottom: 82px;
+    width: 1200px;
+  }
+
+  .positionCard {
+    width: 352px;
+    margin: 0 24px;
+    margin-bottom: 48px;
+
+    span {
+      font-size: 20px;
+    }
+  }
+
+  .benefitsBlock {
+    width: 1200px;
+  }
+
+  .cardSlider {
+    --cardHPadding: 102px;
+    margin-bottom: 216px;
+
+    .leftArrow,
+    .rightArrow {
+      width: 136px;
+    }
+  }
+
+  .detailsPage {
+    .backButton {
+      margin-top: 24px;
+    }
+
+    .jobDescription {
+      width: 576px;
+    }
+  }
+
+  .balloons {
+    div:nth-child(1) {
+      --size: 532px;
+      top: 304px;
+      left: -885px;
+    }
+
+    div:nth-child(2) {
+      --size: 340px;
+      top: 184px;
+      left: -657px;
+      @include sizedBgImage("/_images/careers/balloon_left_2" 340, false);
+    }
+
+    div:nth-child(3) {
+      --size: 145px;
+      top: 53px;
+      left: -358px;
+    }
+
+    div:nth-child(4) {
+      --size: 479px;
+      top: 411px;
+      left: 354px;
+    }
+
+    div:nth-child(5) {
+      --size: 322px;
+      top: 296px;
+      left: 533px;
+      @include sizedBgImage("/_images/careers/balloon_right_2" 320, false);
+    }
+
+    div:nth-child(6) {
+      --size: 226px;
+      top: 167px;
+      left: 307px;
+    }
+
+    div:nth-child(7) {
+      --size: 86px;
+      top: 141px;
+      left: 50px;
+    }
+  }
+}
+
+@include breakpoint(lg) {
+  .positions {
+    width: 800px;
+  }
+
+  .benefitsBlock {
+    width: 635px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .benefitsCard {
+    margin-bottom: 70px;
+  }
+
+  .cardSlider {
+    --cardHPadding: 0px;
+
+    h2 {
+      margin-top: 67px;
+    }
+
+    .leftArrow,
+    .rightArrow {
+      width: 104px;
+    }
+
+    .dots {
+      padding: 10px 0 58px 0;
+    }
+  }
+
+  .detailsPage {
+    .backButton {
+      margin-bottom: 36px;
+    }
+
+    .jobDescription {
+      width: 528px;
+    }
+
+    .applyButton {
+      margin-bottom: 144px;
+    }
+  }
+
+  .balloons {
+    div:nth-child(1) {
+      --size: 417px;
+      top: 270px;
+      left: -622px;
+      @include sizedBgImage("/_images/careers/balloon_left_1" 420);
+    }
+
+    div:nth-child(2) {
+      --size: 267px;
+      top: 176px;
+      left: -444px;
+    }
+
+    div:nth-child(3) {
+      --size: 107px;
+      top: 128px;
+      left: -176px;
+    }
+
+    div:nth-child(4) {
+      --size: 350px;
+      top: 379px;
+      left: 270px;
+      @include sizedBgImage("/_images/careers/balloon_right_1" 350);
+    }
+
+    div:nth-child(5) {
+      --size: 235px;
+      top: 295px;
+      left: 401px;
+    }
+
+    div:nth-child(6) {
+      --size: 165px;
+      top: 201px;
+      left: 236px;
+    }
+
+    div:nth-child(7) {
+      --size: 72px;
+      top: 163px;
+      left: 70px;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .page {
+    --contentWidth: 100%;
+  }
+
+  .positions {
+    width: 710px;
+  }
+
+  .positionCard {
+    width: 304px;
+  }
+
+  .benefitsBlock {
+    width: 580px;
+  }
+
+  .cardSlider {
+    --cardWidth: 665px;
+    margin-bottom: 144px;
+
+    .card {
+      min-height: 380px;
+
+      h3 {
+        margin-top: 44px;
+      }
+
+      p {
+        font-size: 20px;
+        width: 450px;
+      }
+    }
+
+    .leftArrow,
+    .rightArrow {
+      width: 56px;
+    }
+  }
+
+  .detailsPage {
+    .jobDescription {
+      width: 432px;
+      font-size: 18px;
+    }
+  }
+
+  .balloons {
+    div:nth-child(1) {
+      --size: 307px;
+      top: 152px;
+      left: -464px;
+      @include sizedBgImage("/_images/careers/balloon_left_1" 310);
+    }
+
+    div:nth-child(2) {
+      --size: 197px;
+      top: 83px;
+      left: -334px;
+    }
+
+    div:nth-child(3) {
+      --size: 107px;
+      top: 144px;
+      left: -98px;
+    }
+
+    div:nth-child(4) {
+      --size: 295px;
+      top: 337px;
+      left: 177px;
+      @include sizedBgImage("/_images/careers/balloon_right_1" 300);
+    }
+
+    div:nth-child(5) {
+      --size: 198px;
+      top: 266px;
+      left: 287px;
+    }
+
+    div:nth-child(6) {
+      --size: 139px;
+      top: 187px;
+      left: 148px;
+    }
+
+    div:nth-child(7) {
+      --size: 76px;
+      top: 88px;
+      left: 72px;
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .intro {
+    width: 280px;
+  }
+
+  .positions {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .positionCard {
+    width: 270px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .benefitsBlock {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .benefitsCard {
+    h3 {
+      text-align: center;
+    }
+  }
+
+  .cardSlider {
+    width: calc(100% + 2 * var(--pageMargin));
+    margin-left: calc(-1 * var(--pageMargin));
+    margin-right: calc(-1 * var(--pageMargin));
+    margin-bottom: 0;
+
+    &:before {
+      display: none;
+    }
+    &:after {
+      border-radius: 0;
+    }
+
+    .bgNumbers {
+      margin-top: 55px;
+    }
+
+    .card {
+      svg {
+        width: 210px;
+      }
+
+      h3 {
+        margin: 0;
+        width: 210px;
+        height: 120px;
+        font-size: 20px;
+        line-height: 32px;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        &:after {
+          display: none;
+        }
+      }
+
+      p {
+        width: 270px;
+        font-size: 18px;
+      }
+    }
+
+    .leftArrow,
+    .rightArrow {
+      width: 56px;
+      top: 83px;
+      bottom: auto;
+      height: 230px;
+    }
+  }
+
+  .detailsPage {
+    .jobTitle {
+      font-size: 23px;
+      line-height: 32px;
+    }
+
+    .jobDescription {
+      width: 272px;
+      margin-bottom: 40px;
+    }
+
+    .applyButton {
+      margin-bottom: 136px;
+    }
+  }
+
+  .balloons {
+    width: 100%;
+    left: 0;
+
+    div:nth-child(1) {
+      --size: 146px;
+      top: 110px;
+      left: -66px;
+    }
+
+    div:nth-child(2) {
+      --size: 93px;
+      top: 77px;
+      left: -3px;
+    }
+
+    div:nth-child(3) {
+      --size: 47px;
+      top: 87px;
+      left: 119px;
+    }
+
+    div:nth-child(4) {
+      --size: 115px;
+      top: 157px;
+      left: auto;
+      right: -36px;
+    }
+
+    div:nth-child(5) {
+      --size: 77px;
+      top: 130px;
+      left: auto;
+      right: -41px;
+    }
+
+    div:nth-child(6) {
+      --size: 54px;
+      top: 99px;
+      left: auto;
+      right: 36px;
+    }
+
+    div:nth-child(7) {
+      --size: 26px;
+      top: 68px;
+      left: auto;
+      right: 104px;
+    }
+  }
+}
