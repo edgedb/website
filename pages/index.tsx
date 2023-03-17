@@ -1185,7 +1185,7 @@ edgedb> select 2 + 2;`}
                         language;
                       </li>
                       <li>
-                        is less capable than the query language is abstracts
+                        is less capable than the query language it abstracts
                         away (usually SQL);
                       </li>
                       <li>
