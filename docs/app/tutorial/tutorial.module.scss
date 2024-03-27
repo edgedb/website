@@ -1,0 +1,14 @@
+@import "@/mixins.scss";
+
+.mobileControls {
+  @include breakpoint(md) {
+    --overlayControlsBottomMargin: 48px;
+  }
+}
+
+.overlayContent {
+  padding-left: 20px;
+  @include responsive(padding-top, 24px, $md: 24px);
+  @include responsive(padding-bottom, 48px, $md: 48px);
+  @include responsive(padding-right, 24px, $md: 24px);
+}

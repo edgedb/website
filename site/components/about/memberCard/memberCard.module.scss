@@ -1,0 +1,113 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  @include responsive(md, flex-direction, column);
+  @include responsive(md, align-items, flex-start);
+  @include responsive(sm, align-items, center);
+  max-width: 492px;
+  padding: 12px 12px 12px 24px;
+  @include responsive(lg, padding, 0);
+
+  &:hover {
+    cursor: pointer;
+
+    .group1 {
+      transform: scale(1.045) rotate(45deg);
+    }
+    .group2 {
+      transform: scale(1.118) rotate(60deg);
+    }
+    .group3 {
+      transform: scale(1.089) rotate(120deg);
+    }
+    .group4 {
+      transform: scale(1.059) rotate(60deg);
+    }
+    .group5 {
+      transform: rotate(80deg);
+    }
+    .group6 {
+      transform: scale(1.067) rotate(-80deg);
+    }
+  }
+
+  .avatar {
+    border-radius: 50%;
+    width: 144px;
+    height: 144px;
+    position: relative;
+    background-size: contain;
+    border: 5px solid #0ccb93;
+
+    svg {
+      position: absolute;
+      top: -70px;
+      left: -70px;
+      pointer-events: none;
+
+      .group1,
+      .group2,
+      .group3,
+      .group4,
+      .group5,
+      .group6 {
+        transform-origin: 50% 50%;
+        transition: transform 0.5s ease-in-out;
+      }
+    }
+  }
+
+  .info {
+    margin-left: 70px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    @include responsive(lg, margin-left, 64px);
+    @include responsive(md, margin-left, 0);
+    @include responsive(md, margin-top, 40px);
+    @include responsive(sm, margin-top, 30px);
+    @include responsive(sm, align-items, center);
+    width: calc(100% - 214px);
+    @include responsive(md, width, 100%);
+    z-index: 1;
+
+    p {
+      margin: 0;
+      color: #000;
+      line-height: 32px;
+    }
+
+    svg {
+      fill: #4c4c4c;
+      transition: fill 0.1s;
+      width: 32px;
+      height: 32px;
+
+      &:hover {
+        fill: #0ccb93;
+      }
+    }
+
+    .name {
+      font-weight: 700;
+    }
+
+    .role {
+      @include responsive(sm, text-align, center);
+      @include responsive(sm, max-width, 260px);
+      max-width: 298px;
+    }
+
+    .country {
+      font-style: italic;
+    }
+
+    .socials {
+      margin-top: 16px;
+      display: flex;
+      column-gap: 16px;
+      height: 32px;
+    }
+  }
+}

@@ -1,0 +1,494 @@
+@import "../../styles/mixins.scss";
+
+.pageHeader {
+  height: 135px;
+  align-items: center;
+  justify-content: center;
+  z-index: $zindexPageHeader;
+
+  .headerWrapper {
+    @include responsiveAllXXL(
+      --navWidth,
+      2560px,
+      1920px,
+      1440px,
+      1024px,
+      100%,
+      100%
+    );
+
+    @include responsiveAll(
+      padding,
+      0 72px,
+      0 56px,
+      0 40px,
+      0 23px 0 32px,
+      0 15px 0 24px
+    );
+  }
+}
+
+.docsHeader {
+  position: sticky;
+  top: var(--globalBannerHeight, 0px);
+  background: #fff;
+  height: var(--docsHeaderHeight);
+  z-index: $zindexPageHeader;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+
+  @include darkMode {
+    background: #191919;
+  }
+
+  .headerWrapper {
+    --navWidth: 1440px;
+    @include responsive(lg, --navWidth, 1024px);
+
+    @include responsiveAll(
+      padding,
+      0 35px,
+      0 56px,
+      0 48px,
+      0 31px 0 40px,
+      0 15px 0 24px
+    );
+  }
+}
+
+.headerWrapper {
+  --logoWidth: 190px;
+  @include responsive(sm, --logoWidth, 160px);
+
+  --contentWidth: 724px;
+  @include responsive(lg, --contentWidth, 472px);
+  @include responsive(md, --contentWidth, 164px);
+  @include responsive(sm, --contentWidth, 50px);
+
+  height: 100%;
+  max-width: var(--navWidth);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    [left-sidebar] minmax(0, var(--logoWidth))
+    1fr
+    [content] var(--contentWidth);
+}
+
+.pageNav {
+  nav {
+    display: flex;
+    font-weight: $weight_bold;
+    font-size: 16px;
+    line-height: 40px;
+    color: #4d4d4d;
+    flex-shrink: 0;
+  }
+
+  @include darkMode {
+    nav {
+      color: #9c9c9c;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+.textLink {
+  display: block;
+  padding: 0 8px;
+
+  @include responsive(lg, padding, 0 4px);
+
+  & > * {
+    display: inline;
+    padding: 12px;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    > span {
+      display: inline-block;
+      border-bottom: 3px solid transparent;
+      line-height: 1em;
+      transition: border-color 0.2s;
+    }
+
+    > svg {
+      display: none;
+      fill: var(--accentGreen);
+      color: var(--accentGreen);
+      width: 16px;
+      margin-right: 16px;
+    }
+
+    @include hover {
+      color: $edb_link_green;
+
+      span {
+        border-color: currentColor;
+      }
+    }
+  }
+
+  &.activeLink > * span {
+    border-color: currentColor;
+  }
+}
+
+.promoLink {
+  flex-shrink: 0;
+  margin-left: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="100" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1" y="1" width="100%" height="100%" style="height:calc(100% - 2px); width:calc(100% - 2px)" rx="3" ry="3" stroke-width="2" fill="transparent" stroke="url(%23buttonGradient)"/></svg>');
+
+  span {
+    padding: 0 12px;
+    background: var(--startColor);
+    background: var(--gradient);
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @include hover {
+    background: var(--gradient);
+
+    span {
+      background-clip: unset;
+      color: #fff;
+      -webkit-text-fill-color: unset;
+    }
+  }
+
+  @include breakpoint(md) {
+    order: -1;
+
+    .docsHeader & {
+      margin: 0 auto;
+    }
+  }
+
+  @include breakpoint(sm) {
+    .docsHeader & {
+      display: none;
+    }
+  }
+}
+
+.mobileLink {
+  display: none;
+}
+
+.linkGroup {
+  display: none;
+  position: relative;
+  margin: 16px 0;
+  padding-top: 28px;
+  padding-bottom: 16px;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #f6f6f6;
+    left: calc((100vw - 100%) / -2);
+    @include responsive(sm, left, -20vw);
+    width: 100vw;
+    z-index: -1;
+
+    @include darkMode {
+      background: #262626;
+    }
+  }
+
+  .groupName {
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a1a1a1;
+
+    @include darkMode {
+      color: #666;
+    }
+  }
+}
+
+.injectedComponent {
+  display: flex;
+  justify-content: center;
+  min-width: 200px;
+
+  @include responsive(sm, min-width, unset);
+}
+
+.logo {
+  fill: #4d4d4d;
+  align-self: center;
+  margin: -15px 0;
+  --logoHoverScale: 0.74;
+
+  @include darkMode {
+    fill: #9c9c9c;
+  }
+}
+
+.logoDesktop {
+  @extend .logo;
+
+  @include breakpoint(sm) {
+    display: none;
+  }
+}
+
+.logoMobile {
+  @extend .logo;
+  display: none;
+
+  @include breakpoint(sm) {
+    display: block;
+  }
+}
+
+.siteSectionName {
+  fill: #cfcfcf;
+  margin-left: 9px;
+  flex-shrink: 0;
+  margin-top: 1px;
+
+  @include breakpoint(sm) {
+    height: 24px;
+    width: 49px;
+  }
+
+  @include darkMode {
+    fill: #666666;
+  }
+}
+
+.headerLogo {
+  grid-column: left-sidebar;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.content {
+  grid-column: content / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+li.iconLinks {
+  display: flex;
+  padding-right: 0;
+  margin-left: 12px;
+
+  --borderColour: #e6e6e6;
+  --backgroundColour: #efefef;
+  --iconColour: #4c4c4c;
+  --textColour: #4c4c4c;
+
+  a {
+    display: flex;
+    padding: 4px;
+
+    span {
+      display: flex;
+      height: 24px;
+      width: 24px;
+      align-items: center;
+      justify-content: center;
+      background: var(--backgroundColour);
+      border: 1px solid var(--borderColour);
+      box-sizing: border-box;
+      border-radius: 4px;
+      transition: background-color 0.2s, border 0.2s, color 0.2s;
+
+      svg {
+        width: 19px;
+        height: 19px;
+        fill: var(--iconColour);
+        transition: fill 0.2s;
+      }
+    }
+
+    @include hover {
+      --backgroundColour: #{$edb_link_green};
+      --borderColour: #{$edb_link_green};
+      --textColour: #{$edb_link_green};
+      --iconColour: #fff;
+
+      span {
+        border-color: var(--borderColour);
+      }
+
+      @include darkMode {
+        --iconColour: #2c2d2e;
+      }
+    }
+
+    &.splitButton {
+      span:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      span:nth-child(2) {
+        width: auto;
+        padding: 0 4px;
+        font-weight: bold;
+        font-size: 14px;
+        color: var(--textColour);
+        border-radius: 0 4px 4px 0;
+        background: #fff;
+        border-left: 0;
+      }
+    }
+  }
+
+  @include darkMode {
+    --borderColour: #9c9c9c;
+    --backgroundColour: #9c9c9c;
+    --iconColour: #2c2d2e;
+    --textColour: #9c9c9c;
+
+    a.splitButton {
+      span:nth-child(2) {
+        background: transparent;
+      }
+    }
+  }
+
+  @include breakpoint(sm) {
+    display: none;
+  }
+}
+
+.navMenu {
+  display: none;
+  color: var(--grey50);
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 14px;
+
+  @include breakpoint(sm) {
+    margin-left: 4px;
+  }
+}
+
+@include breakpoint(md) {
+  .pageHeader {
+    height: 104px;
+  }
+
+  .navMenu {
+    display: flex;
+    z-index: 1;
+  }
+
+  .pageNav nav {
+    display: none;
+
+    position: fixed;
+    background: #fff;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
+  }
+
+  .links {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: max-content;
+    margin: 0 auto 36px auto;
+    @include responsive(sm, margin-left, 20vw);
+    min-height: calc(100% - 72px);
+  }
+
+  .textLink {
+    display: flex;
+    padding: 0;
+
+    font-size: 14px;
+
+    > * {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      padding: 0;
+      width: 100%;
+
+      > span {
+        line-height: 16px;
+      }
+
+      > svg {
+        display: block;
+      }
+    }
+  }
+
+  li.iconLinks {
+    justify-content: center;
+    margin: 0;
+    margin-top: 32px;
+
+    a {
+      padding: 12px;
+    }
+  }
+
+  .linkGroup {
+    display: block;
+
+    .links {
+      margin: 0;
+      margin-top: 4px;
+    }
+  }
+
+  .menuOpen {
+    nav {
+      display: block;
+    }
+
+    .navMenu {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+    }
+
+    @include darkMode {
+      nav {
+        color: #808080;
+        background-color: #1f1f1f;
+      }
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .pageHeader {
+    height: 88px;
+  }
+}

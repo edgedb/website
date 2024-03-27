@@ -1,0 +1,140 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  user-select: none;
+  @include responsiveAll(
+    margin-bottom,
+    892px,
+    716px,
+    670px,
+    508px,
+    calc(774 / 1440 * 100vw + 100px)
+  );
+
+  .tabs {
+    margin: 40px auto 60px auto;
+    @include responsive(xl, margin, 30px auto 40px auto);
+    justify-content: center;
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+
+    > div {
+      @include breakpoint(sm) {
+        overflow-x: scroll;
+        padding: 0 24px;
+        width: 100vw;
+        @include hideScrollbar;
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 46px;
+          z-index: 1;
+        }
+
+        &::before {
+          left: 0;
+          width: 24px;
+          background: linear-gradient(
+            270deg,
+            rgba(242, 242, 242, 0) 0%,
+            #f2f2f2 100%
+          );
+        }
+
+        &::after {
+          right: 0;
+          width: 24px;
+          background: linear-gradient(
+            270deg,
+            #f2f2f2 0%,
+            rgba(242, 242, 242, 0) 100%
+          );
+        }
+      }
+    }
+
+    .tab {
+      display: inline-block;
+      padding: 5px 12px 7px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 2px solid var(--grey85);
+      color: var(--baseTextLightTheme);
+      font-family: Open Sans;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      position: relative;
+
+      &:not(:first-child) {
+        margin-left: 16px;
+      }
+
+      &::after {
+        background: linear-gradient(90deg, #da76a9 0%, #df9c6c 100%);
+        content: "";
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        left: -2px;
+        right: -2px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+        z-index: -1;
+      }
+
+      &:hover {
+        color: var(--white);
+        border-color: transparent;
+
+        &::after {
+          opacity: 1;
+        }
+      }
+
+      &.active {
+        background-color: var(--grey30);
+        color: var(--white);
+        border-color: transparent;
+        background-origin: border-box;
+
+        &:hover {
+          background: var(--grey30);
+        }
+      }
+    }
+  }
+
+  img {
+    @include responsiveAll(
+      width,
+      1280px,
+      1056px,
+      944px,
+      704px,
+      calc(100% - 48px)
+    );
+
+    border-radius: 8px;
+    position: absolute;
+    @include responsiveAll(top, 100px, 80px, 80px, 80px, 80px);
+    @include responsiveAll(left, -292px, -180px, -124px, -4px, 0);
+    @include responsive(sm, margin-left, 24px);
+
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+}

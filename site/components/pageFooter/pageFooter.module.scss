@@ -1,0 +1,47 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.pageFooter {
+  background-color: #ebebeb;
+  padding-top: 140px;
+  padding-bottom: 30px;
+  display: flex;
+
+  &.minimal {
+    background-color: unset;
+  }
+
+  @include darkMode {
+    background-color: #333437;
+
+    &.minimal {
+      background-color: unset;
+    }
+  }
+}
+
+.footerContent {
+  grid-column: content;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-bottom: 70px;
+
+  color: #4d4d4d;
+
+  @include responsive(md, margin-bottom, 30px);
+
+  @include darkMode {
+    color: #9c9c9c;
+  }
+
+  @include breakpoint(md) {
+    flex-direction: column;
+  }
+}
+
+.footerLinks {
+  width: fit-content;
+}

@@ -1,0 +1,884 @@
+@import "./mixins.scss";
+
+.page {
+  background-color: var(--grey95);
+  position: relative;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+
+    h1 {
+      color: var(--grey25);
+      font-family: EdgeDB;
+      text-align: center;
+      @include responsiveAll(font-size, 96px, 72px, 56px, 48px, 32px);
+      @include responsiveAll(line-height, 96px, 72px, 56px, 48px, 32px);
+      @include responsiveAll(
+        letter-spacing,
+        normal,
+        -2.16,
+        -1.68,
+        -1.44,
+        -0.96
+      );
+
+      font-weight: 700;
+      line-height: 96px;
+      margin: 61px 60px 47px 60px;
+      @include responsive(sm, margin, 0 20px 80px 20px);
+    }
+
+    h2 {
+      color: var(--grey25);
+      text-align: center;
+      font-family: EdgeDB;
+      font-weight: 700;
+      @include responsiveAll(font-size, 64px, 56px, 48px, 40px, 28px);
+      @include responsiveAll(line-height, 64px, 56px, 48px, 40px, 28px);
+      @include responsiveAll(letter-spacing, -1.92, -1.68, -1.44, -1.2, -0.84);
+      margin-top: 120px;
+      max-width: 928px;
+      margin: auto;
+    }
+
+    h3 {
+      color: var(--baseTextLightTheme);
+      font-family: Open Sans;
+      @include responsiveAll(font-size, 20px, 16px, 16px, 14px, 14px);
+      @include responsiveAll(line-height, 32px, 24px, 24px, 24px, 24px);
+      font-weight: 700;
+    }
+
+    p {
+      font-family: Open Sans;
+      @include responsiveAll(font-size, 28px, 20px, 20px, 16px, 16px);
+      @include responsiveAll(line-height, 40px, 32px, 32px, 24px, 24px);
+      color: var(--baseTextLightTheme);
+
+      span {
+        font-weight: 700;
+      }
+    }
+
+    .small {
+      @include responsiveAll(font-size, 20px, 16px, 16px, 14px, 14px);
+      @include responsiveAll(line-height, 32px, 24px, 24px, 24px, 24px);
+    }
+
+    .introParagraph {
+      text-align: center;
+      @include responsiveAll(width, 944px, 760px, 740px, 512px, 100%);
+      @include responsive(sm, text-align, start);
+      margin: auto;
+    }
+
+    .introButtons {
+      display: flex;
+      margin: 60px 20px;
+      row-gap: 16px;
+      column-gap: 30px;
+
+      @include responsive(sm, flex-direction, column);
+      @include responsive(sm, margin, 40px 0);
+
+      .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        position: relative;
+
+        padding: 20px 24px;
+        @include responsive(lg, padding, 12px 16px);
+
+        font-family: Open Sans;
+        @include responsiveAll(font-size, 24px, 24px, 18px, 18px, 14px);
+        font-weight: 700;
+        line-height: 32px;
+        color: var(--white);
+
+        cursor: pointer;
+        outline: 0;
+        user-select: none;
+        border: none;
+        border-radius: 12px;
+
+        --gradient: linear-gradient(91deg, #8b6cdf 8.06%, #e176a3 106.93%);
+        --hoverGradient: linear-gradient(90deg, #da76a9 0%, #df9c6c 100%);
+
+        background: var(--gradient);
+
+        svg {
+          margin-right: 16px;
+        }
+
+        &::after {
+          background: var(--hoverGradient);
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 200ms ease-out;
+        }
+
+        &:hover {
+          &::after {
+            opacity: 1;
+          }
+        }
+
+        span,
+        svg {
+          z-index: 1;
+        }
+
+        &.border {
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="70%" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1.5" y="1.5" width="100%" height="100%" style="height:calc(100% - 4px); width:calc(100% - 4px)" rx="11.5" ry="11.5" stroke-width="4" fill="transparent" stroke="url(%23buttonGradient)"/></svg>');
+          @include responsive(
+            sm,
+            background-image,
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="70%" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1.5" y="1.5" width="100%" height="100%" style="height:calc(100% - 3px); width:calc(100% - 3px)" rx="11.5" ry="11.5" stroke-width="3" fill="transparent" stroke="url(%23buttonGradient)"/></svg>')
+          );
+          color: #8b6ce0;
+
+          span {
+            background: var(--gradient);
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+          }
+
+          &::after {
+            background: var(--hoverGradient);
+          }
+
+          &:hover {
+            color: var(--white);
+
+            span {
+              background: none;
+              background-clip: unset;
+              color: #fff;
+              -webkit-text-fill-color: unset;
+            }
+          }
+        }
+      }
+    }
+
+    .uiSection {
+      .introParagraph {
+        margin-top: 50px;
+        @include responsive(sm, margin-top, 40px);
+        margin-bottom: 30px;
+        @include responsive(sm, margin-bottom, 20px);
+        text-align: center;
+        @include responsiveAll(width, 880px, 608px, 608px, 512px, 100%);
+        @include responsive(sm, padding, 0 24px);
+      }
+    }
+
+    .generalFeatures {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      @include responsive(sm, display, block);
+      margin-bottom: 140px;
+      @include responsiveAll(margin-bottom, 140px, 130px, 100px, 100px, 86px);
+    }
+
+    .feature {
+      color: var(--baseTextLightTheme);
+      font-family: Open Sans;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 32px;
+      padding-left: 40px;
+      padding-right: 40px;
+      @include responsive(sm, padding, 0);
+    }
+
+    .resilienceFeatures {
+      display: flex;
+      @include responsiveAll(gap, 188px, 136px, 80px, 40px, 26px);
+      margin-top: 80px;
+      margin-bottom: 152px;
+      @include responsive(lg, margin-bottom, 98px);
+      @include responsive(md, padding, 0 40px);
+      @include responsive(sm, padding, 0);
+      @include responsive(sm, flex-direction, column);
+    }
+
+    .overview {
+      border-radius: 8px;
+      @include responsive(sm, border-radius, 0);
+      background-color: var(--white);
+      box-shadow: 0px 40px 40px -24px rgba(0, 0, 0, 0.12);
+      @include responsive(sm, box-shadow, none);
+      @include responsiveAll(padding, 48px, 32px, 32px, 24px, 24px);
+      height: fit-content;
+      position: sticky;
+      @include responsive(sm, position, static);
+      top: 20px; // give it some top-margin when it's scrolling in fixed
+      flex-shrink: 0;
+      @include responsive(sm, margin, 0 -24px 12px -24px);
+      @include responsiveAll(width, 720px, 552px, 432px, 328px, 100vw);
+
+      p {
+        font-family: Open Sans;
+        color: var(--baseTextLightTheme);
+        margin: 0 0 16px 0;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .resilienceFeature {
+      @extend .feature;
+      position: relative;
+      order: var(--blockOrder);
+      z-index: 0;
+      padding-right: 0;
+
+      &:first-child h3 {
+        margin-top: 0;
+      }
+
+      &:last-child p {
+        margin-bottom: 0;
+      }
+
+      &:before {
+        counter-reset: resilienceFeature var(--blockOrder);
+        content: counter(resilienceFeature, decimal-leading-zero);
+
+        position: absolute;
+        top: -4px;
+        left: 16px;
+        @include responsive(xl, top, -8px);
+        @include responsive(xl, left, 20px);
+        @include responsive(md, left, 22px);
+        z-index: -1;
+
+        @include edgedbfont;
+        font-size: 64px;
+        @include responsive(xl, font-size, 54px);
+        @include responsive(md, font-size, 46px);
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        letter-spacing: -2.4px;
+        color: var(--grey90);
+
+        @include responsive(sm, display, none);
+      }
+    }
+
+    .ctaSection {
+      padding-top: 160px;
+      @include responsive(sm, padding-top, 60px);
+      padding-bottom: 112px;
+      @include responsive(sm, padding-bottom, 0);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        margin-bottom: 50px;
+      }
+
+      .outroParagraph {
+        @include responsiveAll(width, 992px, 768px, 768px, 634px, 100%);
+        text-align: start;
+      }
+
+      button {
+        padding: 24px 35px 24px 36px;
+        @include responsive(lg, padding, 24px 31px 24px 32px);
+        @include responsive(sm, padding, 16px 24px 16px 23px);
+      }
+    }
+  }
+
+  .authSection {
+    h2 {
+      margin-bottom: 56px;
+    }
+
+    .authParagraph {
+      text-align: center;
+      @include responsiveAll(width, 880px, 608px, 608px, 512px, 100%);
+    }
+  }
+
+  .interactiveSection {
+    background-color: var(--grey90);
+
+    padding-top: 56px;
+    @include responsive(lg, padding-top, 48px);
+    @include responsive(sm, padding-top, 0);
+
+    padding-bottom: 96px;
+    @include responsive(lg, padding-bottom, 80px);
+    @include responsive(sm, padding-bottom, 40px);
+
+    @include responsiveAll(margin-top, 70px, 104px, 52px, 46px, 120px);
+
+    .interactiveContent {
+      display: flex;
+      justify-content: space-between;
+      @include responsive(sm, flex-direction, column);
+      width: 100%;
+      max-width: var(--pageMaxWidth);
+      padding-top: 60px;
+      @include responsiveAllXXL(
+        padding-left,
+        230px,
+        270px,
+        190px,
+        140px,
+        44px,
+        24px
+      );
+
+      @include responsiveAllXXL(
+        padding-right,
+        230px,
+        240px,
+        140px,
+        60px,
+        44px,
+        24px
+      );
+      margin: auto;
+    }
+
+    .themeSwitcher {
+      position: static;
+      margin: auto;
+    }
+
+    .colorPickerWrapper {
+      width: 416px;
+      @include responsive(md, width, 328px);
+      @include responsive(sm, width, 100%);
+      @include responsive(sm, margin-top, 20px);
+      margin-top: 32px;
+
+      p {
+        font-size: 20px;
+        line-height: 32px;
+
+        @include breakpoint(md) {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    .colorPicker {
+      padding: 24px;
+      border-radius: 8px;
+      background: var(--grey95);
+      box-shadow: 0px 40px 40px -24px rgba(0, 0, 0, 0.12);
+      width: 352px;
+      @include responsive(md, width, 328px);
+      @include responsive(sm, width, min(100%, 288px));
+      margin-bottom: 56px;
+      @include responsive(lg, margin-bottom, 80px);
+      @include responsive(sm, margin, 20px auto 40px auto);
+      margin-top: 48px;
+
+      input[type="file"]::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+
+      .logoWrapper {
+        position: relative;
+        margin-bottom: 22px;
+      }
+
+      .logoInput,
+      .fakeInput {
+        height: 32px;
+        border: none;
+        border-radius: 4px;
+        background-color: var(--white);
+        padding: 4px 8px;
+
+        flex-grow: 1;
+        font-family: Open Sans;
+        font-size: 16px;
+        color: var(--baseTextLightTheme);
+        line-height: 22px;
+        width: 100%;
+        outline: 0;
+      }
+
+      .logoInput {
+        opacity: 0;
+        z-index: 1;
+        position: relative;
+      }
+
+      .fakeInput {
+        position: absolute;
+        top: 30px;
+        z-index: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--grey40);
+      }
+
+      label {
+        color: var(--baseTextLightTheme);
+        font-family: Open Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        display: block;
+      }
+
+      .color {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background-size: cover;
+        background-position: center center;
+        flex-shrink: 0;
+      }
+    }
+
+    .formWrapper {
+      p,
+      button {
+        font-size: 18px;
+        font-family: Roboto Flex;
+        line-height: normal;
+        color: var(--grey30);
+        margin: 0;
+      }
+
+      .logoWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+
+        .logo {
+          width: 32px;
+          height: 32px;
+          background-color: var(--grey20);
+          border-radius: 50%;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+
+        .logoTitle {
+          color: var(--grey20);
+          font-weight: 700;
+        }
+      }
+
+      .form {
+        padding: 24px;
+        color: var(--grey30);
+        font-weight: 400;
+        width: 352px;
+        @include responsive(lg, width, 288px);
+        border-radius: 8px;
+        background-color: var(--white, #fff);
+        box-shadow: 0px 40px 40px -24px rgba(0, 0, 0, 0.12);
+        @include responsive(sm, margin, 0 auto 42px auto);
+
+        .title {
+          margin-bottom: 20px;
+        }
+
+        .separator {
+          border-bottom: 1px solid var(--grey90);
+          position: relative;
+          margin-top: 30px;
+          margin-bottom: 4px;
+
+          span {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0 14px;
+            background-color: var(--white);
+            position: absolute;
+            top: -11px;
+            left: calc(50% - 22px);
+          }
+        }
+
+        .signWithApp {
+          display: flex;
+          gap: 10px;
+          padding: 8px;
+          border-radius: 8px;
+          border: 2px solid var(--grey90);
+          margin-bottom: 16px;
+          font-family: Roboto Flex;
+          color: #495057;
+
+          svg {
+            fill: #24292f;
+          }
+        }
+
+        .inputWrapper {
+          display: flex;
+          flex-direction: column;
+
+          p {
+            font-size: 16px;
+            margin-top: 18px;
+            margin-bottom: 5px;
+          }
+
+          input {
+            height: 40px;
+            border-radius: 6px;
+            border: 2px solid var(--grey95);
+            background-color: var(--grey95);
+          }
+        }
+
+        button {
+          display: flex;
+          border: none;
+          padding: 12.5px 12px 11.5px 129px;
+          @include responsive(lg, padding-left, 97px);
+          justify-content: flex-end;
+          align-items: flex-start;
+          gap: 92px;
+          @include responsive(lg, gap, 60px);
+          align-self: stretch;
+          margin-top: 32px;
+          border-radius: 6px;
+          color: var(--white, #fff);
+          font-weight: 700;
+        }
+
+        .signUpText {
+          font-size: 16px;
+          margin-top: 18px;
+
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .themeSwitcherBig {
+      display: flex;
+      gap: 16px;
+      margin: auto;
+      width: fit-content;
+      cursor: pointer;
+
+      button {
+        display: flex;
+        width: 128px;
+        padding: 11px 14px 13px 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        border: 2px solid var(--grey80);
+        background-color: transparent;
+        color: var(--grey30);
+        font-family: Open Sans;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        cursor: pointer;
+
+        &.active {
+          background: var(--grey30);
+          border-color: var(--grey30);
+          color: var(--grey95);
+        }
+      }
+    }
+
+    &.darkMode {
+      background-color: var(--grey14);
+
+      p {
+        color: var(--baseTextDarkTheme);
+      }
+
+      .themeSwitcherBig {
+        button {
+          border-color: var(--grey30);
+          color: var(--grey80);
+
+          &.active {
+            background-color: var(--grey80);
+            border-color: var(--grey80);
+            color: var(--grey14);
+          }
+        }
+      }
+
+      .colorPicker {
+        background-color: var(--grey25);
+
+        label {
+          color: var(--baseTextDarkTheme);
+        }
+
+        .logoInput,
+        .fakeInput {
+          background-color: var(--grey14);
+          color: var(--baseTextDarkTheme);
+
+          &.placeholder {
+            color: var(--grey50);
+          }
+        }
+      }
+
+      .formWrapper {
+        .logoWrapper {
+          .logo {
+            background-color: var(--grey90);
+          }
+
+          .logoTitle {
+            color: var(--grey90);
+          }
+        }
+
+        .form {
+          background-color: var(--grey20);
+
+          p {
+            color: var(--grey90);
+          }
+
+          .separator {
+            border-color: var(--grey40);
+
+            span {
+              color: var(--grey80);
+              background-color: var(--grey20);
+            }
+          }
+
+          .signWithApp {
+            color: var(--grey90);
+            border-color: var(--grey40);
+
+            svg {
+              fill: #e6e6e6;
+            }
+          }
+
+          .inputWrapper {
+            input {
+              border-color: var(--grey25);
+              background-color: var(--grey25);
+            }
+          }
+
+          button {
+            color: var(--grey20);
+          }
+        }
+      }
+    }
+  }
+}
+
+.pageFooter {
+  background-color: var(--grey95);
+}
+
+.imageTabs {
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.06));
+}
+
+.blink {
+  animation: blink-animation 4s steps(20, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 1200px;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+
+  div {
+    position: absolute;
+    width: var(--size);
+    height: calc(var(--size) * 1080 / 1920);
+    left: calc(50% + var(--left));
+    background-size: 100%;
+    --parallax: 0.025;
+
+    transform: translate(
+      calc(var(--mouseRelPosX) * -1 * var(--parallax)),
+      calc(var(--mouseRelPosY) * -1 * var(--parallax))
+    );
+  }
+
+  div:nth-child(1) {
+    --size: 1200px;
+    --parallax: 0.03;
+    top: 176px;
+    --left: -1280px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_01" 600, true);
+  }
+
+  div:nth-child(2) {
+    --size: 380px;
+    --parallax: 0.01;
+    top: 120px;
+    --left: 173px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_02", false);
+    z-index: -1;
+  }
+
+  div:nth-child(3) {
+    display: none;
+    --size: 540px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_03", false);
+    z-index: -2;
+  }
+
+  div:nth-child(4) {
+    --size: 1200px;
+    --parallax: 0.03;
+    top: 308px;
+    --left: 448px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_04", false);
+  }
+
+  @include breakpoint(xxl) {
+    div:nth-child(1) {
+      top: -38px;
+      --left: -1444px;
+    }
+    div:nth-child(2) {
+      top: 120px;
+      --left: 196px;
+    }
+    div:nth-child(3) {
+      display: block;
+      top: 458px;
+      --left: -584px;
+    }
+    div:nth-child(4) {
+      --size: 980px;
+      top: 400px;
+      --left: 320px;
+    }
+  }
+
+  @include breakpoint(xl) {
+    div:nth-child(1) {
+      --size: 720px;
+      top: 1px;
+      --left: -982px;
+    }
+    div:nth-child(2) {
+      --size: 300px;
+      top: 128px;
+      --left: 162px;
+    }
+    div:nth-child(3) {
+      --size: 480px;
+      top: 349px;
+      --left: -520px;
+    }
+    div:nth-child(4) {
+      --size: 860px;
+      top: 280px;
+      --left: 248px;
+    }
+  }
+
+  @include breakpoint(lg) {
+    div:nth-child(1) {
+      --size: 567px;
+      top: 9px;
+      --left: -744px;
+    }
+    div:nth-child(2) {
+      --size: 220px;
+      top: 114px;
+      --left: 103px;
+    }
+    div:nth-child(3) {
+      --size: 280px;
+      top: 318px;
+      --left: -376px;
+    }
+    div:nth-child(4) {
+      --size: 640px;
+      top: 288px;
+      --left: 213px;
+    }
+  }
+
+  @include breakpoint(md) {
+    div:nth-child(1) {
+      --size: 400px;
+      top: 21px;
+      --left: -532px;
+    }
+    div:nth-child(2) {
+      --size: 180px;
+      top: 40px;
+      --left: -56px;
+    }
+    div:nth-child(3) {
+      --size: 275px;
+      top: 290px;
+      --left: -316px;
+    }
+    div:nth-child(4) {
+      --size: 420px;
+      top: 116px;
+      --left: 142px;
+    }
+  }
+
+  @include breakpoint(sm) {
+    div:nth-child(1),
+    div:nth-child(2),
+    div:nth-child(3) {
+      display: none;
+    }
+
+    div:nth-child(4) {
+      --size: 284px;
+      top: 64px;
+      --left: -142px;
+    }
+  }
+}

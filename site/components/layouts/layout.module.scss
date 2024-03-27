@@ -1,0 +1,20 @@
+@import "../../styles/mixins.scss";
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  --pageBackgroundColour: var(--pageLightBg);
+
+  background-color: var(--pageBackgroundColour);
+
+  @include darkMode {
+    --pageBackgroundColour: var(--pageDarkBg);
+  }
+}
+
+.pageChildren {
+  padding-top: 42px;
+  @include responsive(md, padding-top, 26px);
+}

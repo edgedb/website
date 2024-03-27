@@ -1,0 +1,107 @@
+@import "@/mixins.scss";
+@import "@/components/base.scss";
+
+.content {
+  @include baseContentStyles;
+}
+
+.cells {
+  counter-reset: codecell;
+}
+
+.codeCell {
+  counter-increment: codecell;
+
+  padding: 24px 40px;
+}
+
+.subtopicsHeader {
+  font-size: 14px;
+  color: #999999;
+  text-align: start;
+  padding: 0 24px;
+
+  @include darkTheme {
+    color: #808080;
+  }
+}
+
+.pageNav {
+  --textColour: #4c4c4c;
+  --backgroundColour: #e5e5e5;
+  --activeTextColour: #fff;
+  --activeBackgroundColour: #1f8aed;
+  --hoverBackgroundColour: #056bca;
+
+  counter-reset: subtopic;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+  padding: 10px 24px;
+  font-size: 16px;
+  line-height: 32px;
+
+  & > a,
+  & > span {
+    counter-increment: subtopic;
+    margin: 4px;
+    padding: 0 12px;
+    color: var(--textColour);
+    background-color: var(--backgroundColour);
+    border-radius: 4px;
+    text-decoration: none;
+
+    &:before {
+      content: counter(subtopic) ". ";
+    }
+  }
+
+  & > a {
+    @include hover {
+      color: var(--activeTextColour);
+      background-color: var(--hoverBackgroundColour);
+    }
+  }
+
+  .activeNav {
+    color: var(--activeTextColour);
+    background-color: var(--activeBackgroundColour);
+  }
+
+  @include darkTheme {
+    --textColour: #b2b2b2;
+    --backgroundColour: #191919;
+    --activeTextColour: #141414;
+  }
+}
+
+.introIllustration {
+  width: 100%;
+  padding-top: calc(100% / #{(1035 / 496)});
+  @include sizedBgImage(
+    "/_images/tutorial/projector_illustration_light",
+    false
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: -70px;
+  margin-bottom: 40px;
+
+  @include darkTheme {
+    @include sizedBgImage(
+      "/_images/tutorial/projector_illustration_dark",
+      false
+    );
+  }
+
+  @include breakpoint(sm) {
+    @include sizedBgImage("/_images/tutorial/projector_illustration_light" 768);
+
+    @include darkTheme {
+      @include sizedBgImage(
+        "/_images/tutorial/projector_illustration_dark" 768
+      );
+    }
+  }
+}

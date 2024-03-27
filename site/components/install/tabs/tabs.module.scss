@@ -1,0 +1,52 @@
+@import "../../../styles/mixins.scss";
+
+.tabHeaders {
+  display: grid;
+  justify-content: center;
+  grid-auto-flow: column;
+  gap: 6px;
+  margin-bottom: 30px;
+  grid-auto-columns: minmax(200px, max-content);
+}
+
+.tabHeader {
+  position: relative;
+  font-weight: $weight_semibold;
+  font-size: 20px;
+  line-height: 36px;
+  padding: 0 20px;
+  text-align: center;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    content: "";
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: #dbdbdb;
+  }
+
+  &.selected {
+    color: $edb_mid_blue;
+
+    &:after {
+      background: $edb_mid_blue;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .tabHeaders {
+    grid-auto-columns: minmax(min-content, 1fr);
+  }
+}
+
+@include breakpoint(sm) {
+  .tabHeader {
+    font-size: 18px;
+    padding: 0 6px;
+  }
+}
