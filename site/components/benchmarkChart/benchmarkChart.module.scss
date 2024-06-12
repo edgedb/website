@@ -1,0 +1,147 @@
+@import "../../styles/mixins.scss";
+
+.benchmarkChart {
+  border-radius: 16px;
+  background: rgba(15, 15, 15, 0.4);
+  backdrop-filter: blur(18px);
+  padding: 32px 72px 32px 44px;
+  display: flex;
+  flex-direction: column;
+  color: #bababa;
+
+  @include breakpoint(sm) {
+    padding: 32px 16px;
+  }
+}
+
+.groupSelector {
+  align-self: center;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+
+  span {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--grey14, #242424);
+    border: 0;
+    color: inherit;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+}
+
+.chart {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 24px;
+  margin: 21px 0;
+
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+    row-gap: 5px;
+  }
+}
+
+.chartRow {
+  display: contents;
+}
+
+.rowLabel {
+  text-align: right;
+  font-family: "Roboto Mono";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  .highlighted & {
+    color: #3a906c;
+  }
+
+  @include responsive(md, font-size, 16px);
+  @include breakpoint(sm) {
+    font-size: 14px;
+    line-height: 16px;
+    text-align: left;
+    margin-left: 8px;
+    margin-top: 21px;
+  }
+}
+
+.dataLine {
+  align-self: center;
+  mask-position: 1px, 0px;
+  mask-repeat: no-repeat;
+
+  div {
+    background: rgba(255, 255, 255, 0.45);
+    height: 8px;
+    border-radius: 4px;
+    transition: width 0.3s;
+
+    .highlighted & {
+      background: #3a906c;
+    }
+  }
+}
+
+.axis {
+  position: relative;
+  grid-column: 2;
+  height: 40px;
+
+  .tick {
+    position: absolute;
+    width: 0;
+    height: 9px;
+    border: 1px solid var(--grey50, #808080);
+    text-align: right;
+    font-family: "Roboto Mono", monospace;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    span {
+      position: absolute;
+      transform: translate(-50%, 12px);
+    }
+  }
+
+  @include breakpoint(sm) {
+    grid-column: 1;
+    margin-top: 16px;
+
+    .tick {
+      font-size: 12px;
+    }
+
+    .tick:first-child,
+    .tick:last-child,
+    .tick:nth-child(2n + 1) {
+      display: none;
+    }
+  }
+}
+
+.axisLabel {
+  text-align: center;
+  font-family: "Open Sans";
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 24px;
+  opacity: 0.5;
+}

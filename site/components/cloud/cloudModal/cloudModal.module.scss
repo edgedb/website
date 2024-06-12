@@ -1,0 +1,166 @@
+@import "../../../styles/mixins.scss";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparentize(#333, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+.container {
+  position: relative;
+  background-color: var(--grey14);
+  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding-bottom: 48px;
+  @include responsiveAll(width, 840px, 768px, 768px, 704px, 100%);
+  overflow: auto;
+  padding: 52px 72px 48px 112px;
+
+  @include breakpoint(sm) {
+    height: 100%;
+    padding: 36px 24px 24px;
+  }
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    padding: 0 40px;
+    @include responsive(sm, padding, 0);
+
+    .content {
+      flex-grow: 1;
+    }
+
+    h2 {
+      color: var(--baseTextDarkTheme);
+      text-align: center;
+      font-family: EdgeDB;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 56px;
+      letter-spacing: -1.44px;
+      margin: 0 0 28px 0;
+
+      @include breakpoint(sm) {
+        font-size: 28px;
+        line-height: 32px;
+        letter-spacing: -0.84px;
+        margin-bottom: 40px;
+      }
+    }
+
+    p {
+      border-radius: 6px;
+      background: var(--grey25);
+      padding: 16px 24px;
+      font-family: Open Sans;
+      font-size: 18px;
+      @include responsive(xl, font-size, 16px);
+      line-height: 32px;
+      @include responsive(xl, line-height, 24px);
+      margin-bottom: 0;
+      color: var(--baseTextDarkTheme);
+    }
+
+    .thanksMessage {
+      color: var(--grey50);
+      text-align: center;
+      margin-top: 80px;
+      font-size: 16px;
+      line-height: 32px;
+
+      @include responsive(sm, text-align, left);
+    }
+
+    ol {
+      list-style: none;
+      margin-bottom: 30px;
+      padding-left: 20px;
+      @include responsive(sm, padding-left, 62px);
+
+      li::before {
+        content: counter(inst);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 40px;
+        height: 40px;
+        background: var(--grey25);
+        border-radius: 20px;
+
+        font-family: Open Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+        color: var(--baseTextDarkTheme);
+
+        position: absolute;
+        left: -60px;
+        top: 10px;
+        @include responsive(xl, top, 5px);
+      }
+
+      li {
+        position: relative;
+        counter-increment: inst;
+        color: var(--baseTextDarkTheme);
+        font-size: 18px;
+        line-height: 24px;
+        @include responsive(sm, font-size, 14px);
+        margin-bottom: 24px;
+        @include responsive(sm, margin-bottom, 32px);
+      }
+    }
+
+    .submit {
+      border: none;
+      color: var(--grey8);
+      background-color: var(--accentViolet);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 32px;
+      padding: 8px 0;
+      cursor: pointer;
+      min-width: 240px;
+      border-radius: 6px;
+      width: 320px;
+      margin: 40px auto 0 auto;
+
+      @include breakpoint(sm) {
+        width: 100%;
+        padding: 8px 24px;
+      }
+
+      svg {
+        fill: var(--grey8);
+      }
+    }
+  }
+
+  .close {
+    background: transparent;
+    border: none;
+    position: absolute;
+    @include responsive(sm, position, fixed);
+    top: 24px;
+    right: 24px;
+    color: var(--grey60);
+    padding: 0;
+    cursor: pointer;
+  }
+}

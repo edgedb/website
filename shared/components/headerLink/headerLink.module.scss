@@ -1,0 +1,109 @@
+@import "../../mixins.scss";
+
+.header {
+  @include hover {
+    .linkPopup {
+      opacity: 1;
+    }
+  }
+}
+
+.popupWrapper {
+  position: relative;
+
+  :global(.touch) & {
+    display: none;
+  }
+}
+
+.linksInner {
+  height: 32px;
+  display: flex;
+  align-items: center;
+
+  .spacer {
+    width: 1px;
+    height: 16px;
+    background: #000;
+    opacity: 0.1;
+    border-radius: 1px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  @include darkTheme {
+    .spacer {
+      background: #fff;
+      opacity: 0.24;
+    }
+  }
+}
+
+.linkPopup {
+  --popupBg: var(--headerLinkPopupBg, #fff);
+
+  position: absolute;
+  top: 50%;
+  height: 32px;
+  margin-top: -16px;
+  left: 16px;
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1;
+
+  @include darkTheme {
+    --popupBg: #191919;
+  }
+}
+
+// This is a separate element because for some reason the drop-shadow filter
+// was causing a rendering bug in firefox where the icons
+// disappeared/flickered on hover
+.popupBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--popupBg);
+  border-radius: 4px;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+  z-index: -1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 11px;
+    left: -3px;
+    background: var(--popupBg);
+    transform: rotate(45deg);
+  }
+}
+
+.badge {
+  border: 1px solid #979797;
+  color: #979797;
+  border-radius: 2px;
+  padding: 4px 7px;
+  margin-left: 8px;
+  font-size: 54%;
+  line-height: 1.4;
+  font-weight: 600;
+  height: fit-content;
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
+
+  @include breakpoint(sm) {
+    font-size: 14px;
+  }
+}

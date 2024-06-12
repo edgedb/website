@@ -1,0 +1,82 @@
+@import "../../styles/mixins.scss";
+
+.chart_container {
+  margin: 40px 0;
+}
+
+.chart {
+  width: 100%;
+}
+
+.chart text {
+  @include mainfont;
+}
+
+.chart .axis path,
+.chart .axis line {
+  fill: none;
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+.chart .axis.x2 path,
+.chart .axis.x2 line {
+  display: none;
+}
+.chart .axis text,
+.chart .legend text {
+  font-size: 14px;
+  fill: #333;
+}
+.chart .axis.x path {
+  display: none;
+}
+
+.chart .axis text {
+  fill: #555;
+}
+.chart .axis line,
+.chart .axis path {
+  stroke: #888;
+}
+
+.chart .focus line {
+  stroke: #900;
+}
+.chart .focus text {
+  fill: #900;
+  font-size: 13px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 90%;
+
+  .legend_msg {
+    margin: 0.4em 0 0.8em 0;
+    padding: 0;
+  }
+
+  .legend_items {
+    display: flex;
+    justify-content: center;
+
+    .legend_item {
+      display: flex;
+      align-items: center;
+      padding: 0 1em;
+
+      .legend_color {
+        width: 15px;
+        height: 15px;
+        overflow: hidden;
+        line-height: 15px;
+      }
+
+      .legend_caption {
+        padding: 0 0.5em;
+      }
+    }
+  }
+}

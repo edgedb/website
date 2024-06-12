@@ -1,0 +1,509 @@
+@import "@/mixins.scss";
+
+.desc {
+  * {
+    box-sizing: border-box;
+  }
+  margin: var(--descVMargin) calc(-1 * var(--overhang, 0px));
+
+  @include breakpoint(sm) {
+    --pageMargin: 24px;
+  }
+
+  pointer-events: none;
+  z-index: 1;
+
+  --codeBgColour: var(--grey93);
+  --tableBgColor: var(--grey93);
+
+  --latestColor: #46b98f;
+  --devColor: #ca9033;
+
+  @include darkTheme {
+    --latestColor: #2f9771;
+    --devColor: #ca9033;
+  }
+
+  @include responsive(--descVMargin, 104px, $xl: 96px, $lg: 88px);
+
+  .descAnchor {
+    height: var(--headerAnchorOffset, 32px);
+    margin: calc(-1 * var(--headerAnchorOffset, 32px)) 0 0;
+  }
+
+  .descBlock {
+    @include raisedShadow(#fff, 8px, false, 40px, 8px, 52px);
+
+    pointer-events: auto;
+  }
+
+  .descSigHeader {
+    position: relative;
+    height: 40px;
+    background: var(--grey90);
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    padding: 0 8px 0 12px;
+    cursor: default;
+    align-items: center;
+
+    @include hover {
+      .descHeaderLink {
+        opacity: 1;
+      }
+    }
+
+    .desktopBadge {
+      font-size: 11px;
+      line-height: 16px;
+      margin-left: auto;
+      border-radius: 2px;
+      padding: 4px 7px;
+    }
+
+    .versionLatest {
+      border: 1px solid var(--latestColor);
+      color: var(--latestColor);
+    }
+
+    .versionDev {
+      border: 1px solid var(--devColor);
+      color: var(--devColor);
+    }
+
+    .mobileBadge {
+      display: none;
+    }
+
+    @include breakpoint(sm) {
+      .mobileBadge {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 2px 4px;
+        border-radius: 2px;
+      }
+
+      .desktopBadge {
+        display: none;
+      }
+    }
+  }
+
+  .descSigType {
+    border-right: 2px solid #f7f7f7;
+    padding: 0 12px 0 0;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--grey50);
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+  .descSigName {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+
+    font-style: normal;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--grey30);
+
+    white-space: nowrap;
+    overflow-x: auto;
+    @include hideScrollbars;
+
+    &.isDescRef {
+      color: var(--grey50);
+    }
+
+    :global(.oppsymbol),
+    :global(.funcname) {
+      color: var(--grey30);
+      font-weight: 500;
+
+      @include darkTheme {
+        color: var(--grey65);
+      }
+    }
+  }
+
+  .descHeaderLink {
+    position: absolute;
+    right: 16px;
+    top: 4px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .descHeaderLinkFade {
+    margin-right: -12px;
+    padding-left: 16px;
+    background: linear-gradient(to right, rgba(232, 232, 232, 0), #e9e9e9 18px);
+  }
+
+  .descSigHeaderArrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    width: 8px;
+    fill: #999;
+    transform: translateY(-50%) rotate(180deg);
+    display: none;
+  }
+
+  .descContent {
+    padding: 32px;
+    --badgeLightBg: #fff;
+    --badgeDarkBg: #212121;
+
+    > p {
+      margin: 18px 0px;
+      padding: 0;
+    }
+
+    > :first-child {
+      margin-top: 0px;
+    }
+    > :last-child {
+      margin-bottom: 0px;
+    }
+
+    div[class*="code_showHighlight"]
+      div[class^="code_highlightWrapper"]:hover
+      div[class^="code_block"] {
+      @include darkTheme {
+        background-color: var(--grey10);
+      }
+    }
+
+    div[class^="code_highlightWrapper"]:not(:last-child)
+      div[class^="code_block"] {
+      @include responsive(
+        border-bottom,
+        none,
+        $sm: 2px solid var(--white),
+        $touch: 2px solid var(--white)
+      );
+
+      @include darkTheme {
+        border-color: var(--grey6);
+      }
+    }
+  }
+
+  .descSigBlock {
+    display: flex;
+    margin: 32px;
+    margin-bottom: 0;
+    padding: 24px 32px;
+    background-color: var(--grey93);
+    border-radius: 6px;
+    line-height: 30px;
+    overflow-x: auto;
+  }
+
+  @include breakpoint(sm) {
+    margin: 16px 0;
+
+    .descBlock:before {
+      left: 24px;
+      right: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .descBlock:after {
+      border-radius: 0;
+    }
+
+    .descHeaderLink {
+      display: none;
+    }
+
+    .descSigHeaderArrow {
+      display: block;
+    }
+
+    .descContent {
+      display: none;
+      padding: 16px var(--pageMargin);
+      padding-top: 0px;
+
+      .codeBlock {
+        margin-left: calc(16px - var(--pageMargin));
+        margin-right: calc(16px - var(--pageMargin));
+      }
+
+      div[class^="code_code"] {
+        border-radius: 8px;
+      }
+    }
+
+    .descSigBlock {
+      display: none;
+      padding: 8px 16px;
+      margin: 0 24px;
+      margin-bottom: 16px;
+    }
+
+    &.open {
+      .descContent,
+      .descSigBlock {
+        display: block;
+      }
+
+      .descSigHeaderArrow {
+        transform: translateY(-50%) rotate(-90deg);
+      }
+    }
+
+    .descSigHeader {
+      background: none !important;
+      height: unset;
+      min-height: 88px;
+      padding: 16px var(--pageMargin);
+      flex-direction: column;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .descSigType {
+      font-size: 12px;
+      line-height: 12px;
+      border-right: none;
+    }
+
+    .descSigName {
+      padding-left: 0;
+      margin-top: 10px;
+      white-space: normal;
+      width: calc(100vw - 64px);
+      align-self: flex-start;
+      justify-content: center;
+    }
+  }
+
+  .descSig {
+    @include monospace;
+
+    flex-shrink: 0;
+    padding-right: 32px;
+
+    @include responsive(font-size, 16px, $xl: 15px, $sm: 14px);
+
+    > span {
+      display: block;
+
+      padding-left: 4em;
+      text-indent: -4em;
+
+      &.noToken {
+        font-weight: 500;
+        color: var(--syntaxText);
+      }
+
+      :global {
+        .funcparams {
+          .parenthesis,
+          .funcarg {
+            &:after {
+              content: " ";
+              white-space: normal;
+              font-size: 0;
+              line-height: 0;
+            }
+          }
+        }
+
+        .token {
+          color: var(--syntaxText);
+
+          &.module-prefix .token {
+            color: #777;
+          }
+
+          &.generictype {
+            color: var(--syntaxRed);
+          }
+
+          &.oppsymbol {
+            font-weight: 500;
+            background-color: #e1e1e1;
+            color: var(--syntaxRed);
+            border-radius: 4px;
+            padding: 0.1em 0.25em;
+          }
+
+          &.funcarg {
+            white-space: nowrap;
+            &:after {
+              content: " ";
+              white-space: normal;
+              font-size: 0;
+              line-height: 0;
+            }
+          }
+
+          &.argname {
+            color: var(--syntaxGreen);
+          }
+
+          &.return {
+            color: var(--syntaxRed);
+          }
+
+          &.keyword {
+            color: var(--syntaxPurple);
+          }
+
+          &.type {
+            color: var(--syntaxBlue);
+          }
+
+          &.composite {
+            color: var(--syntaxOrange);
+          }
+
+          &.funcname {
+            font-weight: 500;
+          }
+        }
+      }
+
+      &:global(.longsig) {
+        :global {
+          .funcparams {
+            .parenthesis,
+            .funcarg {
+              &:after {
+                content: "\A"; // linefeed char
+                white-space: pre;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .fields {
+    background-color: var(--grey97);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      font-size: 90%;
+
+      .fieldName {
+        margin-top: 1em;
+        padding-bottom: 0.5em;
+        font-weight: 500;
+        padding-right: 20px;
+        color: #777;
+        @include monospace;
+      }
+
+      &:first-child .fieldName {
+        margin-top: 0;
+      }
+
+      .fieldName,
+      .fieldBody {
+        p {
+          margin: 0;
+          padding: 0;
+        }
+
+        .nestedParagraph {
+          margin-bottom: 0.5em;
+        }
+
+        & > ul {
+          list-style: none;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        li {
+          p {
+            text-indent: -1.5em;
+
+            * {
+              text-indent: 0;
+            }
+          }
+        }
+
+        li:not(:first-child) {
+          margin-top: 0.5em;
+        }
+      }
+
+      code {
+        background-color: var(--grey93);
+      }
+
+      strong > code {
+        background-color: transparent;
+      }
+    }
+  }
+
+  @include darkTheme {
+    --codeBgColour: var(--grey12);
+    --tableBgColor: var(--grey10);
+    --copyBtnBg: var(--grey20);
+
+    .descBlock:after {
+      background: var(--grey8);
+    }
+
+    .descSigHeader {
+      background: var(--grey14);
+    }
+
+    .descHeaderLinkFade {
+      background: linear-gradient(to right, rgba(28, 28, 28, 0), #1c1c1c 18px);
+    }
+
+    .descSigType {
+      border-right-color: #2d2d2d;
+      color: var(--grey50);
+    }
+
+    .descSigName {
+      color: #b3b3b3;
+
+      &.isDescRef {
+        color: var(--grey50);
+      }
+    }
+
+    .descSigBlock {
+      background: var(--grey12);
+    }
+
+    .descSig > span :global(.token.oppsymbol) {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .fields {
+      background-color: var(--grey8);
+
+      .field code {
+        background-color: var(--grey6);
+      }
+    }
+  }
+}

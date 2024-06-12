@@ -1,0 +1,76 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.pageFooter {
+  --darkBg: transparent;
+
+  z-index: 1;
+
+  @include responsiveAllXXL(
+    padding-top,
+    170px,
+    154px,
+    162px,
+    114px,
+    80px,
+    80px
+  );
+  @include responsiveAllXXL(
+    padding-bottom,
+    208px,
+    140px,
+    140px,
+    124px,
+    156px,
+    170px
+  );
+
+  display: flex;
+  justify-content: center;
+  @include responsive(lg, --contentWidth, 882px);
+}
+
+.footerContent {
+  grid-column: content;
+  margin: 0 auto;
+
+  > div:first-child {
+    display: flex;
+    flex-direction: row;
+    column-gap: 56px;
+    @include responsive(lg, column-gap, 32px);
+    @include responsive(md, column-gap, 112px);
+    justify-content: space-between;
+    margin: 0 auto;
+
+    @include breakpoint(md) {
+      flex-direction: column;
+    }
+  }
+
+  > div:nth-child(2) {
+    width: 160px;
+    margin: 0 auto;
+    text-align: center;
+    @include responsiveAllXXL(
+      margin-top,
+      130px,
+      118px,
+      110px,
+      134px,
+      88px,
+      122px
+    );
+  }
+}
+
+.footerLinks {
+  width: fit-content;
+  column-gap: 56px;
+  @include responsive(lg, column-gap, 32px);
+  @include responsive(md, column-gap, 112px);
+
+  &.minimal {
+    margin: auto;
+  }
+}

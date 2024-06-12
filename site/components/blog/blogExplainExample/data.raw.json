@@ -1,0 +1,1537 @@
+{
+  "config_vals": {
+    "allow_user_specified_id": false,
+    "apply_access_policies": true,
+    "__internal_no_const_folding": false
+  },
+  "globals_used": [],
+  "module_aliases": {"null": "default"},
+  "arguments": {"execute": true, "buffers": false},
+  "version": "4.0-dev.7541+local",
+  "buffers": [
+    "analyze\nwith\n  movies := (select Movie order by .title offset <int64>$page*10),\n  results := (select movies limit 10),\nselect {\n  results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  }),\n  hasMore := count(movies) > 10\n}"
+  ],
+  "debug_info": {
+    "full_plan": {
+      "parallel_aware": false,
+      "async_capable": false,
+      "alias": "q~1",
+      "startup_cost": 760.88,
+      "total_cost": 760.9,
+      "plan_rows": 1,
+      "plan_width": 32,
+      "actual_startup_time": 0.262,
+      "actual_total_time": 0.264,
+      "actual_rows": 1,
+      "actual_loops": 1,
+      "output": ["ROW($4, $6)"],
+      "filter": "(\"q~1\".\"FreeObject_value~1\" IS NOT NULL)",
+      "rows_removed by_filter": 0,
+      "plans": [
+        {
+          "strategy": "Plain",
+          "partial_mode": "Simple",
+          "parent_relationship": "InitPlan",
+          "subplan_name": "InitPlan 5 (returns $4)",
+          "parallel_aware": false,
+          "async_capable": false,
+          "startup_cost": 665.44,
+          "total_cost": 665.45,
+          "plan_rows": 1,
+          "plan_width": 32,
+          "actual_startup_time": 0.225,
+          "actual_total_time": 0.227,
+          "actual_rows": 1,
+          "actual_loops": 1,
+          "output": [
+            "COALESCE(array_agg(ROW(\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\", (SubPlan 1), (SubPlan 2))), '{}'::record[])"
+          ],
+          "plans": [
+            {
+              "parent_relationship": "Outer",
+              "parallel_aware": false,
+              "async_capable": false,
+              "startup_cost": 72.47,
+              "total_cost": 74.54,
+              "plan_rows": 92,
+              "plan_width": 52,
+              "actual_startup_time": 0.024,
+              "actual_total_time": 0.026,
+              "actual_rows": 8,
+              "actual_loops": 1,
+              "output": [
+                "\"Movie~5\".id",
+                "\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\"",
+                "\"Movie~5\".\"a541013f-060b-11ee-abbb-3dd7ef2ad05b\""
+              ],
+              "plans": [
+                {
+                  "parent_relationship": "InitPlan",
+                  "subplan_name": "InitPlan 3 (returns $2)",
+                  "parallel_aware": false,
+                  "async_capable": false,
+                  "startup_cost": 0.0,
+                  "total_cost": 0.01,
+                  "plan_rows": 1,
+                  "plan_width": 8,
+                  "actual_startup_time": 0.0,
+                  "actual_total_time": 0.0,
+                  "actual_rows": 1,
+                  "actual_loops": 1,
+                  "output": ["'10'::bigint"],
+                  "plan_id": "d477c83c-ab2a-4637-828e-c61fb51330d4",
+                  "plans": [],
+                  "node_type": "Result"
+                },
+                {
+                  "parent_relationship": "Outer",
+                  "parallel_aware": false,
+                  "async_capable": false,
+                  "startup_cost": 72.46,
+                  "total_cost": 83.93,
+                  "plan_rows": 918,
+                  "plan_width": 52,
+                  "actual_startup_time": 0.023,
+                  "actual_total_time": 0.024,
+                  "actual_rows": 8,
+                  "actual_loops": 1,
+                  "output": [
+                    "\"Movie~5\".id",
+                    "\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\"",
+                    "\"Movie~5\".\"a541013f-060b-11ee-abbb-3dd7ef2ad05b\""
+                  ],
+                  "plans": [
+                    {
+                      "parent_relationship": "InitPlan",
+                      "subplan_name": "InitPlan 4 (returns $3)",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "startup_cost": 0.0,
+                      "total_cost": 0.01,
+                      "plan_rows": 1,
+                      "plan_width": 8,
+                      "actual_startup_time": 0.0,
+                      "actual_total_time": 0.0,
+                      "actual_rows": 1,
+                      "actual_loops": 1,
+                      "output": ["'20'::bigint"],
+                      "plan_id": "a07d9ff7-0446-4139-aba1-f5778b5a727f",
+                      "plans": [],
+                      "node_type": "Result"
+                    },
+                    {
+                      "parent_relationship": "Outer",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "startup_cost": 71.17,
+                      "total_cost": 73.72,
+                      "plan_rows": 1020,
+                      "plan_width": 52,
+                      "actual_startup_time": 0.021,
+                      "actual_total_time": 0.022,
+                      "actual_rows": 28,
+                      "actual_loops": 1,
+                      "output": [
+                        "\"Movie~5\".id",
+                        "\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\"",
+                        "\"Movie~5\".\"a541013f-060b-11ee-abbb-3dd7ef2ad05b\""
+                      ],
+                      "sort_key": [
+                        "\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\" NULLS FIRST"
+                      ],
+                      "sort_method": "quicksort",
+                      "sort_space_used": 27,
+                      "sort_space_type": "Memory",
+                      "plans": [
+                        {
+                          "parent_relationship": "Outer",
+                          "parallel_aware": false,
+                          "async_capable": false,
+                          "relation_name": "Movie",
+                          "schema": "edgedbpub",
+                          "alias": "Movie~5",
+                          "startup_cost": 0.0,
+                          "total_cost": 20.2,
+                          "plan_rows": 1020,
+                          "plan_width": 52,
+                          "actual_startup_time": 0.006,
+                          "actual_total_time": 0.009,
+                          "actual_rows": 28,
+                          "actual_loops": 1,
+                          "output": [
+                            "\"Movie~5\".id",
+                            "\"Movie~5\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\"",
+                            "\"Movie~5\".\"a541013f-060b-11ee-abbb-3dd7ef2ad05b\""
+                          ],
+                          "plan_id": "1195540c-0f16-42c4-ad58-cf3edf904713",
+                          "plans": [],
+                          "node_type": "SeqScan"
+                        }
+                      ],
+                      "plan_id": "28c84f69-b3cf-4092-8e99-bcedb4d8bdf6",
+                      "presorted_key": [],
+                      "node_type": "Sort"
+                    }
+                  ],
+                  "plan_id": "3d9b36a9-3bd4-4945-8672-aee46d47f5de",
+                  "node_type": "Limit"
+                }
+              ],
+              "plan_id": "cd495cfe-13ca-4178-8c75-5e13aa2b266f",
+              "node_type": "Limit"
+            },
+            {
+              "parent_relationship": "SubPlan",
+              "subplan_name": "SubPlan 1",
+              "parallel_aware": false,
+              "async_capable": false,
+              "startup_cost": 0.0,
+              "total_cost": 0.01,
+              "plan_rows": 1,
+              "plan_width": 4,
+              "actual_startup_time": 0.0,
+              "actual_total_time": 0.0,
+              "actual_rows": 1,
+              "actual_loops": 8,
+              "output": [
+                "\"Movie~5\".\"a541013f-060b-11ee-abbb-3dd7ef2ad05b\""
+              ],
+              "plan_id": "ba2fb77e-43b4-4686-8141-a757e90e5558",
+              "plans": [],
+              "node_type": "Result"
+            },
+            {
+              "strategy": "Plain",
+              "partial_mode": "Simple",
+              "parent_relationship": "SubPlan",
+              "subplan_name": "SubPlan 2",
+              "parallel_aware": false,
+              "async_capable": false,
+              "startup_cost": 6.39,
+              "total_cost": 6.4,
+              "plan_rows": 1,
+              "plan_width": 32,
+              "actual_startup_time": 0.024,
+              "actual_total_time": 0.024,
+              "actual_rows": 1,
+              "actual_loops": 8,
+              "output": [
+                "COALESCE(array_agg(ROW(\"Person~1\".\"a5623271-060b-11ee-aae1-d950b019ce9a\")), '{}'::record[])"
+              ],
+              "plans": [
+                {
+                  "parent_relationship": "Outer",
+                  "parallel_aware": false,
+                  "async_capable": false,
+                  "join_type": "Inner",
+                  "startup_cost": 4.3,
+                  "total_cost": 6.37,
+                  "plan_rows": 6,
+                  "plan_width": 14,
+                  "actual_startup_time": 0.015,
+                  "actual_total_time": 0.022,
+                  "actual_rows": 4,
+                  "actual_loops": 8,
+                  "output": [
+                    "\"Person~1\".\"a5623271-060b-11ee-aae1-d950b019ce9a\""
+                  ],
+                  "inner_unique": true,
+                  "hash_cond": "(\"Person~1\".id = \"actors~1\".target)",
+                  "plans": [
+                    {
+                      "parent_relationship": "Outer",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "relation_name": "Person",
+                      "schema": "edgedbpub",
+                      "alias": "Person~1",
+                      "startup_cost": 0.0,
+                      "total_cost": 1.84,
+                      "plan_rows": 84,
+                      "plan_width": 30,
+                      "actual_startup_time": 0.001,
+                      "actual_total_time": 0.005,
+                      "actual_rows": 84,
+                      "actual_loops": 8,
+                      "output": [
+                        "\"Person~1\".id",
+                        "\"Person~1\".\"a5623271-060b-11ee-aae1-d950b019ce9a\""
+                      ],
+                      "plan_id": "53089ebb-4f97-4186-b4b9-983dd32f0d4d",
+                      "plans": [],
+                      "node_type": "SeqScan"
+                    },
+                    {
+                      "parent_relationship": "Inner",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "startup_cost": 4.22,
+                      "total_cost": 4.22,
+                      "plan_rows": 6,
+                      "plan_width": 16,
+                      "actual_startup_time": 0.011,
+                      "actual_total_time": 0.011,
+                      "actual_rows": 4,
+                      "actual_loops": 8,
+                      "output": ["\"actors~1\".target"],
+                      "hash_buckets": 1024,
+                      "original_hash_buckets": 1024,
+                      "hash_batches": 1,
+                      "original_hash_batches": 1,
+                      "peak_memory_usage": 9,
+                      "plans": [
+                        {
+                          "parent_relationship": "Outer",
+                          "parallel_aware": false,
+                          "async_capable": false,
+                          "relation_name": "Movie.actors",
+                          "schema": "edgedbpub",
+                          "alias": "actors~1",
+                          "startup_cost": 0.0,
+                          "total_cost": 4.22,
+                          "plan_rows": 6,
+                          "plan_width": 16,
+                          "actual_startup_time": 0.008,
+                          "actual_total_time": 0.01,
+                          "actual_rows": 4,
+                          "actual_loops": 8,
+                          "output": ["\"actors~1\".target"],
+                          "filter": "(\"Movie~5\".id = \"actors~1\".source)",
+                          "rows_removed by_filter": 174,
+                          "plan_id": "6ecfd1fe-80cf-4b6d-bf04-06527dce4b2d",
+                          "plans": [],
+                          "node_type": "SeqScan"
+                        }
+                      ],
+                      "plan_id": "d5eb27a4-ca6b-47a5-8d05-899c2855de4a",
+                      "node_type": "Hash"
+                    }
+                  ],
+                  "plan_id": "4c4263a9-48d6-4a1e-a2a3-54f1aeb22c34",
+                  "node_type": "HashJoin"
+                }
+              ],
+              "plan_id": "b4d0a99b-7cc7-4066-bfe4-f4fb2fe11c4e",
+              "node_type": "Aggregate"
+            }
+          ],
+          "plan_id": "99b2414d-6fa9-4ae6-a76b-ea694575500f",
+          "node_type": "Aggregate"
+        },
+        {
+          "parent_relationship": "InitPlan",
+          "subplan_name": "InitPlan 7 (returns $6)",
+          "parallel_aware": false,
+          "async_capable": false,
+          "alias": "q~2",
+          "startup_cost": 95.41,
+          "total_cost": 95.43,
+          "plan_rows": 1,
+          "plan_width": 1,
+          "actual_startup_time": 0.016,
+          "actual_total_time": 0.016,
+          "actual_rows": 1,
+          "actual_loops": 1,
+          "output": [
+            "(COALESCE(\"q~2\".\"expr~13_value~1\", '0'::bigint) > '10'::bigint)"
+          ],
+          "plans": [
+            {
+              "strategy": "Plain",
+              "partial_mode": "Simple",
+              "parent_relationship": "Subquery",
+              "parallel_aware": false,
+              "async_capable": false,
+              "startup_cost": 95.41,
+              "total_cost": 95.42,
+              "plan_rows": 1,
+              "plan_width": 8,
+              "actual_startup_time": 0.015,
+              "actual_total_time": 0.016,
+              "actual_rows": 1,
+              "actual_loops": 1,
+              "output": ["count(\"expr-2~4\".\"Movie_value~5\")"],
+              "plans": [
+                {
+                  "parent_relationship": "Outer",
+                  "parallel_aware": false,
+                  "async_capable": false,
+                  "startup_cost": 72.46,
+                  "total_cost": 83.93,
+                  "plan_rows": 918,
+                  "plan_width": 16,
+                  "actual_startup_time": 0.013,
+                  "actual_total_time": 0.015,
+                  "actual_rows": 8,
+                  "actual_loops": 1,
+                  "output": ["\"expr-2~4\".\"Movie_value~5\""],
+                  "plans": [
+                    {
+                      "parent_relationship": "InitPlan",
+                      "subplan_name": "InitPlan 6 (returns $5)",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "startup_cost": 0.0,
+                      "total_cost": 0.01,
+                      "plan_rows": 1,
+                      "plan_width": 8,
+                      "actual_startup_time": 0.0,
+                      "actual_total_time": 0.0,
+                      "actual_rows": 1,
+                      "actual_loops": 1,
+                      "output": ["'20'::bigint"],
+                      "plan_id": "588664b5-2e19-4c8b-8464-268bb18a97ab",
+                      "plans": [],
+                      "node_type": "Result"
+                    },
+                    {
+                      "parent_relationship": "Outer",
+                      "parallel_aware": false,
+                      "async_capable": false,
+                      "alias": "expr-2~4",
+                      "startup_cost": 71.17,
+                      "total_cost": 83.92,
+                      "plan_rows": 1020,
+                      "plan_width": 16,
+                      "actual_startup_time": 0.01,
+                      "actual_total_time": 0.013,
+                      "actual_rows": 28,
+                      "actual_loops": 1,
+                      "output": ["\"expr-2~4\".\"Movie_value~5\""],
+                      "plans": [
+                        {
+                          "parent_relationship": "Subquery",
+                          "parallel_aware": false,
+                          "async_capable": false,
+                          "startup_cost": 71.17,
+                          "total_cost": 73.72,
+                          "plan_rows": 1020,
+                          "plan_width": 48,
+                          "actual_startup_time": 0.01,
+                          "actual_total_time": 0.011,
+                          "actual_rows": 28,
+                          "actual_loops": 1,
+                          "output": [
+                            "\"Movie~12\".id",
+                            "\"Movie~12\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\""
+                          ],
+                          "sort_key": [
+                            "\"Movie~12\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\" NULLS FIRST"
+                          ],
+                          "sort_method": "quicksort",
+                          "sort_space_used": 27,
+                          "sort_space_type": "Memory",
+                          "plans": [
+                            {
+                              "parent_relationship": "Outer",
+                              "parallel_aware": false,
+                              "async_capable": false,
+                              "relation_name": "Movie",
+                              "schema": "edgedbpub",
+                              "alias": "Movie~12",
+                              "startup_cost": 0.0,
+                              "total_cost": 20.2,
+                              "plan_rows": 1020,
+                              "plan_width": 48,
+                              "actual_startup_time": 0.001,
+                              "actual_total_time": 0.003,
+                              "actual_rows": 28,
+                              "actual_loops": 1,
+                              "output": [
+                                "\"Movie~12\".id",
+                                "\"Movie~12\".\"a53ed44c-060b-11ee-a07e-3bc8dc18c858\""
+                              ],
+                              "plan_id": "8865b6b4-cb70-4095-b6e8-24d6c03ccb47",
+                              "plans": [],
+                              "node_type": "SeqScan"
+                            }
+                          ],
+                          "plan_id": "beaaf61f-55d1-4b8a-88be-bae707aeb8ec",
+                          "presorted_key": [],
+                          "node_type": "Sort"
+                        }
+                      ],
+                      "plan_id": "c2061999-2426-4800-9e29-233f22e98a91",
+                      "node_type": "SubqueryScan"
+                    }
+                  ],
+                  "plan_id": "a5e66ea1-240e-40d3-8821-dae2fb244ee7",
+                  "node_type": "Limit"
+                }
+              ],
+              "plan_id": "daf40822-a655-4c89-9575-59c83c19ba53",
+              "node_type": "Aggregate"
+            }
+          ],
+          "plan_id": "c5e90dfb-5447-407c-942c-cb4f1557ff32",
+          "node_type": "SubqueryScan"
+        },
+        {
+          "parent_relationship": "Subquery",
+          "parallel_aware": false,
+          "async_capable": false,
+          "startup_cost": 0.0,
+          "total_cost": 0.01,
+          "plan_rows": 1,
+          "plan_width": 16,
+          "actual_startup_time": 0.018,
+          "actual_total_time": 0.018,
+          "actual_rows": 1,
+          "actual_loops": 1,
+          "output": ["edgedbext.uuid_generate_v4()"],
+          "plan_id": "9932d357-b188-4518-b00b-1176723c47eb",
+          "plans": [],
+          "node_type": "Result"
+        }
+      ],
+      "plan_id": "f60314eb-7e6a-41e9-a686-217b25f9f42f",
+      "node_type": "SubqueryScan"
+    },
+    "analysis_info": {
+      "alias_info": {
+        "aggw~2": {"contexts": []},
+        "Movie_results~2": {
+          "contexts": [
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "aggw~1": {"contexts": []},
+        "Person_actors~3": {"contexts": []},
+        "actors~1": {
+          "contexts": [
+            {"start": 192, "end": 198, "buffer_idx": 0, "text": "actors"}
+          ]
+        },
+        "Person~1": {
+          "contexts": [
+            {"start": 192, "end": 198, "buffer_idx": 0, "text": "actors"}
+          ]
+        },
+        "Movie~8": {
+          "contexts": [
+            {"start": 149, "end": 156, "buffer_idx": 0, "text": "results"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "Movie~7": {
+          "contexts": [
+            {"start": 149, "end": 156, "buffer_idx": 0, "text": "results"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "Movie~6": {
+          "contexts": [
+            {"start": 101, "end": 107, "buffer_idx": 0, "text": "movies"},
+            {"start": 149, "end": 156, "buffer_idx": 0, "text": "results"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "expr-2~2": {
+          "contexts": [
+            {"start": 101, "end": 107, "buffer_idx": 0, "text": "movies"},
+            {"start": 149, "end": 156, "buffer_idx": 0, "text": "results"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "Movie~5": {
+          "contexts": [
+            {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+            {"start": 101, "end": 107, "buffer_idx": 0, "text": "movies"},
+            {"start": 149, "end": 156, "buffer_idx": 0, "text": "results"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ]
+        },
+        "expr-5~2": {
+          "contexts": [
+            {
+              "start": 55,
+              "end": 77,
+              "buffer_idx": 0,
+              "text": "offset <int64>$page*10"
+            }
+          ]
+        },
+        "expr-3~2": {
+          "contexts": [
+            {"start": 69, "end": 74, "buffer_idx": 0, "text": "$page"},
+            {
+              "start": 55,
+              "end": 77,
+              "buffer_idx": 0,
+              "text": "offset <int64>$page*10"
+            }
+          ]
+        },
+        "bool_hasMore~2": {
+          "contexts": [
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "expr-15~2": {
+          "contexts": [
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "expr-13~3": {
+          "contexts": [
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "q~2": {
+          "contexts": [
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "Movie~14": {
+          "contexts": [
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "Movie~13": {
+          "contexts": [
+            {"start": 245, "end": 251, "buffer_idx": 0, "text": "movies"},
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "expr-2~4": {
+          "contexts": [
+            {"start": 245, "end": 251, "buffer_idx": 0, "text": "movies"},
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "Movie~12": {
+          "contexts": [
+            {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+            {"start": 245, "end": 251, "buffer_idx": 0, "text": "movies"},
+            {
+              "start": 239,
+              "end": 252,
+              "buffer_idx": 0,
+              "text": "count(movies)"
+            },
+            {
+              "start": 239,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "count(movies) > 10"
+            },
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ]
+        },
+        "expr-5~4": {
+          "contexts": [
+            {
+              "start": 55,
+              "end": 77,
+              "buffer_idx": 0,
+              "text": "offset <int64>$page*10"
+            }
+          ]
+        },
+        "expr-3~4": {
+          "contexts": [
+            {"start": 69, "end": 74, "buffer_idx": 0, "text": "$page"},
+            {
+              "start": 55,
+              "end": 77,
+              "buffer_idx": 0,
+              "text": "offset <int64>$page*10"
+            }
+          ]
+        },
+        "q~1": {"contexts": []},
+        "expr-8~2": {"contexts": []}
+      },
+      "buffers": [
+        "analyze\nwith\n  movies := (select Movie order by .title offset <int64>$page*10),\n  results := (select movies limit 10),\nselect {\n  results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  }),\n  hasMore := count(movies) > 10\n}"
+      ],
+      "shape_tree": {
+        "aliases": ["q~1"],
+        "pointers": {
+          "id": {"aliases": [], "pointers": {}},
+          "results": {
+            "aliases": ["Movie~5", "Movie~12", "expr-3~4"],
+            "pointers": {
+              "id": {"aliases": [], "pointers": {}},
+              "title": {"aliases": [], "pointers": {}},
+              "release_year": {"aliases": [], "pointers": {}},
+              "actors": {
+                "aliases": [],
+                "pointers": {
+                  "id": {"aliases": [], "pointers": {}},
+                  "name": {"aliases": [], "pointers": {}}
+                },
+                "main_alias": "Person~1"
+              }
+            },
+            "main_alias": "Movie~5"
+          },
+          "hasMore": {"aliases": ["Movie~12"], "pointers": {}}
+        },
+        "main_alias": "expr-8~2"
+      }
+    }
+  },
+  "fine_grained": {
+    "pipeline": [
+      {
+        "startup_cost": 760.88,
+        "total_cost": 760.9,
+        "plan_rows": 1,
+        "plan_width": 32,
+        "actual_startup_time": 0.262,
+        "actual_total_time": 0.264,
+        "actual_rows": 1,
+        "actual_loops": 1,
+        "plan_type": "SubqueryScan",
+        "plan_id": "f60314eb-7e6a-41e9-a686-217b25f9f42f",
+        "properties": [
+          {
+            "title": "filter",
+            "value": "(\"q~1\".\"FreeObject_value~1\" IS NOT NULL)",
+            "type": "expr",
+            "important": false
+          }
+        ]
+      }
+    ],
+    "subplans": [
+      {
+        "pipeline": [
+          {
+            "startup_cost": 665.44,
+            "total_cost": 665.45,
+            "plan_rows": 1,
+            "plan_width": 32,
+            "actual_startup_time": 0.225,
+            "actual_total_time": 0.227,
+            "actual_rows": 1,
+            "actual_loops": 1,
+            "plan_type": "Aggregate",
+            "plan_id": "99b2414d-6fa9-4ae6-a76b-ea694575500f",
+            "properties": [
+              {
+                "title": "parent_relationship",
+                "value": "InitPlan",
+                "type": "text",
+                "important": false
+              },
+              {
+                "title": "subplan_name",
+                "value": "InitPlan 5 (returns $4)",
+                "type": "text",
+                "important": false
+              },
+              {
+                "title": "strategy",
+                "value": "Plain",
+                "type": "text",
+                "important": false
+              },
+              {
+                "title": "partial_mode",
+                "value": "Simple",
+                "type": "text",
+                "important": false
+              }
+            ]
+          }
+        ],
+        "subplans": [
+          {
+            "contexts": [
+              {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+              {"start": 101, "end": 107, "buffer_idx": 0, "text": "movies"},
+              {
+                "start": 130,
+                "end": 224,
+                "buffer_idx": 0,
+                "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+              }
+            ],
+            "pipeline": [
+              {
+                "startup_cost": 72.47,
+                "total_cost": 74.54,
+                "plan_rows": 92,
+                "plan_width": 52,
+                "actual_startup_time": 0.024,
+                "actual_total_time": 0.026,
+                "actual_rows": 8,
+                "actual_loops": 1,
+                "plan_type": "Limit",
+                "plan_id": "cd495cfe-13ca-4178-8c75-5e13aa2b266f",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 72.46,
+                "total_cost": 83.93,
+                "plan_rows": 918,
+                "plan_width": 52,
+                "actual_startup_time": 0.023,
+                "actual_total_time": 0.024,
+                "actual_rows": 8,
+                "actual_loops": 1,
+                "plan_type": "Limit",
+                "plan_id": "3d9b36a9-3bd4-4945-8672-aee46d47f5de",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 71.17,
+                "total_cost": 73.72,
+                "plan_rows": 1020,
+                "plan_width": 52,
+                "actual_startup_time": 0.021,
+                "actual_total_time": 0.022,
+                "actual_rows": 28,
+                "actual_loops": 1,
+                "plan_type": "Sort",
+                "plan_id": "28c84f69-b3cf-4092-8e99-bcedb4d8bdf6",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "sort_method",
+                    "value": "quicksort",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "sort_space_used",
+                    "value": 27,
+                    "type": "kB",
+                    "important": false
+                  },
+                  {
+                    "title": "sort_space_type",
+                    "value": "Memory",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 0.0,
+                "total_cost": 20.2,
+                "plan_rows": 1020,
+                "plan_width": 52,
+                "actual_startup_time": 0.006,
+                "actual_total_time": 0.009,
+                "actual_rows": 28,
+                "actual_loops": 1,
+                "plan_type": "SeqScan",
+                "plan_id": "1195540c-0f16-42c4-ad58-cf3edf904713",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "schema",
+                    "value": "edgedbpub",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "alias",
+                    "value": "Movie~5",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "relation_name",
+                    "value": "Movie",
+                    "type": "relation",
+                    "important": false
+                  }
+                ]
+              }
+            ],
+            "subplans": []
+          },
+          {
+            "contexts": [
+              {"start": 192, "end": 198, "buffer_idx": 0, "text": "actors"}
+            ],
+            "pipeline": [
+              {
+                "startup_cost": 6.39,
+                "total_cost": 6.4,
+                "plan_rows": 1,
+                "plan_width": 32,
+                "actual_startup_time": 0.024,
+                "actual_total_time": 0.024,
+                "actual_rows": 1,
+                "actual_loops": 8,
+                "plan_type": "Aggregate",
+                "plan_id": "b4d0a99b-7cc7-4066-bfe4-f4fb2fe11c4e",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "SubPlan",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "subplan_name",
+                    "value": "SubPlan 2",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "strategy",
+                    "value": "Plain",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "partial_mode",
+                    "value": "Simple",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 4.3,
+                "total_cost": 6.37,
+                "plan_rows": 6,
+                "plan_width": 14,
+                "actual_startup_time": 0.015,
+                "actual_total_time": 0.022,
+                "actual_rows": 4,
+                "actual_loops": 8,
+                "plan_type": "HashJoin",
+                "plan_id": "4c4263a9-48d6-4a1e-a2a3-54f1aeb22c34",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "join_type",
+                    "value": "Inner",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "hash_cond",
+                    "value": "(\"Person~1\".id = \"actors~1\".target)",
+                    "type": "expr",
+                    "important": false
+                  }
+                ]
+              }
+            ],
+            "subplans": [
+              {
+                "pipeline": [
+                  {
+                    "startup_cost": 0.0,
+                    "total_cost": 1.84,
+                    "plan_rows": 84,
+                    "plan_width": 30,
+                    "actual_startup_time": 0.001,
+                    "actual_total_time": 0.005,
+                    "actual_rows": 84,
+                    "actual_loops": 8,
+                    "plan_type": "SeqScan",
+                    "plan_id": "53089ebb-4f97-4186-b4b9-983dd32f0d4d",
+                    "properties": [
+                      {
+                        "title": "parent_relationship",
+                        "value": "Outer",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "schema",
+                        "value": "edgedbpub",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "alias",
+                        "value": "Person~1",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "relation_name",
+                        "value": "Person",
+                        "type": "relation",
+                        "important": false
+                      }
+                    ]
+                  }
+                ],
+                "subplans": []
+              },
+              {
+                "pipeline": [
+                  {
+                    "startup_cost": 4.22,
+                    "total_cost": 4.22,
+                    "plan_rows": 6,
+                    "plan_width": 16,
+                    "actual_startup_time": 0.011,
+                    "actual_total_time": 0.011,
+                    "actual_rows": 4,
+                    "actual_loops": 8,
+                    "plan_type": "Hash",
+                    "plan_id": "d5eb27a4-ca6b-47a5-8d05-899c2855de4a",
+                    "properties": [
+                      {
+                        "title": "parent_relationship",
+                        "value": "Inner",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "hash_buckets",
+                        "value": 1024,
+                        "type": "int",
+                        "important": false
+                      },
+                      {
+                        "title": "original_hash_buckets",
+                        "value": 1024,
+                        "type": "int",
+                        "important": false
+                      },
+                      {
+                        "title": "hash_batches",
+                        "value": 1,
+                        "type": "int",
+                        "important": false
+                      },
+                      {
+                        "title": "original_hash_batches",
+                        "value": 1,
+                        "type": "int",
+                        "important": false
+                      },
+                      {
+                        "title": "peak_memory_usage",
+                        "value": 9,
+                        "type": "kB",
+                        "important": false
+                      }
+                    ]
+                  },
+                  {
+                    "startup_cost": 0.0,
+                    "total_cost": 4.22,
+                    "plan_rows": 6,
+                    "plan_width": 16,
+                    "actual_startup_time": 0.008,
+                    "actual_total_time": 0.01,
+                    "actual_rows": 4,
+                    "actual_loops": 8,
+                    "plan_type": "SeqScan",
+                    "plan_id": "6ecfd1fe-80cf-4b6d-bf04-06527dce4b2d",
+                    "properties": [
+                      {
+                        "title": "filter",
+                        "value": "(\"Movie~5\".id = \"actors~1\".source)",
+                        "type": "expr",
+                        "important": false
+                      },
+                      {
+                        "title": "parent_relationship",
+                        "value": "Outer",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "schema",
+                        "value": "edgedbpub",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "alias",
+                        "value": "actors~1",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "relation_name",
+                        "value": "Movie.actors",
+                        "type": "relation",
+                        "important": false
+                      }
+                    ]
+                  }
+                ],
+                "subplans": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "contexts": [
+          {
+            "start": 228,
+            "end": 257,
+            "buffer_idx": 0,
+            "text": "hasMore := count(movies) > 10"
+          }
+        ],
+        "pipeline": [
+          {
+            "startup_cost": 95.41,
+            "total_cost": 95.43,
+            "plan_rows": 1,
+            "plan_width": 1,
+            "actual_startup_time": 0.016,
+            "actual_total_time": 0.016,
+            "actual_rows": 1,
+            "actual_loops": 1,
+            "plan_type": "SubqueryScan",
+            "plan_id": "c5e90dfb-5447-407c-942c-cb4f1557ff32",
+            "properties": [
+              {
+                "title": "parent_relationship",
+                "value": "InitPlan",
+                "type": "text",
+                "important": false
+              },
+              {
+                "title": "subplan_name",
+                "value": "InitPlan 7 (returns $6)",
+                "type": "text",
+                "important": false
+              }
+            ]
+          }
+        ],
+        "subplans": [
+          {
+            "contexts": [
+              {
+                "start": 228,
+                "end": 257,
+                "buffer_idx": 0,
+                "text": "hasMore := count(movies) > 10"
+              }
+            ],
+            "pipeline": [
+              {
+                "startup_cost": 95.41,
+                "total_cost": 95.42,
+                "plan_rows": 1,
+                "plan_width": 8,
+                "actual_startup_time": 0.015,
+                "actual_total_time": 0.016,
+                "actual_rows": 1,
+                "actual_loops": 1,
+                "plan_type": "Aggregate",
+                "plan_id": "daf40822-a655-4c89-9575-59c83c19ba53",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Subquery",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "strategy",
+                    "value": "Plain",
+                    "type": "text",
+                    "important": false
+                  },
+                  {
+                    "title": "partial_mode",
+                    "value": "Simple",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 72.46,
+                "total_cost": 83.93,
+                "plan_rows": 918,
+                "plan_width": 16,
+                "actual_startup_time": 0.013,
+                "actual_total_time": 0.015,
+                "actual_rows": 8,
+                "actual_loops": 1,
+                "plan_type": "Limit",
+                "plan_id": "a5e66ea1-240e-40d3-8821-dae2fb244ee7",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              },
+              {
+                "startup_cost": 71.17,
+                "total_cost": 83.92,
+                "plan_rows": 1020,
+                "plan_width": 16,
+                "actual_startup_time": 0.01,
+                "actual_total_time": 0.013,
+                "actual_rows": 28,
+                "actual_loops": 1,
+                "plan_type": "SubqueryScan",
+                "plan_id": "c2061999-2426-4800-9e29-233f22e98a91",
+                "properties": [
+                  {
+                    "title": "parent_relationship",
+                    "value": "Outer",
+                    "type": "text",
+                    "important": false
+                  }
+                ]
+              }
+            ],
+            "subplans": [
+              {
+                "contexts": [
+                  {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+                  {
+                    "start": 228,
+                    "end": 257,
+                    "buffer_idx": 0,
+                    "text": "hasMore := count(movies) > 10"
+                  }
+                ],
+                "pipeline": [
+                  {
+                    "startup_cost": 71.17,
+                    "total_cost": 73.72,
+                    "plan_rows": 1020,
+                    "plan_width": 48,
+                    "actual_startup_time": 0.01,
+                    "actual_total_time": 0.011,
+                    "actual_rows": 28,
+                    "actual_loops": 1,
+                    "plan_type": "Sort",
+                    "plan_id": "beaaf61f-55d1-4b8a-88be-bae707aeb8ec",
+                    "properties": [
+                      {
+                        "title": "parent_relationship",
+                        "value": "Subquery",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "sort_method",
+                        "value": "quicksort",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "sort_space_used",
+                        "value": 27,
+                        "type": "kB",
+                        "important": false
+                      },
+                      {
+                        "title": "sort_space_type",
+                        "value": "Memory",
+                        "type": "text",
+                        "important": false
+                      }
+                    ]
+                  },
+                  {
+                    "startup_cost": 0.0,
+                    "total_cost": 20.2,
+                    "plan_rows": 1020,
+                    "plan_width": 48,
+                    "actual_startup_time": 0.001,
+                    "actual_total_time": 0.003,
+                    "actual_rows": 28,
+                    "actual_loops": 1,
+                    "plan_type": "SeqScan",
+                    "plan_id": "8865b6b4-cb70-4095-b6e8-24d6c03ccb47",
+                    "properties": [
+                      {
+                        "title": "parent_relationship",
+                        "value": "Outer",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "schema",
+                        "value": "edgedbpub",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "alias",
+                        "value": "Movie~12",
+                        "type": "text",
+                        "important": false
+                      },
+                      {
+                        "title": "relation_name",
+                        "value": "Movie",
+                        "type": "relation",
+                        "important": false
+                      }
+                    ]
+                  }
+                ],
+                "subplans": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "coarse_grained": {
+    "startup_cost": 760.88,
+    "total_cost": 760.9,
+    "plan_rows": 1,
+    "plan_width": 32,
+    "actual_startup_time": 0.262,
+    "actual_total_time": 0.264,
+    "actual_rows": 1,
+    "actual_loops": 1,
+    "plan_id": "f60314eb-7e6a-41e9-a686-217b25f9f42f",
+    "relations": [],
+    "children": [
+      {
+        "kind": "pointer",
+        "name": "results",
+        "node": {
+          "startup_cost": 665.44,
+          "total_cost": 665.45,
+          "plan_rows": 1,
+          "plan_width": 32,
+          "actual_startup_time": 0.225,
+          "actual_total_time": 0.227,
+          "actual_rows": 1,
+          "actual_loops": 1,
+          "plan_id": "99b2414d-6fa9-4ae6-a76b-ea694575500f",
+          "relations": ["Movie"],
+          "contexts": [
+            {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+            {"start": 101, "end": 107, "buffer_idx": 0, "text": "movies"},
+            {
+              "start": 130,
+              "end": 224,
+              "buffer_idx": 0,
+              "text": "results := (select results {\n    title,\n    release_year,\n    actors: {\n      name,\n    }\n  })"
+            }
+          ],
+          "children": [
+            {
+              "kind": "pointer",
+              "name": "actors",
+              "node": {
+                "startup_cost": 6.39,
+                "total_cost": 6.4,
+                "plan_rows": 1,
+                "plan_width": 32,
+                "actual_startup_time": 0.024,
+                "actual_total_time": 0.024,
+                "actual_rows": 1,
+                "actual_loops": 8,
+                "plan_id": "b4d0a99b-7cc7-4066-bfe4-f4fb2fe11c4e",
+                "relations": ["Person", "Movie.actors"],
+                "contexts": [
+                  {"start": 192, "end": 198, "buffer_idx": 0, "text": "actors"}
+                ],
+                "children": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "pointer",
+        "name": "hasMore",
+        "node": {
+          "startup_cost": 71.17,
+          "total_cost": 73.72,
+          "plan_rows": 1020,
+          "plan_width": 48,
+          "actual_startup_time": 0.01,
+          "actual_total_time": 0.011,
+          "actual_rows": 28,
+          "actual_loops": 1,
+          "plan_id": "beaaf61f-55d1-4b8a-88be-bae707aeb8ec",
+          "relations": [],
+          "contexts": [
+            {"start": 33, "end": 38, "buffer_idx": 0, "text": "Movie"},
+            {
+              "start": 228,
+              "end": 257,
+              "buffer_idx": 0,
+              "text": "hasMore := count(movies) > 10"
+            }
+          ],
+          "children": []
+        }
+      }
+    ]
+  }
+}

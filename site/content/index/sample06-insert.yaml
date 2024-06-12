@@ -1,0 +1,70 @@
+title: Mutation
+
+columns:
+- lang: edgeql
+  body: |
+    # 1. Create some data
+
+    WITH
+      # Define a specific expression to be used
+      # later in the statement.
+      Alice := (
+        SELECT User
+        FILTER User.name = 'Alice'
+      )
+
+    INSERT
+      Issue {
+        title := 'Update EdgeQL examples',
+        body := "I've fixed a few typos. Also " ++
+                "I've added a bunch more examples.",
+
+        # Select an existing Status object
+        status := (
+          SELECT Status
+          FILTER Status.name = 'OPEN'
+        ),
+
+        # Select an existing User as owner by using
+        # the previously defined expression.
+        owner := Alice,
+
+        # Rather than selecting an existing LogEntry,
+        # create a new one and attach it as a link
+        # to this Issue.
+        time_spent_log := (
+          INSERT LogEntry {
+            body := 'A bunch of updates',
+            # The owner is the same as for the
+            # parent Issue.
+            owner := Alice,
+            spent_time := 45
+          }
+        )
+      };
+
+- lang: edgeql
+  body: |
+    # 2. Update some data
+
+    UPDATE
+      Issue
+    FILTER
+      # Get the Issue to be updated based
+      # on the name.
+      Issue.title = 'Update EdgeQL examples'
+
+    SET {
+      time_spent_log := (
+        # Add one more LogEntry to existing
+        # logs.
+        Issue.time_spent_log UNION (
+          INSERT
+            LogEntry {
+              body := 'Fix typos',
+              owner := Issue.owner,
+              spent_time := 5
+            }
+        )
+      )
+    };
