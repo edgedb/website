@@ -1,0 +1,3 @@
+# CRA overriders "tsconfig.json" with own style on "yarn start"
+apps/studio/tsconfig.json
+

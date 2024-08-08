@@ -1,0 +1,35 @@
+@import "../../mixins.scss";
+
+.expandingArrow {
+  fill: none !important;
+  stroke: var(--arrowColour, var(--edb_mid_blue));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  &.expandBox {
+    transition: margin-right 0.3s;
+    margin-right: calc(
+      -1px * var(--expandArrowBy) + (var(--expandArrow, 0) *
+            var(--expandArrowBy) * 1px)
+    );
+  }
+
+  path {
+    will-change: transform;
+  }
+
+  .arrowLine {
+    stroke-linecap: butt;
+    transition: transform 0.3s;
+    transform: scaleX(
+      calc(1 + (var(--expandArrow, 0) * var(--expandArrowBy) / 2))
+    );
+  }
+
+  .arrowHead {
+    transition: transform 0.3s;
+    transform: translateX(
+      calc(var(--expandArrow, 0) * var(--expandArrowBy) * 1px)
+    );
+  }
+}

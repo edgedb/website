@@ -1,0 +1,34 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.blogToC {
+  grid-column: left-sidebar;
+  align-self: start;
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: sticky;
+  top: 0px;
+
+  height: calc(100vh - 128px);
+  max-width: 204px;
+
+  overflow: hidden;
+
+  margin-right: var(--bannerOverhang);
+  margin-bottom: 48px;
+
+  &.hide {
+    visibility: hidden;
+  }
+
+  @include responsive(lg, max-width, 156px);
+
+  @include breakpoint(md) {
+    display: none;
+    margin-left: 0px;
+  }
+}

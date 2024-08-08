@@ -1,0 +1,9 @@
+.. blog:published-on:: 2022-11-07 10:01 AM PST
+
+========
+Series A
+========
+
+We are excited to `announce </blog/edgedb-series-a>`_ that EdgeDB has
+raised a $15m Series A financing round! Continue reading to learn what
+this means for the product and the team behind it.

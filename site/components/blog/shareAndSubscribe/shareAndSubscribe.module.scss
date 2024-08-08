@@ -1,0 +1,77 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+  grid-column: right-sidebar;
+  align-self: start;
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 16px;
+
+  position: sticky;
+  top: 0px;
+
+  height: calc(100vh - 128px);
+  width: 144px;
+
+  overflow: hidden;
+
+  margin-left: var(--bannerOverhang);
+  margin-bottom: 48px;
+
+  @include breakpoint(md) {
+    display: none;
+    margin-left: 0px;
+  }
+
+  &.hide {
+    visibility: hidden;
+  }
+
+  .iconLink {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    padding: 8px 12px;
+    border: 2px solid rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+
+    cursor: pointer;
+    color: var(--baseTextDarkTheme);
+
+    &:first-child {
+      @include responsive(md, display, none);
+    }
+
+    svg {
+      display: block;
+      color: #808080;
+
+      height: 24px;
+
+      path {
+        fill: currentColor;
+      }
+    }
+
+    span {
+      font-size: 12px;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: var(--accentViolet);
+      border-color: var(--accentViolet);
+      color: var(--grey6);
+
+      svg {
+        color: var(--grey6);
+      }
+    }
+  }
+}

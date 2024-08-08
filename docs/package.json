@@ -1,0 +1,43 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "next start",
+    "dev": "yarn data-build --watch",
+    "build": "yarn data-build --clean --skip nextjs --embeddings && yarn next build",
+    "data-build": "tsx dataBuild/index.ts",
+    "lint": "next lint",
+    "setup": "cd ../ && ./setup.sh && cd docs && npx @edgedb/generate edgeql-js",
+    "next": "PORT=3003 yarn exec next",
+    "embeddings": "cross-env tsx ../buildTools/gpt/generate-embeddings.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/open-sans": "^5.0.18",
+    "@fontsource-variable/roboto-mono": "^5.0.16",
+    "@fontsource/roboto": "^5.0.8",
+    "mobx-keystone": "^1.7.1",
+    "next": "14.1.2",
+    "posthog-js": "^1.136.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "sse.js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@edgedb-site/build-tools": "workspace:*",
+    "@edgedb-site/shared": "workspace:*",
+    "@edgedb/generate": "^0.4.1",
+    "@edgedb/inspector": "workspace:*",
+    "@edgedb/schema-graph": "workspace:*",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "sass": "^1.69.5",
+    "tsx": "^4.6.2",
+    "typescript": "^5"
+  }
+}

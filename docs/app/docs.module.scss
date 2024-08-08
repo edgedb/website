@@ -1,0 +1,327 @@
+@import "@/mixins.scss";
+@import "@/components/base.scss";
+
+.rstWrapper {
+  @include baseContentStyles;
+
+  .section {
+    display: block;
+  }
+
+  ul div[class^="code_code"],
+  ol div[class^="code_code"] {
+    @include breakpoint(sm) {
+      border-radius: 8px;
+    }
+  }
+
+  table {
+    th {
+      background-color: var(--grey85);
+    }
+
+    @include darkTheme {
+      th {
+        background-color: var(--grey14);
+      }
+    }
+  }
+}
+
+.indexPage {
+  @include baseContentStyles;
+  @include responsive(width, 912px, $lg: 720px, $md: 688px, $sm: 100%);
+  @include responsive(margin-right, -72px, $xl: -232px, $lg: 0);
+  @include responsive(margin-left, 0, $lg: -40px, $md: 0);
+
+  a p {
+    font-weight: 400;
+    color: var(--grey25);
+    @include darkTheme {
+      color: var(--grey65);
+    }
+  }
+
+  ul {
+    @include responsive(padding-left, 32px, $sm: 24px);
+  }
+
+  .code,
+  .youtube-embed {
+    @include responsive(margin, 16px 0px 32px 0px, $xl: 8px 0 24px 0);
+    @include responsive(
+      box-shadow,
+      0px 32px 40px -24px rgba(0, 0, 0, 0.15),
+      $sm: none
+    );
+
+    @include darkTheme {
+      @include responsive(
+        box-shadow,
+        0px 32px 40px -24px rgba(0, 0, 0, 0.25),
+        $sm: none
+      );
+    }
+  }
+
+  .guideArrow {
+    --arrowColour: #0075d1;
+    padding-left: 4px;
+    padding-bottom: 2px;
+  }
+
+  .getStarted {
+    display: grid;
+    @include responsive(
+      grid-template-columns,
+      1fr 1fr,
+      $lg: 354px auto,
+      $md: 354px auto,
+      $sm: 1fr
+    );
+
+    @include darkTheme {
+      b {
+        color: var(--grey80);
+      }
+    }
+
+    .linksBlock {
+      @include breakpoint(sm) {
+        padding-top: 24px;
+
+        .link {
+          margin-bottom: 4px;
+        }
+      }
+    }
+
+    a {
+      font-weight: 700;
+      margin: 0;
+      @include hover {
+        --expandArrow: 1;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        padding-left: 24px;
+
+        @include responsive(margin-bottom, 8px, $xl: 0);
+
+        span {
+          margin-left: 24px;
+          margin-right: 8px;
+          @include responsive(font-size, 18px, $sm: 14px);
+          @include responsive(line-height, 32px, $sm: 24px);
+        }
+      }
+    }
+  }
+
+  .logoWrapper {
+    border-radius: 8px;
+    border: 2px solid var(--grey85, #ccc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 112px;
+    transition: background-color 0.2s ease-in-out;
+
+    .iconPath,
+    .bunLogo,
+    .dotnet {
+      fill: var(--grey30);
+    }
+
+    .tsJs {
+      fill: var(--grey30);
+
+      @include darkTheme {
+        fill: var(--pageBg);
+      }
+    }
+
+    .dotnet {
+      g:first-child,
+      g:nth-child(3) {
+        fill: var(--pageBg);
+      }
+    }
+
+    &:hover {
+      background-color: var(--grey85);
+
+      @include darkTheme {
+        background-color: var(--grey14);
+        border-color: var(--grey14);
+
+        .tsJs {
+          fill: var(--grey14);
+        }
+      }
+    }
+
+    @include darkTheme {
+      border: 2px solid var(--grey20, #333);
+      .iconPath,
+      .dotnet {
+        fill: var(--grey80);
+      }
+      .bunLogo {
+        fill: #fbf0df;
+      }
+      .dotnet {
+        g:first-child,
+        g:nth-child(3) {
+          fill: var(--grey80);
+        }
+      }
+    }
+  }
+
+  .sectionCheatSheets {
+    > div:first-of-type {
+      @include responsive(margin-top, 32px, $lg: 24px, $sm: 16px);
+    }
+  }
+
+  .guides {
+    display: grid;
+    @include responsive(grid-template-columns, 1fr 1fr, $sm: 1fr);
+    padding-top: 16px;
+
+    a {
+      font-weight: 700;
+      padding-left: 24px;
+      @include hover {
+        --expandArrow: 1;
+      }
+    }
+
+    > div div:not(:first-child) {
+      @include responsive(margin-top, 8px, $sm: 0);
+    }
+  }
+
+  .tutorials {
+    padding: 16px 0;
+    display: grid;
+    @include responsive(
+      grid-template-columns,
+      1fr 1fr 1fr,
+      $lg: 1fr 1fr,
+      $sm: 1fr
+    );
+    gap: 24px;
+    @include breakpoint(sm) {
+      padding: 16px 24px;
+    }
+  }
+
+  .deployment {
+    @include responsive(display, flex, $lg: grid);
+    @include responsive(grid-template-columns, 1fr 1fr 1fr, $sm: 1fr 1fr);
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 0;
+    @include breakpoint(sm) {
+      padding: 16px 24px;
+    }
+  }
+
+  .tutorialLogo {
+    @extend .logoWrapper;
+    height: 116px;
+  }
+
+  .deploymentLogo {
+    @extend .logoWrapper;
+    width: 100%;
+  }
+
+  .introImg {
+    width: 100%;
+    padding-top: calc(100% / #{(912 / 583)});
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-top: 20px;
+    margin-bottom: 56px;
+
+    @include responsive(
+      box-shadow,
+      0px 32px 40px -24px rgba(0, 0, 0, 0.15),
+      $sm: none
+    );
+
+    @include darkTheme {
+      @include responsive(
+        box-shadow,
+        0px 32px 40px -24px rgba(0, 0, 0, 0.25),
+        $sm: none
+      );
+    }
+  }
+
+  .cloudGuiImg {
+    @extend .introImg;
+    @include responsive(border-radius, 8px, $sm: 0);
+    @include sizedBgImage("/_images/docs_cloud_gui", false);
+  }
+
+  .cloudCommands {
+    @include responsive(display, grid, $sm: block);
+    @include responsive(margin-top, 32px, $lg: 0);
+    @include responsive(
+      grid-template-columns,
+      repeat(2, calc(50% - 24px)),
+      $lg: 1fr
+    );
+    column-gap: 48px;
+
+    div:nth-child(2) div:nth-child(2) .code {
+      margin-bottom: 0;
+    }
+  }
+
+  .deploymentList {
+    @include responsive(margin-bottom, 65px, $xl: 55px, $lg: 23px, $sm: 24px);
+  }
+
+  .sectionCloudCode {
+    .code {
+      &:nth-of-type(2) {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .clientsLanguages {
+    padding: 16px 0;
+    display: grid;
+    gap: 21px;
+    @include responsive(
+      grid-template-columns,
+      1fr 1fr 1fr 1fr 1fr,
+      $lg: 1fr 1fr 1fr 1fr,
+      $sm: 1fr 1fr
+    );
+
+    @include breakpoint(sm) {
+      padding: 16px 24px;
+    }
+  }
+
+  .sectionClientsDesign {
+    > div {
+      display: grid;
+      @include responsive(grid-template-columns, 1fr 1fr, $lg: 1fr);
+
+      h3 {
+        color: var(--accent_green_dark_theme);
+        text-transform: uppercase;
+      }
+    }
+  }
+}

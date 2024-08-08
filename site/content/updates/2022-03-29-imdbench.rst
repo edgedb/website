@@ -1,0 +1,13 @@
+.. blog:published-on:: 2022-03-29 10:01 AM PST
+
+========
+IMDBench
+========
+
+We are open-sourcing a new benchmarking rig called `IMDBench
+<https://github.com/edgedb/imdbench>`_. The goal is
+to evaluate the performance of major ORM libraries with realistic
+queries that would be required for a hypothetical IMDB-style movie
+database application.
+
+Read our announcement `blog post </blog/why-orms-are-slow-and-getting-slower>`_.
