@@ -1,0 +1,530 @@
+@import "../../mixins.scss";
+@import "./mixins.scss";
+
+.code {
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: auto;
+  background-color: var(--codeBgColour);
+  @include responsive(border-radius, 8px, $sm: 0);
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &.scrollDisabled {
+    overflow: hidden;
+  }
+
+  @include monospace;
+
+  @include responsive(font-size, 16px, $lg: 15px, $sm: 13px);
+
+  --lineHeight: var(--codeBlockLineHeight, 24px);
+  @include breakpoint(sm) {
+    --lineHeight: var(--codeBlockLineHeight, 20px);
+  }
+
+  line-height: var(--lineHeight);
+  color: var(--syntaxText);
+
+  --vPad: var(--codeBlockVerticalPadding, 16px);
+  --vTopPad: var(--codeBlockVerticalPadding, 16px); // tablet & mobile only
+  --hPad: var(--codeBlockHorizontalPadding, 20px);
+
+  &.inline {
+    padding: 0.1em 0.25em;
+    font-size: 95%;
+  }
+
+  pre {
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .block {
+    @include responsive(
+      padding,
+      10px var(--hPad),
+      $sm: var(--vTopPad) var(--hPad) 10px var(--hPad),
+      $touch: var(--vTopPad) var(--hPad) 10px var(--hPad)
+    );
+    width: calc(
+      1ch * var(--maxLineLength) + 2 * var(--hPad) + var(--copyButtonSpacer)
+    );
+    min-width: 100%;
+    transition: background-color 0.1s;
+  }
+
+  .lineNumbers {
+    float: left;
+    text-align: right;
+    margin-right: 2ch;
+    opacity: 0.5;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .diffLines {
+    height: 0;
+    @include responsive(
+      margin-top,
+      var(--vPad),
+      $sm: var(--vTopPad),
+      $touch: var(--vTopPad)
+    );
+
+    @include responsive(
+      margin-bottom,
+      calc(-1 * var(--vPad)),
+      $sm: calc(-1 * var(--vTopPad)),
+      $touch: calc(-1 * var(--vTopPad))
+    );
+
+    width: calc(
+      1ch * var(--maxLineLength) + 2 * var(--hPad) + var(--copyButtonSpacer)
+    );
+    min-width: 100%;
+
+    div {
+      height: var(--lineHeight);
+      padding-left: 10px;
+    }
+    .p {
+      background: #d1f1e8;
+      color: #54965a;
+
+      &:before {
+        content: "+";
+      }
+    }
+    .m {
+      background: #fbe0e0;
+      color: #b15858;
+
+      &:before {
+        content: "-";
+      }
+    }
+
+    @include darkTheme {
+      .p {
+        background: #0e221b;
+        color: #3ca98b;
+      }
+      .m {
+        background: #351a1a;
+        color: #e06e6e;
+      }
+    }
+  }
+
+  .highlightWrapper {
+    display: contents;
+
+    --copyButtonSpacer: 0px;
+
+    &.hasCopyButton {
+      --copyButtonSpacer: 62px;
+
+      .block,
+      .diffLines {
+        --vTopPad: 34px;
+      }
+    }
+
+    &:not(:last-child) .block {
+      @include responsive(margin-bottom, 8px, $sm: 0, $touch: 0);
+
+      @include responsive(
+        border-bottom,
+        none,
+        $sm: 2px solid var(--grey90),
+        $touch: 2px solid var(--grey90)
+      );
+
+      @include darkTheme {
+        border-bottom-color: var(--grey10);
+      }
+    }
+
+    &:first-of-type .block {
+      @include responsive(
+        padding-top,
+        var(--vPad),
+        $sm: var(--vTopPad),
+        $touch: var(--vTopPad)
+      );
+    }
+    &:last-of-type .block {
+      padding-bottom: var(--vPad);
+    }
+  }
+
+  &.showHighlight .highlightWrapper:hover .block {
+    background-color: var(--codeBlockHighlightColour, var(--grey85));
+
+    @include darkTheme {
+      background-color: var(--codeBlockHighlightColour, var(--grey12));
+    }
+  }
+
+  :global {
+    @include tokenColours;
+  }
+
+  &:global(.code-language-edgeql-synopsis),
+  &:global(.code-language-sdl-synopsis) {
+    :global {
+      .token {
+        color: inherit;
+
+        &.keyword,
+        &.string {
+          font-weight: 500;
+        }
+        &.synopsis-placeholder {
+          font-style: italic;
+        }
+        &.synopsis-text {
+          color: var(--syntaxSynopsis);
+          * {
+            color: var(--syntaxSynopsis);
+          }
+        }
+        &.optional {
+          color: var(--syntaxOptional);
+        }
+      }
+    }
+  }
+}
+
+.repl {
+  .codePart {
+    display: flex;
+  }
+
+  .outPart,
+  .codePart pre:first-child {
+    color: #777;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @include breakpoint(sm) {
+    font-size: 13px;
+    --lineHeight: var(--codeBlockLineHeight, 20px);
+  }
+}
+
+.showMore {
+  position: sticky;
+  bottom: 0;
+  height: 50px;
+  width: 100px;
+  left: calc(50% - 50px);
+  background: #fff;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include monospace;
+  padding-top: 6px;
+  font-size: 13px;
+  z-index: 1;
+  cursor: pointer;
+
+  @include darkTheme {
+    color: var(--grey50);
+    background: var(--grey14);
+
+    &:hover {
+      color: var(--grey6);
+      background: var(--accentViolet);
+    }
+  }
+}
+
+.code {
+  &.collapsed {
+    max-height: calc(1em * var(--code-max-height));
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(
+        var(--codeBgColourTransparent),
+        var(--codeBgColour)
+      );
+    }
+  }
+
+  &.expanded {
+    .showMore svg {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.copyCodeButtonWrapper {
+  height: 0;
+  width: calc(
+    1ch * var(--maxLineLength) + 2 * var(--hPad) + var(--copyButtonSpacer)
+  );
+  min-width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  @include responsive(opacity, 0, $sm: 1, $touch: 1);
+  transition: opacity 0.1s;
+  z-index: 1;
+
+  .copyCode {
+    position: sticky;
+    @include responsive(right, 10px, $sm: 8px, $touch: 8px);
+    user-select: none;
+  }
+
+  .highlightWrapper:hover & {
+    opacity: 1;
+  }
+}
+
+.copyCodeDisplaceWrapper {
+  @include responsive(display, none, $sm: flex);
+  flex-wrap: wrap-reverse;
+  align-items: flex-end;
+  user-select: none;
+  margin-bottom: calc(-2 * var(--lineHeight));
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.1s;
+  pointer-events: none;
+
+  .copyCode {
+    width: 70px;
+    visibility: hidden;
+  }
+
+  .showHighlight &:before {
+    content: "";
+    background-color: var(--codeBlockHighlightColour, white);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--lineHeight) * 2);
+    width: calc(
+      1ch * var(--maxLineLength) + 2 * var(--hPad) + var(--copyButtonSpacer)
+    );
+    min-width: 100%;
+
+    @include darkTheme {
+      background-color: var(--codeBlockHighlightColour, #242424);
+    }
+  }
+
+  .highlightWrapper:hover & {
+    opacity: 1;
+  }
+}
+
+.copyCodeFirstLine {
+  padding-right: 10px;
+  height: calc(var(--lineHeight) * 2);
+  padding-left: var(--hPad);
+  box-sizing: content-box;
+}
+
+.copyCode {
+  @include responsive(margin-top, 10px, $sm: 4px, $touch: 4px);
+  @include responsive(margin-right, 10px, $sm: 2px, $touch: 2px);
+  margin-bottom: calc(-1 * var(--codeButtonInset, 10px));
+
+  border-radius: 4px;
+
+  @include responsive(
+    background-color,
+    var(--grey40),
+    $sm: transparent,
+    $touch: transparent
+  );
+
+  @include responsive(
+    box-shadow,
+    0px 2px 2px rgba(0, 0, 0, 0.04),
+    $sm: none,
+    $touch: none
+  );
+
+  @include responsive(
+    color,
+    var(--grey80),
+    $sm: var(--grey60),
+    $touch: var(--grey60)
+  );
+
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  @include monospace;
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1;
+
+  svg {
+    @include responsive(margin-right, 7px, $sm: 0, $touch: 0);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(1px);
+  }
+
+  .copyLabel {
+    @include responsive(display, block, $sm: none, $touch: none);
+  }
+
+  .copiedLabel {
+    @include responsive(display, block, $sm: none, $touch: none);
+  }
+
+  .copiedIcon {
+    @include responsive(display, none, $sm: block, $touch: block);
+  }
+
+  @include darkTheme {
+    @include responsive(
+      color,
+      var(--grey8),
+      $sm: var(--grey40),
+      $touch: var(--grey40)
+    );
+  }
+}
+
+.codeTabs {
+  &.codeTabs:after {
+    top: 44px;
+    border-top-left-radius: 0 !important;
+  }
+
+  .tabs {
+    display: flex;
+    height: 44px;
+    font-size: 16px;
+    overflow-x: auto;
+    margin: 0 calc(-1 * var(--overhang));
+    @include hideScrollbars;
+
+    @include breakpoint(md) {
+      font-size: 14px;
+    }
+  }
+
+  .tab {
+    flex-shrink: 0;
+    padding: 0 16px;
+    margin: 0 1px;
+    margin-top: 6px;
+    min-width: 4em;
+    text-align: center;
+    background: var(--codeTabColor, #e6e6e6);
+    color: #666;
+    line-height: 36px;
+    cursor: pointer;
+    user-select: none;
+
+    &.selected {
+      color: inherit;
+      background: var(--codeSelectedTabColor, var(--codeBgColour));
+      padding: 0 18px;
+      margin: 0 -1px;
+      margin-top: 0px;
+      padding-top: 6px;
+      border-radius: 6px 6px 0 0;
+    }
+
+    &:first-child {
+      @include responsive(border-top-left-radius, 6px, $sm: 0);
+      margin-left: 0;
+      padding-left: 18px;
+    }
+    &:last-child {
+      border-top-right-radius: 6px;
+      margin-right: 0;
+      padding-right: 18px;
+    }
+
+    @include darkTheme {
+      background: var(--codeTabColor, var(--grey14));
+      color: var(--grey50);
+
+      &.selected {
+        color: inherit;
+        background: var(--codeBgColour);
+      }
+    }
+  }
+
+  .tabContent {
+    display: none;
+
+    &.selected {
+      display: block;
+    }
+
+    .code {
+      margin-top: 0 !important;
+      border-top-left-radius: 0 !important;
+    }
+  }
+
+  --vPad: 1px;
+  --hPad: var(--codeBlockHorizontalPadding, 20px);
+  .textTabContent {
+    padding: var(--vPad) var(--hPad) var(--vPad) var(--hPad);
+    .code {
+      border-radius: 8px !important;
+    }
+    .block {
+      background-color: #e6e6e6;
+      @include darkTheme {
+        background-color: #191919;
+      }
+    }
+  }
+}
+
+.caption {
+  width: 100%;
+  display: block;
+  position: sticky;
+  left: 0;
+  padding: 7px var(--vPad) 8px var(--vPad);
+  color: #191919;
+  background-color: #e6e6e6;
+  font-family: Open Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+
+  @include breakpoint(sm) {
+    font-size: 14px;
+  }
+
+  @include darkTheme {
+    color: #808080;
+    background-color: var(--grey14);
+  }
+}

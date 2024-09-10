@@ -1,0 +1,912 @@
+@import "@/mixins.scss";
+
+.headerAskAIButton {
+  color: var(--grey40);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    flex-shrink: 0;
+  }
+
+  @include darkTheme {
+    color: var(--grey55);
+  }
+
+  @include breakpoint(lg) {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+    color: var(--grey50);
+
+    .label {
+      display: none;
+    }
+
+    @include darkTheme {
+      color: var(--grey55);
+    }
+  }
+}
+
+.mobileAskAIButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background: var(--grey30);
+  color: var(--grey95);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+  }
+
+  @include breakpoint(sm) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @include darkTheme {
+    background: var(--grey55);
+    color: var(--grey8);
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparentize(#f7f7f7, 0.15);
+  z-index: 50;
+  transition: opacity 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 48px;
+
+  @include darkTheme {
+    background: transparentize(#000000, 0.4);
+  }
+
+  &:not(.popupOpen) {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  @include breakpoint(md) {
+    padding: 0;
+  }
+}
+
+.gptPanel {
+  * {
+    font-family: "Open Sans", sans-serif;
+  }
+
+  pre * {
+    font-family: "Roboto Mono", monospace;
+  }
+
+  background: #f7f7f7;
+  height: 100%;
+  width: 100%;
+  @include responsive(border-radius, 8px, $sm: 0);
+  position: relative;
+  display: flex;
+  position: relative;
+  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.16);
+
+  a {
+    color: var(--link_light_theme);
+    text-decoration: none;
+
+    @include darkTheme {
+      color: var(--link_dark_theme);
+    }
+  }
+
+  transform: translateY(-20px);
+  transition: transform 0.2s;
+
+  @include darkTheme {
+    background: #191919;
+    box-shadow: 0px 44px 48px -24px rgba(0, 0, 0, 0.16);
+  }
+
+  .popupOpen & {
+    transform: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  button {
+    border: none;
+  }
+
+  .main {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .output {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    height: 100%;
+    border-radius: 8px;
+    flex-grow: 1;
+    padding-bottom: 120px;
+
+    @include breakpoint(sm) {
+      padding-top: 32px;
+    }
+
+    .question {
+      display: flex;
+      padding: 24px 32px 0 32px;
+      border-bottom: 2px solid #f7f7f7;
+
+      @include breakpoint(sm) {
+        flex-direction: column;
+      }
+
+      @include darkTheme {
+        border-bottom: 2px solid #191919;
+      }
+
+      p {
+        font-size: 16px;
+        margin: 0;
+        flex-grow: 1;
+        @include responsive(line-height, 32px, $md: 24px);
+        @include responsive(padding-bottom, 30px, $sm: 16px);
+
+        @include darkTheme {
+          border-bottom-color: #525252;
+        }
+      }
+
+      .questionIcon {
+        fill: #808080;
+        flex-shrink: 0;
+        margin-right: 24px;
+
+        @include breakpoint(sm) {
+          margin-bottom: 6px;
+          margin-right: 0;
+          align-self: center;
+        }
+
+        circle {
+          fill: #bfbfbf;
+        }
+
+        @include darkTheme {
+          circle {
+            fill: #404040;
+          }
+        }
+      }
+    }
+
+    .answerWrapper {
+      padding-bottom: 40px;
+      border-radius: 8px;
+      background: #ebebeb;
+      @include responsive(width, 960px, $xxl: 760px, $lg: 576px, $md: 608px);
+      @include responsive(margin-top, 48px, $lg: 32px, $md: 64px);
+
+      @include breakpoint(sm) {
+        width: 100%;
+        border-radius: 0;
+      }
+
+      @include darkTheme {
+        background: #262626;
+      }
+
+      @include breakpointMobileFirst(sm) {
+        scrollbar-color: #dedede white;
+
+        @include darkTheme {
+          scrollbar-color: var(--grey25) #2e2e2e;
+        }
+
+        &::-webkit-scrollbar {
+          width: 12px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #dedede;
+          border-right: 8px solid white;
+          border-top: 12px solid white;
+          border-bottom: 12px solid white;
+          border-bottom-right-radius: 10px;
+
+          @include darkTheme {
+            background: #262626;
+            border-color: #2e2e2e;
+          }
+        }
+      }
+
+      .response {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        @include responsive(padding-left, 88px, $sm: 24px);
+        @include responsive(padding-right, 32px, $sm: 24px);
+        @include responsive(padding-top, 18px, $sm: 58px);
+        font-size: 16px;
+        @include responsive(line-height, 32px, $lg: 24px);
+
+        p {
+          margin-top: 6px;
+          margin-bottom: 12px;
+        }
+
+        > pre {
+          border-radius: 8px;
+          line-height: 24px;
+          margin: 4px 0 28px -52px;
+          @include responsive(font-size, 16px, $lg: 15px, $sm: 13px);
+
+          @include breakpoint(sm) {
+            border-radius: 0;
+            margin: 4px -24px 28px -24px;
+          }
+        }
+
+        h6 {
+          margin: 16px 0 12px 0;
+        }
+
+        blockquote {
+          margin-bottom: 4px;
+        }
+      }
+
+      .feedback {
+        font-size: 12px;
+        line-height: 16px;
+        color: #666666;
+        text-align: center;
+        margin: 8px 0 0;
+
+        @include darkTheme {
+          color: #999999;
+        }
+      }
+    }
+
+    .disableCopyHover {
+      div[class^="code_copyCode"] {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    .welcomeScreen {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        margin: 0;
+        line-height: 32px;
+
+        @include breakpoint(xl) {
+          line-height: 24px;
+        }
+      }
+
+      .welcomeIntro {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        @include responsive(padding, 0, $sm: 24px);
+
+        .welcomeText {
+          @include responsive(padding, 0 40px, $sm: 0);
+          @include responsive(
+            margin-top,
+            40px,
+            $lg: 28px,
+            $md: 36px,
+            $sm: 32px
+          );
+          margin-bottom: 90px;
+          font-size: 16px;
+          max-width: 568px;
+        }
+
+        .welcomeGptLogo {
+          fill: var(--grey45);
+
+          @include darkTheme {
+            fill: #808080;
+          }
+        }
+      }
+
+      .exampleTitle {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1f1f1f;
+        opacity: 0.5;
+        @include responsive(margin-bottom, 24px, $sm: 16px);
+
+        @include darkTheme {
+          color: #808080;
+          opacity: 1;
+        }
+      }
+
+      .exampleCards {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+
+        .card {
+          @include responsive(width, 288px, $lg: 256px, $sm: 100%);
+        }
+
+        @include breakpoint(sm) {
+          flex-direction: column;
+        }
+      }
+    }
+
+    .votingWrapper {
+      margin-top: 32px;
+      position: relative;
+      height: 48px;
+
+      .voteUpBtn {
+        cursor: pointer;
+        background: transparent;
+        position: absolute;
+        right: 50%;
+        transition: right 300ms;
+
+        .voteUpArrow {
+          rect {
+            stroke: #46b98f;
+          }
+          path {
+            fill: #46b98f;
+          }
+        }
+        .voted {
+          rect {
+            fill: #46b98f;
+          }
+
+          path {
+            fill: white;
+          }
+        }
+        &:hover {
+          .voteUpArrow {
+            rect {
+              fill: #46b98f;
+            }
+
+            path {
+              fill: white;
+            }
+          }
+        }
+
+        &:disabled {
+          pointer-events: none;
+          right: calc(50% - 28px);
+        }
+
+        @include darkTheme {
+          .voteUpArrow {
+            rect {
+              stroke: #1f9673;
+            }
+            path {
+              fill: #1f9673;
+            }
+          }
+          .voted {
+            rect {
+              fill: #1f9673;
+            }
+
+            path {
+              fill: #2e2e2e;
+            }
+          }
+
+          &:hover {
+            .voteUpArrow {
+              rect {
+                fill: #1f9673;
+              }
+
+              path {
+                fill: #2e2e2e;
+              }
+            }
+          }
+        }
+      }
+
+      .voteDownBtn {
+        cursor: pointer;
+        background: transparent;
+        position: absolute;
+        left: 50%;
+        transition: left 300ms;
+
+        .voteDownArrow {
+          rect {
+            stroke: #d6817a;
+          }
+          path {
+            fill: #d6817a;
+          }
+        }
+
+        .voted {
+          rect {
+            fill: #d6817a;
+          }
+
+          path {
+            fill: white;
+          }
+        }
+
+        &:hover {
+          .voteDownArrow {
+            rect {
+              fill: #d6817a;
+            }
+
+            path {
+              fill: white;
+            }
+          }
+        }
+
+        &:disabled {
+          pointer-events: none;
+          left: calc(50% - 28px);
+        }
+
+        @include darkTheme {
+          .voteDownArrow {
+            rect {
+              stroke: #af6963;
+            }
+            path {
+              fill: #af6963;
+            }
+          }
+
+          .voted {
+            rect {
+              fill: #af6963;
+            }
+
+            path {
+              fill: #2e2e2e;
+            }
+          }
+
+          &:hover {
+            .voteDownArrow {
+              rect {
+                fill: #af6963;
+              }
+
+              path {
+                fill: #2e2e2e;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .form {
+    color: #1f1f1f;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+
+    @include darkTheme {
+      color: #b3b3b3;
+    }
+
+    .formContent {
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      z-index: 2;
+
+      @include responsive(
+        width,
+        1004px,
+        $xxl: 812px,
+        $lg: 608px,
+        $md: 640px,
+        $sm: 100%
+      );
+      @include responsive(padding-bottom, 48px, $sm: 0px);
+
+      box-shadow: 0px -25px 26px 1px rgba(247, 247, 247, 1);
+      background: #f7f7f7;
+      pointer-events: none;
+
+      @include darkTheme {
+        background: #191919;
+        box-shadow: 0px -25px 26px 1px rgba(25, 25, 25, 1);
+      }
+    }
+
+    .promptWrapper {
+      position: relative;
+      display: flex;
+      pointer-events: all;
+      width: 100%;
+      @include responsive(min-height, 48px, $sm: 56px);
+      @include responsive(
+        max-height,
+        calc(100vh - 176px),
+        $lg: calc(100vh - 128px),
+        $md: calc(100vh - 112px),
+        $sm: calc(100vh - 72px)
+      );
+    }
+
+    .prompt {
+      margin: 0;
+      padding: 8px 60px 8px 24px;
+      @include responsive(font-size, 18px, $md: 16px);
+      line-height: 32px;
+      width: 100%;
+      font-family: "Open Sans";
+
+      @include breakpoint(sm) {
+        font-size: 14px;
+        line-height: 24px;
+        padding: 16px 46px 16px 16px;
+      }
+    }
+
+    .promptHiddenEl {
+      @extend .prompt;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-y: auto;
+      visibility: hidden;
+    }
+
+    .promptInput {
+      @extend .prompt;
+      border: none;
+      outline: none;
+      z-index: 1;
+      background: #4d4d4d;
+      color: #f5f5f5;
+      border-radius: 8px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      resize: none;
+      overflow-y: auto;
+      height: 100%;
+
+      @include darkTheme {
+        background: #bababa;
+        color: #191919;
+      }
+
+      @include breakpoint(sm) {
+        background: var(--grey25);
+        border-radius: 0;
+
+        @include darkTheme {
+          background: #dedede;
+          color: #4d4d4d;
+        }
+      }
+    }
+
+    .existingChat {
+      display: flex;
+      justify-content: flex-end;
+      @include responsive(width, 278px, $md: 260px, $sm: 128px);
+      flex-shrink: 0;
+      pointer-events: all;
+      transition: width 0.3s, opacity 0.3s;
+
+      &.hide {
+        width: 0;
+        opacity: 0;
+      }
+
+      & > div {
+        position: relative;
+        flex-shrink: 0;
+        width: max-content;
+        display: flex;
+        justify-content: flex-end;
+        gap: 24px;
+      }
+    }
+
+    .newChatBtn {
+      background: #7154ae;
+      padding: 8px 24px;
+      border-radius: 8px;
+      @include responsive(font-size, 18px, $md: 16px);
+      line-height: 32px;
+      cursor: pointer;
+      color: #f5f5f5;
+      margin: 0;
+      z-index: 1;
+
+      @include darkTheme {
+        background: #9f8dc7;
+        color: #191919;
+      }
+
+      @include breakpoint(sm) {
+        border-radius: 0;
+        font-size: 14px;
+        line-height: 24px;
+        padding: 16px 0px;
+        width: 128px;
+      }
+    }
+
+    .subtext {
+      position: absolute;
+      font-size: 12px;
+      line-height: 16px;
+      bottom: -2px;
+      color: #808080;
+      margin: 0;
+      bottom: -18px;
+      right: 4px;
+      z-index: 1;
+
+      @include breakpoint(sm) {
+        display: none;
+      }
+    }
+
+    .conjunction {
+      margin-bottom: 5px;
+      z-index: 1;
+
+      @include breakpoint(sm) {
+        display: none;
+      }
+    }
+
+    .mobileTopShadow {
+      @include breakpoint(sm) {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 1;
+
+        background: linear-gradient(
+          180deg,
+          #f7f7f7 0%,
+          #f7f7f7 5%,
+          rgba(247, 247, 247, 0.6) 51.25%,
+          rgba(247, 247, 247, 0) 100%
+        );
+
+        @include darkTheme {
+          background: linear-gradient(
+            180deg,
+            #191919 0%,
+            #191919 5%,
+            rgba(25, 25, 25, 0.6) 51.25%,
+            rgba(25, 25, 25, 0) 100%
+          );
+        }
+      }
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    @include responsive(top, 12px, $md: 16px, $sm: 24px);
+    @include responsive(right, 12px, $md: 16px, $sm: 24px);
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    color: var(--grey45);
+
+    @include darkTheme {
+      color: #808080;
+    }
+
+    @include breakpoint(sm) {
+      background: #d9d9d9;
+      line-height: 1;
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.3));
+
+      svg {
+        fill: var(--grey45);
+      }
+
+      @include darkTheme {
+        background: #2e2e2e;
+
+        svg {
+          fill: #808080;
+        }
+      }
+    }
+  }
+}
+
+.runQueryBtn {
+  position: absolute;
+  right: 14px;
+  bottom: 6px;
+  background: transparent;
+  line-height: 1;
+  padding: 3px 6px;
+  margin: 0;
+  z-index: 2;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    fill: var(--grey45);
+  }
+
+  &:enabled {
+    svg {
+      fill: #46b98f;
+    }
+  }
+
+  @include darkTheme {
+    svg {
+      fill: #808080;
+    }
+
+    &:enabled {
+      svg {
+        fill: #0d805e;
+      }
+    }
+  }
+
+  @include breakpoint(sm) {
+    bottom: 11px;
+    right: 10px;
+  }
+
+  &.inputDots {
+    bottom: 14px;
+
+    &:hover {
+      cursor: auto;
+    }
+  }
+}
+
+.gptLogo {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 20px;
+  @include responsive(left, 32px, $sm: calc(50% - 16px));
+
+  fill: #808080;
+
+  @include darkTheme {
+    fill: #808080;
+  }
+}
+
+.codeBlock {
+  margin-top: 0;
+}
+
+.loadingDots {
+  @include responsive(padding-top, 24px, $lg: 18px, $sm: 20px);
+
+  display: flex;
+  gap: 7px;
+  .dot1,
+  .dot2,
+  .dot3 {
+    background: #1f1f1f;
+    opacity: 0.3;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+
+    @include darkTheme {
+      background: #808080;
+    }
+  }
+  .dot1 {
+    animation: jump 2s -0.32s linear infinite;
+    opacity: 1;
+  }
+  .dot2 {
+    animation: jump 2s -0.16s linear infinite;
+    opacity: 1;
+  }
+  .dot3 {
+    animation: jump 2s linear infinite;
+    opacity: 1;
+  }
+
+  @keyframes jump {
+    0%,
+    80%,
+    100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    }
+    40% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+}
