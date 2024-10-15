@@ -1,0 +1,49 @@
+// Modified from https://gist.github.com/S1SYPHOS/5d216e9d9c8cd6047e4b8847e4032f28
+
+//  Function to replace characters in a string
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+  @return $string;
+}
+
+//  Function to create an url encoded string
+@function urlEncode($url) {
+  // Chunk up string in order to avoid "SystemStackError: stack level too deep"
+  $encoded: "";
+  $slice: 2000;
+  $index: 0;
+  $loops: ceil(str-length($url) / $slice);
+  @for $i from 1 through $loops {
+    $chunk: str-slice($url, $index, $index + $slice - 1);
+    $chunk: str-replace($chunk, "!", "%21");
+    $chunk: str-replace($chunk, "#", "%23");
+    $chunk: str-replace($chunk, "$", "%24");
+    $chunk: str-replace($chunk, "%", "%25");
+    $chunk: str-replace($chunk, "&", "%26");
+    $chunk: str-replace($chunk, "'", "%27");
+    $chunk: str-replace($chunk, "(", "%28");
+    $chunk: str-replace($chunk, ")", "%29");
+    $chunk: str-replace($chunk, "*", "%2A");
+    $chunk: str-replace($chunk, "+", "%2B");
+    $chunk: str-replace($chunk, ",", "%2C");
+    $chunk: str-replace($chunk, "/", "%2F");
+    $chunk: str-replace($chunk, ":", "%3A");
+    $chunk: str-replace($chunk, ";", "%3B");
+    $chunk: str-replace($chunk, "=", "%3D");
+    $chunk: str-replace($chunk, "?", "%3F");
+    $chunk: str-replace($chunk, "@", "%40");
+    $chunk: str-replace($chunk, "[", "%5B");
+    $chunk: str-replace($chunk, "]", "%5D");
+    $encoded: #{$encoded}#{$chunk};
+    $index: $index + $slice;
+  }
+  @return $encoded;
+}

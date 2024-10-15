@@ -1,0 +1,41 @@
+@import "./mixins.scss";
+
+.wrapper {
+  flex-grow: 1;
+}
+
+.content {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+
+  h1 {
+    @include responsiveAllXXL(font-size, 24px, 20px, 18px, 18px, 16px, 16px);
+    line-height: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--baseTextDarkTheme);
+
+    &:before {
+      content: "404";
+      font-family: "Sometype Mono", monospace;
+      @include responsiveAllXXL(
+        font-size,
+        220px,
+        180px,
+        140px,
+        140px,
+        120px,
+        120px
+      );
+      line-height: 1;
+      color: var(--grey18);
+    }
+  }
+}

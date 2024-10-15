@@ -1,0 +1,126 @@
+@import "@/mixins.scss";
+
+.overviewButtons {
+  display: flex;
+  gap: 16px;
+  height: 40px;
+  margin-bottom: 40px;
+
+  .searchButton {
+    display: flex;
+    flex-grow: 1;
+    padding: 0 16px;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border-radius: 6px;
+    color: var(--grey6);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+
+    svg {
+      width: 14px;
+      fill: currentColor;
+    }
+
+    @include darkTheme {
+      background: var(--grey55);
+    }
+  }
+
+  .discordLink {
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    color: var(--grey25);
+    background: var(--accent_violet_light_theme);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+
+    svg {
+      width: 19px;
+      fill: currentColor;
+    }
+
+    @include darkTheme {
+      color: var(--grey6);
+      background: var(--accent_violet_dark_theme);
+    }
+  }
+}
+
+.questionList {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+
+  a {
+    display: flex;
+    padding: 14px 24px 14px 24px;
+    align-items: center;
+    gap: 16px;
+    background: var(--grey90);
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+
+    @include darkTheme {
+      background: var(--grey6);
+      color: var(--grey60);
+    }
+  }
+}
+
+.tagsList {
+  position: sticky;
+  top: calc(var(--pageHeaderHeight) + 32px);
+  display: flex;
+  flex-direction: column;
+  margin-top: 92px;
+  align-items: start;
+  gap: 8px;
+
+  a {
+    text-decoration: none;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: var(--grey90);
+    color: var(--grey50);
+    @include monospace;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+
+    @include darkTheme {
+      background: var(--grey14);
+    }
+  }
+}
+
+div.questionBlock {
+  border-radius: 8px;
+  margin-bottom: 56px;
+
+  background: #fff;
+  box-shadow: 0px 32px 40px -24px rgba(0, 0, 0, 0.25);
+
+  @include darkTheme {
+    background: var(--grey12);
+  }
+
+  h2 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 32px;
+    padding-top: 16px;
+    padding-bottom: 0;
+  }
+}

@@ -1,0 +1,79 @@
+title: GraphQL
+
+columns:
+- lang: graphql
+  body: |
+    query {
+      Issue(filter: {number: {eq: $number}}) {
+        number
+        title
+
+        owner {
+          name
+        }
+        watchers {
+          name
+        }
+        priority {
+          name
+        }
+        status {
+          name
+        }
+
+        # total_time_spent cannot be emulated
+        # out-of-the box, so all the time logs
+        # should be retrieved instead
+        time_spent_log {
+          spent_time
+        }
+
+        start_date
+        due_date
+
+        related_to {
+          number
+          title
+          priority {
+            name
+          }
+        }
+      }
+    }
+
+- lang: json
+  body: |
+    // An example JSON result of the query.
+    {
+      "Issue": [{
+        "number": 163,
+        "title": "Sign-in doesn't work",
+        "owner": {
+          "name": "Joe Doe"
+        },
+        "watchers": [
+          {
+            "name": "Anna Smith"
+          },
+          {
+            "name": "Peter Mill"
+          }
+        ],
+        "priority": {
+          "name": "URGENT"
+        },
+        "status": {
+          "name": "OPEN"
+        },
+        "time_spent_log": null,
+        "start_date": "2015-08-11T20:23:06+00:00",
+        "due_date": "2015-08-11T22:00:06+00:00",
+        "related_to": [{
+          "number": 121,
+          "title": "Sign-up doesn't work",
+          "priority": {
+            "name": "URGENT"
+          }
+        }]
+      }]
+    }

@@ -1,0 +1,154 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.page {
+  @include responsiveAll(
+    --contentWidth,
+    832px,
+    752px,
+    752px,
+    640px,
+    min(400px, 100%)
+  );
+
+  --codeBgColour: var(--grey6);
+}
+
+.pageFooter {
+  background: none;
+  z-index: 1;
+  --footerSubscribeBgColour: #f7f7f7;
+}
+
+.content {
+  grid-column: content;
+  margin-bottom: 30px;
+  z-index: 1;
+
+  a {
+    color: var(--accentGreenDarkTheme);
+  }
+
+  p,
+  ol,
+  ul {
+    font-size: 20px;
+    line-height: 32px;
+    color: var(--baseTextDarkTheme, #bababa);
+
+    @include responsive(xl, font-size, 18px);
+    @include responsive(xl, line-height, 32px);
+    @include responsive(sm, font-size, 16px);
+    @include responsive(sm, line-height, 32px);
+  }
+
+  p {
+    margin-bottom: 24px;
+  }
+
+  ol {
+    padding-left: 3em;
+    list-style-type: none;
+
+    li {
+      margin-bottom: 16px;
+      counter-increment: section;
+      position: relative;
+      padding-left: 6px;
+    }
+
+    li:before {
+      content: "(" counter(section, lower-alpha) ")";
+      position: absolute;
+      left: -1.4em;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-style: normal;
+    font-weight: $weight_bold;
+    letter-spacing: -0.03em;
+    color: var(--grey80);
+    margin: 0;
+  }
+
+  h1 {
+    @include edgedbfont;
+    text-align: center;
+    @include responsiveAll(font-size, 112px, 96px, 80px, 80px, 38px);
+    @include responsiveAll(line-height, 104px, 80px, 80px, 80px, 36px);
+    @include responsiveAll(
+      letter-spacing,
+      -3.36px,
+      -2.88px,
+      -2.4px,
+      -2.4px,
+      -1.14px
+    );
+    margin: auto;
+    @include responsiveAll(margin-top, 100px, 56px, 36px, 36px, 36px);
+    margin-bottom: 60px;
+    @include responsive(lg, margin-bottom, 36px);
+
+    max-width: 746px;
+    @include responsive(lg, max-width, 640px);
+    @include responsive(sm, max-width, 272px);
+  }
+
+  h2 {
+    @include responsiveAll(font-size, 28px, 26px, 26px, 26px, 22px);
+    @include responsiveAll(line-height, 32px, 32px, 32px, 32px, 24px);
+    margin-top: 46px;
+    @include responsive(sm, margin-top, 38px);
+  }
+
+  h3 {
+    @include responsiveAll(font-size, 22px, 22px, 20px, 20px, 18px);
+    line-height: 28px;
+    margin-top: 36px;
+    @include responsive(sm, margin-top, 28px);
+  }
+
+  > div {
+    p:first-of-type {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 40px;
+      text-align: center;
+      margin-top: 0px;
+      @include responsiveAll(margin-bottom, 64px, 50px, 34px, 34px, 24px);
+    }
+  }
+}
+
+.termsAndConditions {
+  ol {
+    counter-reset: section;
+  }
+
+  li {
+    counter-increment: section;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  & > ol > li {
+    &::marker {
+      content: counters(section, ".") ". \00A0";
+    }
+
+    & > ol > li {
+      &::marker {
+        content: counters(section, ".") " \00A0";
+      }
+
+      & > ol > li::marker {
+        content: "(" counter(section, lower-alpha) ") \00A0";
+      }
+    }
+  }
+}

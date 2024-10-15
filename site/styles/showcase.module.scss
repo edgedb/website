@@ -1,0 +1,278 @@
+@import "./mixins.scss";
+
+.page {
+  background: none;
+
+  --grayDarkColor: #4d4d4d;
+  --whiteTextColor: #e5e5e5;
+
+  @include responsiveAllXXL(
+    --contentWidth,
+    1222px,
+    1222px,
+    1113px,
+    929px,
+    640px,
+    min(520px, 100%)
+  );
+
+  @include responsiveAll(
+    background-size,
+    3686px,
+    1920px,
+    1704px,
+    1332px,
+    1032px
+  );
+
+  @include responsiveAll(
+    background-position-y,
+    -579px,
+    -40px,
+    -76px,
+    -24px,
+    -40px
+  );
+}
+
+.pageFooter {
+  background: none;
+  z-index: 1;
+  --footerSubscribeBgColour: #f7f7f7;
+}
+
+.content {
+  grid-column: content;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  @include responsive(xxl, margin-top, 72px);
+  z-index: 1;
+
+  p,
+  ol,
+  ul {
+    font-size: 20px;
+    line-height: 40px;
+    @include responsive(xl, font-size, 18px);
+    @include responsive(xl, line-height, 32px);
+    @include responsive(md, font-size, 16px);
+  }
+
+  ol,
+  ul {
+    padding-left: 3em;
+
+    li {
+      padding-left: 15px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @include edgedbfont;
+    font-style: normal;
+    font-weight: $weight_bold;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: var(--grayDarkColor);
+    margin: 0;
+  }
+
+  h1 {
+    margin: 32px auto 62px auto;
+    @include responsiveAll(font-size, 112px, 96px, 80px, 76px, 38px);
+    @include responsiveAll(line-height, 112px, 96px, 80px, 76px, 38px);
+    @include responsive(md, margin-top, 0);
+    @include responsiveAll(max-width, 800px, 690px, 600px, 540px, 280px);
+  }
+
+  h2 {
+    @include responsiveAll(font-size, 80px, 80px, 48px, 48px, 32px);
+    @include responsiveAll(line-height, 80px, 80px, 48px, 48px, 32px);
+    margin-bottom: 100px;
+  }
+
+  h3 {
+    @include responsiveAll(font-size, 80px, 64px, 48px, 48px, 32px);
+    @include responsiveAll(line-height, 80px, 64px, 48px, 48px, 32px);
+    @include responsiveAll(margin-bottom, 82px, 60px, 60px, 48px, 36px);
+    margin-top: 60px;
+    @include responsive(xl, margin-top, 0);
+  }
+
+  h4 {
+    font-weight: $weight_semibold;
+    @include responsiveAll(font-size, 48px, 40px, 40px, 40px, 32px);
+    @include responsiveAll(line-height, 64px, 64px, 64px, 64px, 32px);
+    margin-bottom: 30px;
+  }
+
+  h5 {
+    font-size: 20px;
+    color: var(--whiteTextColor);
+  }
+
+  h6 {
+    font-size: 20px;
+    color: #000;
+    margin: 8px 0 0 0;
+  }
+
+  dl {
+    margin-top: 0px;
+  }
+
+  dd {
+    margin-bottom: 15px;
+  }
+
+  .dots {
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+
+  .code {
+    margin-left: calc(-1 * var(--codeBlockHorizontalPadding));
+    margin-right: calc(-1 * var(--codeBlockHorizontalPadding));
+    @include responsive(sm, margin-left, calc(-1 * var(--pageMargin)));
+    @include responsive(sm, margin-right, calc(-1 * var(--pageMargin)));
+    margin-bottom: 68px;
+    @include responsive(xl, margin-bottom, 58px);
+    margin-top: 10px;
+  }
+
+  .subtleText {
+    font-size: 18px;
+    text-align: center;
+    @include responsive(xl, font-size, 16px);
+    @include responsive(sm, font-size, 15px);
+    color: #b3b3b3;
+    margin-bottom: 10px;
+  }
+
+  .light {
+    color: var(--whiteTextColor);
+  }
+}
+
+.intro {
+  margin: 0 auto 50px auto;
+  @include responsiveAll(width, 820px, 736px, 704px, 630px, min(520px, 100%));
+
+  p {
+    font-size: 24px;
+    line-height: 48px;
+    margin: auto;
+
+    @include responsive(md, font-size, 20px);
+    @include responsive(sm, font-size, 18px);
+    @include responsive(sm, line-height, 32px);
+  }
+}
+
+.edgeqlIntro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @include responsive(sm, grid-template-columns, 1fr);
+  @include responsiveAll(column-gap, 120px, 100px, 80px, 48px, 38px);
+
+  .edgeqlIntroSection {
+    p {
+      margin: 0;
+      @include responsive(lg, font-size, 16px);
+    }
+  }
+}
+
+.edgeqlIntroCode {
+  @include responsiveAll(width, 640px, 608px, 608px, min(100%, 560px), 100%);
+}
+
+.codeExplainer {
+  --codeBgColour: #ffffff;
+
+  .tab {
+    background-color: transparent;
+  }
+}
+
+.darkSection {
+  position: relative;
+  margin-top: 40px;
+}
+
+.section {
+  @include responsiveAll(margin-top, 140px, 110px, 80px, 60px, 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  p {
+    width: 100%;
+    max-width: 640px;
+    @include responsive(xl, max-width, 608px);
+    @include responsive(md, max-width, 560px);
+  }
+}
+
+.sectionBody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include responsiveAllXXL(width, 1222px, 1113px, 1113px, 929px, 100%, 100%);
+  @include responsiveAllXXL(column-gap, 140px, 70px, 70px, 16px, 0, 0);
+}
+
+.narrowSection {
+  @include responsiveAll(width, 640px, 608px, 608px, min(100%, 560px), 100%);
+  @include responsiveAll(margin-top, 140px, 110px, 80px, 60px, 80px);
+  margin-left: auto;
+  margin-right: auto;
+  p {
+    @include responsive(xl, font-size, 18px);
+    @include responsive(xl, line-height, 32px);
+    @include responsive(md, font-size, 16px);
+  }
+
+  .stepByStepSection {
+    color: #4d4d4d;
+    --titleColor: #4e4e4e;
+    --decorationColor: #f7f7f7;
+  }
+}
+
+.exampleCode {
+  --codeBgColour: transparent;
+  --codeBlockVerticalPadding: 30px;
+  --codeBlockHorizontalPadding: 32px;
+  --codeBlockLineHeight: 28px;
+
+  font-size: 15px;
+  @include responsive(xl, font-size, 15px);
+  @include responsive(md, font-size, 14px);
+
+  height: max-content;
+
+  & > div {
+    margin: 0;
+  }
+
+  @include raisedShadow(
+    #f6f6f6,
+    8px,
+    false,
+    40px,
+    8px,
+    64px,
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.migrationsCode {
+  --editorContentBg: #f7f7f7;
+}

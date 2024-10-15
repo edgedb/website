@@ -1,0 +1,142 @@
+@import "../../../styles/mixins.scss";
+
+.blogExplainExample {
+  position: relative;
+  margin: 0 calc(-1 * var(--overhang)) !important;
+  width: calc(var(--contentWidth) + var(--overhang) * 2) !important;
+}
+
+.fallbackImage {
+  background: #eee;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+
+  @include breakpoint(sm) {
+    border-radius: 0;
+  }
+}
+
+.fullscreenButton {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 8px;
+  top: 8px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  @include breakpoint(sm) {
+    display: none;
+  }
+}
+
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+
+  svg {
+    fill: #cdcdcd;
+  }
+}
+
+.popupContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f7f7f7;
+  box-shadow: 0px 64px 40px -40px rgba(0, 0, 0, 0.16);
+  user-select: none;
+
+  max-width: 1812px;
+  max-height: 980px;
+
+  @include breakpoint(xxl) {
+    max-width: 1620px;
+    max-height: 780px;
+  }
+  @include breakpoint(xl) {
+    max-width: 1328px;
+    max-height: 602px;
+  }
+  @include breakpoint(lg) {
+    max-width: 912px;
+    max-height: 592px;
+  }
+
+  & > div {
+    width: 50%;
+  }
+
+  .query {
+    border-right: 2px solid #fff;
+    font-size: 15px;
+    line-height: 21px;
+    display: flex;
+    overflow: auto;
+
+    pre {
+      position: relative;
+      font-family: inherit;
+      margin: 0;
+      z-index: 1;
+    }
+  }
+
+  .queryLineNo {
+    text-align: right;
+    white-space: pre;
+    padding: 16px;
+    color: rgb(139, 139, 139);
+    position: sticky;
+    left: 0;
+    background: #f7f7f7;
+    z-index: 2;
+  }
+
+  .queryCode {
+    position: relative;
+    margin: 16px;
+    margin-left: 2px;
+  }
+
+  .highlightsContainer {
+    --outline-color: #468bff;
+  }
+
+  .vis {
+    border-left: 2px solid #fff;
+    line-height: 16px;
+  }
+
+  font-family: "Roboto Mono", monospace;
+  --syntax-purple: #b044c2;
+  --syntax-green: #1a8f66;
+  --syntax-blue: #0075d2;
+  --syntax-red: #e72525;
+  --syntax-orange: #d78100;
+  --syntax-comment: #7f7f7f;
+  --syntax-mod: #838383;
+}
