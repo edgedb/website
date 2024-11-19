@@ -1,0 +1,50 @@
+.. blog:published-on:: 2024-09-10 10:00 AM PST
+
+==========
+Dev Report
+==========
+
+Welcome to EdgeDB Dev Report -- bi-weekly or so updates about the latest in
+EdgeDB development. Here's some bites for you:
+
+* **Scott** is working on `speccing <net_>`_ and implementing a new
+  ``std::net::`` module to bring HTTP requests and 🪝 Webhooks to EdgeDB.
+
+* **Dijana** is about to complete a "mini-StackOverflow" section of our
+  Documentation, fed by questions you ask on our 💬 `Discord <discord_>`_.
+
+* **Matt** is rewriting our EdgeDB <> PostgreSQL communication in 🦀 Rust. Just
+  recently he RIIR'ed our backend connection pool and we're about to make
+  the new pool the default.
+
+* **Aleksandra** is creating a swath of new project templates for Next.js
+  and EdgeDB. From time to time we find her reading the Replicache docs for
+  no apparent reason 😉.
+
+* **Sully** is putting last finishing touches on the new "in-place upgrades"
+  feature of EdgeDB 6. So you can update your database server version without
+  running full dump/restore (for some reason our users want that 🤯.)
+
+* **Aljaz** is close to finalizing his epic project on implementing
+  write SQL support in EdgeDB. He's currently busy enabling 🔐 access policies
+  for SQL queries.
+
+* **Roman** has started designing a website for a new secret project.
+  Completely out of the blue he's researching molecular properties of gels
+  and liquid metals 🔬.
+
+* **Zack**, **Elvis**, and the cloud team are keeping our Cloud running
+  and working on improving our infra. BTW, we're looking for experienced
+  SREs and Cloud Engineers 👷‍♀️, `drop us a line <mailto:jobs@edgedb.com>`_.
+
+* **James** was last seen adding major new UI features 🫡 for EdgeDB and the
+  Cloud.
+
+* **Victor** is wrapping up his work on bringing 📍 PostGIS to EdgeDB 6.
+
+.. lint-off
+
+.. _net: https://github.com/edgedb/rfcs/blob/master/text/1026-net-module.rst
+.. _discord: https://discord.gg/edgedb
+
+.. lint-on

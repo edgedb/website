@@ -1,0 +1,71 @@
+.. blog:published-on:: 2024-11-07 10:00 AM PST
+
+=============
+Dev Report #2
+=============
+
+Hey, it's been almost a couple of months since the last update and for
+a good reason: EdgeDB 6 is shaping up to be an incredible release, and we're
+busy making sure it will rock.
+
+* **Dijana** is updating the built-in ai extension with the latest models and
+  function calling. Her improvements to our "Ask AI" feature are set to
+  ship soon!
+
+* **Andrey**, our new hire, is adding a new extension aptly called
+  ``vectorstore`` to make it a one-minute task to use EdgeDB as a vector
+  database. He also created adapters for *LangChain* and *LlamaIndex*,
+  which we're testing now internally.
+
+* **Scott**, after implementing the new ``net::http`` module and *webhooks*
+  support for *Auth*, is maintaining momentum by enhancing security for
+  Auth API endpoints.
+
+* **Scott**, **Sully**, and **Zack** are working on separate components
+  to add built-in SMTP support for our auth extension for EdgeDB Cloud.
+  This will simplify getting started with email-based authentication
+  in the cloud.
+
+* **Matt** is living the every Rust's engineer dream -- rewriting existing
+  :blog:strike:`perfectly` working software to Rust. Jokes aside,
+  EdgeDB 6 will benefit from a new Rust-based HTTP layer, and there's also
+  a lot of work done towards rewriting EdgeDB 7 IO completely in Rust.
+  We're crossing our fingers!
+
+* Speaking of dreams, **Sully** just realized his by landing an implementation
+  of his `RFC <path_>`_ to simplify Path Resolution in EdgeQL. Although this
+  can be considered a minor breaking change, it will allow us to evolve
+  EdgeQL much quicker.
+
+* **Aljaz** and **Victor** are finalizing the 6.0 mega project: adding
+  full SQL support. They're thrilled to spend their days exploring different
+  popular ORMs and discovering how we can support them in the best way possible.
+
+* **Aleksandra** has recently created a new `NextJS+EdgeDB <tpl_>`_ template
+  that should soon be available on vercel.com. She's now busy preparing us
+  for React Summit in NYC on November 18th. Excited to see some of you there!
+
+* **Fantix**, just before he left on 🏝️, finalized his work on a new
+  slow queries log feature.
+
+* **Zack** and the cloud team are working on our cloud infra non-stop,
+  making sure it operates smoothly, while preparing to ship pretty significant
+  internal improvements.
+
+* **Daniel** is about to land a new major functionality to EdgeQL:
+  functions that can have ``insert`` / ``update`` / ``delete`` commands in them.
+
+* **James** is almost done with a huge round of updates in our UI.
+  Soon you'll be able to show/hide, reorder, and pin columns in Data View.
+  He's now busy with creating a UI for slow queries log.
+
+* **Roman** is designing several semi-secret projects, including a page for
+  the upcoming Python hackathon (this is a secret!)
+
+.. lint-off
+
+.. _path: https://github.com/edgedb/rfcs/blob/master/text/1027-no-factoring.rst
+.. _tpl: https://github.com/edgedb/nextjs-edgedb-ai-basic-template
+.. _discord: https://discord.gg/edgedb
+
+.. lint-on

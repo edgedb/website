@@ -1,0 +1,397 @@
+@import "@/mixins.scss";
+
+.toc {
+  position: sticky;
+  top: var(--pageHeaderHeight);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--pageHeaderHeight));
+  z-index: 5;
+  user-select: none;
+
+  --linkHeight: 26px;
+
+  @media (max-height: 782px) {
+    --linkHeight: 20px;
+  }
+
+  @include breakpoint(md) {
+    display: none;
+  }
+}
+
+.tocCenterWrapper {
+  display: flex;
+  align-items: center;
+  margin: auto 0;
+  padding-left: 38px;
+
+  .menuOpen & .menuButton {
+    opacity: 0;
+  }
+}
+
+.tocWrapper {
+  min-width: 66px;
+  max-width: 208px;
+  flex-grow: 1;
+  transition: opacity 0.2s;
+
+  .hideToc &,
+  .menuOpen & {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @include hover {
+    .chapterLink {
+      &:before {
+        background: #cccccc;
+      }
+      &.current:before {
+        background: #999999;
+      }
+    }
+
+    @include darkTheme {
+      .chapterLink {
+        &:before {
+          background: #666666;
+        }
+        &.current:before {
+          background: #b3b3b3;
+        }
+      }
+    }
+  }
+}
+
+.chapterLink {
+  display: block;
+  position: relative;
+  height: var(--linkHeight);
+
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 12px;
+    background: #e5e5e5;
+
+    left: 12px;
+    top: calc((var(--linkHeight) - 6px) / 2);
+  }
+
+  &:before {
+    transition: background 0.2s;
+  }
+
+  &:after {
+    width: 24px;
+    height: 24px;
+    margin: -9px;
+    background: #60c6ba;
+    box-sizing: border-box;
+    border: 6px solid var(--pageBg);
+    transform: scale(0);
+    transition: transform 0.3s;
+  }
+
+  &.current:before {
+    width: 10px;
+    height: 10px;
+    margin: -2px;
+    background: #cdcdcd;
+  }
+
+  @include hover {
+    &:after {
+      transform: scale(1);
+    }
+  }
+
+  .tooltip {
+    --tooltipBg: #373737;
+
+    display: none;
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    width: max-content;
+    max-width: 320px;
+    transform: translateY(-50%);
+    z-index: 1;
+
+    background: var(--tooltipBg);
+    padding: 10px 16px;
+    // @include mainfont;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: #f7f7f7;
+    border-radius: 6px;
+    pointer-events: none;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.12));
+
+    .chapterName {
+      font-family: "Sometype Mono", monospace;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+      color: #b7b7b7;
+    }
+
+    .tags {
+      margin: 4px -2px;
+      --tagBg: #4b4b4b;
+      --tagColour: #bcbcbc;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      transform: rotate(45deg) translateY(-11.3px);
+      background: var(--tooltipBg);
+      left: -12px;
+      top: 50%;
+    }
+  }
+
+  @include hover {
+    .tooltip {
+      display: block;
+    }
+  }
+
+  @include darkTheme {
+    &:before {
+      background: #4c4c4c;
+    }
+
+    &:after {
+      background: #009280;
+    }
+
+    &.current:before {
+      background: #8e8e8e;
+    }
+
+    .tooltip {
+      --tooltipBg: #e5e5e5;
+
+      color: #333333;
+
+      .chapterName {
+        color: #4d4d4d;
+      }
+
+      .tags {
+        --tagBg: #d5d5d5;
+        --tagColour: #595959;
+      }
+    }
+  }
+}
+
+.overlayContent {
+  padding-left: 20px;
+  @include responsive(padding-top, 24px, $md: 24px);
+  @include responsive(padding-bottom, 64px, $md: 64px);
+  @include responsive(padding-right, 24px, $md: 24px);
+}
+
+.chapterList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  max-width: 100%;
+
+  a {
+    text-decoration: none;
+  }
+
+  @include darkTheme {
+    a.chapterItem {
+      color: #666;
+
+      .chapterTitle {
+        color: #9c9c9c;
+      }
+    }
+
+    .closeMenu {
+      background: #b4b4b4;
+
+      svg {
+        fill: #262626;
+      }
+    }
+  }
+}
+
+a.chapterItem {
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+  font-family: "Sometype Mono", monospace;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #b3b3b3;
+
+  width: max-content;
+  padding: 12px 0;
+  padding-left: 25px;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  .ring,
+  .line,
+  .dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    fill: var(--pageBg, #fff);
+    stroke: #e5e5e5;
+    stroke-width: 2;
+  }
+
+  .ring,
+  .dot {
+    top: 16px;
+  }
+
+  .line {
+    height: 100%;
+  }
+
+  .dot {
+    stroke-width: 0;
+    fill: none;
+  }
+
+  &.current {
+    .dot {
+      fill: #cdcdcd;
+    }
+
+    @include hover {
+      .dot {
+        fill: #0cad9a;
+
+        @include darkTheme {
+          fill: #009280;
+        }
+      }
+    }
+  }
+
+  &:first-child {
+    .line {
+      height: calc(100% - 24px);
+      top: 24px;
+    }
+  }
+
+  &:last-child {
+    .line {
+      height: 24px;
+    }
+  }
+
+  .chapterTitle {
+    // @include mainfont;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: #4d4d4d;
+  }
+
+  @include hover {
+    &,
+    & .chapterTitle {
+      color: #0cad9a;
+
+      @include darkTheme {
+        color: #009280;
+      }
+    }
+  }
+
+  @include darkTheme {
+    color: #414141;
+
+    .ring,
+    .line,
+    .dot {
+      stroke: #414141;
+    }
+
+    &.current {
+      color: #9c9c9c;
+
+      .dot {
+        fill: #9c9c9c;
+      }
+    }
+
+    .tags {
+      --tagBg: #404040;
+      --tagColour: #b2b2b2;
+    }
+  }
+}
+
+.menuButton {
+  position: absolute;
+  cursor: pointer;
+  width: max-content;
+  left: -10px;
+  top: calc(50% - 24px);
+  padding: 10px;
+
+  @include hover {
+    .iconButton {
+      background: #00c0aa;
+
+      @include darkTheme {
+        background: #009280;
+      }
+    }
+  }
+
+  @include darkTheme {
+    span {
+      color: #666666;
+    }
+  }
+}
+
+.iconButton {
+  width: 28px;
+  height: 28px;
+  border-radius: 20px;
+  background: #cdcdcd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+
+  svg {
+    width: 15px;
+    fill: var(--pageBg);
+  }
+
+  @include darkTheme {
+    background: #4d4d4d;
+  }
+}
