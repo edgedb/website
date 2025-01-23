@@ -1,0 +1,129 @@
+@import "../../styles/mixins.scss";
+
+.container {
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  .handle {
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    border-radius: 17px;
+    border: 2px solid white;
+    pointer-events: none;
+  }
+
+  .color {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background-size: cover;
+    background-position: center center;
+    flex-shrink: 0;
+  }
+
+  .inputWrapper {
+    position: relative;
+  }
+
+  label {
+    @include responsive(sm, margin-bottom, 6px);
+  }
+
+  .colorInput {
+    height: 32px;
+    width: 6em;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--white);
+    flex-grow: 1;
+    font-family: Open Sans;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: var(--baseTextLightTheme);
+    line-height: 22px;
+    outline: 0;
+    padding: 4px 8px 4px 20px;
+  }
+
+  .hash {
+    position: absolute;
+    color: var(--grey40);
+    left: 8px;
+    top: 1px;
+  }
+
+  .colorPicker {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    z-index: 1;
+
+    touch-action: none;
+
+    &.hide {
+      display: none;
+    }
+
+    .panel {
+      position: relative;
+      width: 232px;
+      height: 200px;
+      background: white;
+
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+
+      background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0) 100%),
+        linear-gradient(to right, #fff 0%, rgb(255 255 255 / 0) 100%);
+
+      .colorHandle {
+        @extend .handle;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+    }
+
+    .hue {
+      position: relative;
+      width: 232px;
+      height: 32px;
+
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      background: linear-gradient(
+        90deg,
+        red 0,
+        #ff0 17%,
+        #0f0 33%,
+        #0ff 50%,
+        #00f 67%,
+        #f0f 83%,
+        red
+      );
+
+      .hueHandle {
+        @extend .handle;
+
+        top: -1px;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  &.dark {
+    .colorInput {
+      background-color: var(--grey14);
+      color: var(--baseTextDarkTheme);
+    }
+
+    .hash {
+      color: var(--grey50);
+    }
+  }
+}

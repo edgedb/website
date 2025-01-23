@@ -1,0 +1,66 @@
+@import "@edgedb-site/shared/mixins.scss";
+
+$illustrations: (
+  "clients",
+  "cheatsheet",
+  "datamodel",
+  "changelog",
+  "introduction",
+  "internals",
+  "edgeql",
+  "graphql",
+  "quickstart",
+  "cli",
+  "guides",
+  "stdlib",
+  "administration",
+  "glossary"
+);
+
+.illustration_placeholder {
+  width: 0;
+  height: 100px;
+}
+
+.illustration {
+  width: 240px;
+  height: 368px;
+  flex-shrink: 0;
+
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  @include breakpoint(xl) {
+    width: 120px;
+    height: 184px;
+  }
+
+  @include breakpoint(sm) {
+    width: 108px;
+    height: 162px;
+  }
+}
+
+@each $name in $illustrations {
+  .#{$name} {
+    @include sizedBgImage("/_images/doc_illustrations/#{$name}" 240);
+
+    @include darkTheme {
+      @include sizedBgImage("/_images/doc_illustrations/#{$name}_dark" 240);
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  @each $name in $illustrations {
+    .#{$name} {
+      @include sizedBgImage("/_images/doc_illustrations/#{$name}_mobile" 110);
+
+      @include darkTheme {
+        @include sizedBgImage(
+          "/_images/doc_illustrations/#{$name}_dark_mobile" 110
+        );
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+$cogLeftUrl: "/_images/install_cog_left";
+$cogRightUrl: "/_images/install_cog_right";
+
+.page {
+  --contentWidth: 680px;
+
+  background-repeat: no-repeat;
+  background-size: 750px, 730px;
+  background-position: left calc(50% - 870px) top 170px,
+    left calc(50% + 880px) top 175px;
+  @include sizedBgImages(true, $cogLeftUrl 750, $cogRightUrl 730);
+}
+
+.footer {
+  background-color: unset;
+
+  --footerSubscribeBgColour: #f7f7f7;
+}
+
+.content {
+  grid-column: content;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    text-align: center;
+  }
+}
+
+.title {
+  margin: 70px 0 10px 0;
+}
+
+.intro {
+  text-align: center;
+  max-width: 600px;
+  align-self: center;
+  margin: 0 50px;
+  margin-bottom: 70px;
+  line-height: 32px;
+}
+
+.terminal {
+  margin-bottom: 70px;
+}
+
+.tickList {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    line-height: 32px;
+    padding-left: 48px;
+    margin: 40px 32px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    background-position: left 0px;
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='1' y='1' width='30' height='30' rx='5' stroke='%2346B98F' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.0003 21.9769L24.6101 13.2672C25.3803 12.488 25.3723 11.2262 24.6021 10.4471C23.8193 9.65512 22.5322 9.64689 21.7493 10.4388L14.0001 18.278L10.2507 14.4851C9.46781 13.6932 8.18073 13.7014 7.39786 14.4934C6.62765 15.2725 6.6197 16.5343 7.38991 17.3135L12.5776 22.5614C13.3604 23.3532 14.6392 23.3533 15.4221 22.5616L16.0003 21.9769Z' fill='%2346B98F'/%3E%3C/svg%3E%0A");
+  }
+}
+
+.tutorial {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  // background: #f7f7f7;
+  border-radius: $radius;
+  padding: 32px;
+  margin-bottom: 50px;
+  margin-top: 100px;
+
+  display: flex;
+  flex-direction: column;
+  svg {
+    fill: $edb_mid_blue;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  a.tutorialLink {
+    display: block;
+    align-self: center;
+
+    color: $edb_green;
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    border: 2px solid currentColor;
+    border-radius: $radius_sm;
+    padding: 10px 15px;
+  }
+}
+
+@include breakpoint(xxl) {
+  .page {
+    background-size: 580px, 565px;
+    background-position: left calc(50% - 725px) top 170px,
+      left calc(50% + 680px) top 160px;
+  }
+}
+
+@include breakpoint(xl) {
+  .page {
+    background-size: 415px, 400px;
+    background-position: left calc(50% - 640px) top 125px,
+      left calc(50% + 615px) top 145px;
+    @include sizedBgImages(true, $cogLeftUrl 415, $cogRightUrl 400);
+  }
+}
+
+@include breakpoint(lg) {
+  .page {
+    --contentWidth: 640px;
+
+    background-size: 350px, 340px;
+    background-position: left calc(50% - 495px) top 110px,
+      left calc(50% + 490px) top 120px;
+  }
+}
+
+@include breakpoint(md) {
+  .page {
+    --contentWidth: 580px;
+
+    background-size: 265px, 260px;
+    background-position: left calc(50% - 360px) top 80px,
+      left calc(50% + 370px) top 85px;
+    @include sizedBgImages(true, $cogLeftUrl 265, $cogRightUrl 260);
+  }
+}
+
+@include breakpoint(sm) {
+  .page {
+    --contentWidth: 100%;
+
+    background-size: 185px, 180px;
+    background-position: left -65px top 64px, right -36px top -80px;
+    @include sizedBgImages(true, $cogLeftUrl 185, $cogRightUrl 180);
+  }
+
+  .content {
+    max-width: 100%;
+    justify-self: center;
+  }
+
+  .intro {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 450px;
+  }
+
+  .tickList {
+    max-width: 520px;
+    align-self: center;
+
+    li {
+      background-size: 48px;
+      background-position: top center;
+      padding-left: 0;
+      padding-top: 60px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+  }
+
+  .tutorial {
+    margin-top: 80px;
+    margin-bottom: 120px;
+  }
+}

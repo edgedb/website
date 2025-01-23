@@ -1,0 +1,19 @@
+{
+  "name": "@edgedb/edgedb.com",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "setup": "./setup.sh",
+    "regenGrammar": "python3 edgedbsite/gen_prism_grammars.py > ./components/code/auto-grammars.js"
+  },
+  "workspaces": {
+    "packages": [
+      "studio/shared/*",
+      "buildTools",
+      "site",
+      "docs",
+      "shared"
+    ]
+  },
+  "packageManager": "yarn@3.2.3"
+}
