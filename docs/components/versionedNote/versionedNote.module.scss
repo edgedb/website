@@ -1,0 +1,80 @@
+@import "@edgedb-site/shared/mixins.scss";
+
+.versionedNote {
+  --outline-color: #979797;
+
+  @include breakpoint(sm) {
+    font-size: 14px;
+    line-height: 24px;
+
+    section > &,
+    .section > & {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+  }
+
+  &.showBadge {
+    border: 2px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 24px;
+    padding-bottom: 0;
+    margin-bottom: 40px;
+    position: relative;
+    margin-top: 40px;
+    --badgeBg: var(--badgeLightBg, var(--pageBg));
+
+    p {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .badge {
+      position: absolute;
+      top: -15px;
+      font-size: 70%;
+      padding: 1px 7px;
+      background: var(--badgeBg);
+      box-shadow: 8px 0 var(--badgeBg), -8px 0 var(--badgeBg);
+
+      @include breakpoint(sm) {
+        top: -11px;
+      }
+    }
+
+    @include darkTheme {
+      border-color: #686868;
+      --badgeBg: var(--badgeDarkBg, var(--pageBg));
+    }
+  }
+
+  &.versionLatest {
+    --outline-color: #2f9771;
+  }
+
+  &.versionDev {
+    --outline-color: #ca9033;
+  }
+}
+
+.badge {
+  --outline-color: #979797;
+  border: 1px solid var(--outline-color);
+  color: var(--outline-color);
+  border-radius: 2px;
+  display: inline;
+  padding: 2px 4px;
+  margin-left: 6px;
+  font-size: 60%;
+  line-height: 1.7;
+  font-weight: 600;
+  vertical-align: middle;
+
+  &.versionLatest {
+    --outline-color: #2f9771;
+  }
+
+  &.versionDev {
+    --outline-color: #ca9033;
+  }
+}

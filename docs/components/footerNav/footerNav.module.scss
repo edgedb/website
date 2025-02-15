@@ -1,0 +1,159 @@
+@import "@/mixins.scss";
+
+.footerNav {
+  overflow: hidden;
+  margin: 80px 0;
+}
+
+.footerButtons {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: 35px 1fr 4px 1fr 35px;
+  grid-template-rows: 30px auto auto 30px;
+  grid-column-gap: 30px;
+  grid-template-areas:
+    ".      .       sep .       .     "
+    ".      p_label sep n_label .     "
+    "p_icon p_title sep n_title n_icon"
+    ".      .       sep .       .     ";
+
+  span,
+  a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .refLabelNext,
+  .refLabelPrev {
+    @include monospace;
+    text-transform: uppercase;
+    color: var(--grey70);
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 0.3em;
+  }
+
+  .refNext,
+  .refPrev {
+    font-size: 30px;
+    line-height: 32px;
+    font-weight: 700;
+    color: inherit !important;
+    align-self: center;
+  }
+
+  .refIconPrev,
+  .refIconNext {
+    align-self: center;
+    width: 35px;
+    height: 35px;
+
+    svg path {
+      fill: var(--accentColour, #1f8aed);
+    }
+  }
+
+  .refPrev {
+    text-align: right;
+    grid-area: p_title;
+  }
+
+  .refIconPrev {
+    grid-area: p_icon;
+  }
+
+  .refLabelPrev {
+    text-align: right;
+    grid-area: p_label;
+  }
+
+  .refNext {
+    grid-area: n_title;
+  }
+
+  .refIconNext {
+    grid-area: n_icon;
+  }
+
+  .refLabelNext {
+    grid-area: n_label;
+  }
+
+  .footerSplit {
+    grid-area: sep;
+    background: var(--accentColour, #1f8aed);
+    border-radius: 4px;
+  }
+}
+
+@include breakpoint(lg) {
+  .footerLinks {
+    .refNext,
+    .refPrev {
+      font-size: 24px;
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .footerLinks {
+    grid-template-columns: 1fr 4px 1fr;
+    grid-template-rows: 20px 45px auto auto 30px;
+    // grid-column-gap: $hang / 2;
+    grid-template-areas:
+      ".       sep .      "
+      "p_icon  sep n_icon "
+      "p_label sep n_label"
+      "p_title sep n_title"
+      ".       sep .      ";
+
+    .refNext,
+    .refPrev {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .refIconPrev {
+      align-self: start;
+      justify-self: end;
+      margin-right: 20px;
+    }
+    .refIconNext {
+      align-self: start;
+      justify-self: start;
+      margin-left: 20px;
+    }
+  }
+}
+
+.button {
+  display: inline-flex;
+  height: 35px;
+  align-items: center;
+  background: #1f8aed;
+  border-radius: 4px;
+  padding: 0 12px;
+
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: #ffffff;
+
+  svg {
+    fill: currentColor;
+    height: 22px;
+    width: auto;
+    margin-left: -4px;
+    margin-right: 4px;
+  }
+
+  @include hover {
+    color: #fff;
+    background-color: lighten(#1f8aed, 5%);
+  }
+}

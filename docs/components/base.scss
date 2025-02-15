@@ -1,0 +1,419 @@
+@import "@/mixins.scss";
+
+@mixin baseContentStyles {
+  font-family: "Open Sans", sans-serif;
+  color: var(--grey25);
+  @include responsive(font-size, 20px, $xl: 18px, $sm: 16px);
+  @include responsive(line-height, 40px, $xl: 32px, $sm: 24px);
+  font-style: normal;
+  font-weight: 400;
+
+  h1 {
+    margin: 0;
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 600;
+    padding: 7px 24px 24px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 32px;
+    padding: 13px 24px 19px 24px;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+    padding: 8px 24px;
+  }
+
+  h4 {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  p {
+    margin: 0;
+    @include responsive(
+      padding,
+      12px 24px,
+      $xl: 9px 24px 15px 24px,
+      $sm: 7px 24px 9px 24px
+    );
+  }
+
+  figure img {
+    width: 100%;
+    height: auto;
+  }
+
+  dl {
+    padding: 0 24px;
+
+    dd {
+      margin-left: 0;
+    }
+  }
+
+  @include darkTheme {
+    color: var(--grey65);
+
+    h1 {
+      color: var(--grey55);
+    }
+
+    h2 {
+      color: var(--grey60);
+    }
+  }
+
+  a {
+    color: var(--link_light_theme);
+    text-decoration: none;
+
+    @include darkTheme {
+      color: var(--link_dark_theme);
+    }
+  }
+
+  a:global(.external-link) {
+    &:after {
+      content: "\202f"; // narrow non-breaking space
+      padding-right: 1em;
+      background-size: calc(1em - 2px);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.25 3C10.8358 3 10.5 2.66421 10.5 2.25C10.5 1.83579 10.8358 1.5 11.25 1.5H15.75C15.8517 1.5 15.9487 1.52024 16.0371 1.55691C16.1249 1.59324 16.2072 1.64696 16.2787 1.71808C16.2793 1.71861 16.2798 1.71914 16.2803 1.71967C16.2809 1.7202 16.2814 1.72073 16.2819 1.72126C16.353 1.7928 16.4068 1.87511 16.4431 1.96291C16.4798 2.05134 16.5 2.14831 16.5 2.25V6.75C16.5 7.16421 16.1642 7.5 15.75 7.5C15.3358 7.5 15 7.16421 15 6.75V4.06066L8.03033 11.0303C7.73744 11.3232 7.26256 11.3232 6.96967 11.0303C6.67678 10.7374 6.67678 10.2626 6.96967 9.96967L13.9393 3H11.25ZM3.75 5.25C3.55109 5.25 3.36032 5.32902 3.21967 5.46967C3.07902 5.61032 3 5.80109 3 6V14.25C3 14.4489 3.07902 14.6397 3.21967 14.7803C3.36032 14.921 3.55109 15 3.75 15H12C12.1989 15 12.3897 14.921 12.5303 14.7803C12.671 14.6397 12.75 14.4489 12.75 14.25V9.75C12.75 9.33579 13.0858 9 13.5 9C13.9142 9 14.25 9.33579 14.25 9.75V14.25C14.25 14.8467 14.0129 15.419 13.591 15.841C13.169 16.2629 12.5967 16.5 12 16.5H3.75C3.15326 16.5 2.58097 16.2629 2.15901 15.841C1.73705 15.419 1.5 14.8467 1.5 14.25V6C1.5 5.40326 1.73705 4.83097 2.15901 4.40901C2.58097 3.98705 3.15326 3.75 3.75 3.75H8.25C8.66421 3.75 9 4.08579 9 4.5C9 4.91421 8.66421 5.25 8.25 5.25H3.75Z' fill='%230075d1'/%3E%3C/svg%3E%0A");
+
+      @include darkTheme {
+        background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.25 3C10.8358 3 10.5 2.66421 10.5 2.25C10.5 1.83579 10.8358 1.5 11.25 1.5H15.75C15.8517 1.5 15.9487 1.52024 16.0371 1.55691C16.1249 1.59324 16.2072 1.64696 16.2787 1.71808C16.2793 1.71861 16.2798 1.71914 16.2803 1.71967C16.2809 1.7202 16.2814 1.72073 16.2819 1.72126C16.353 1.7928 16.4068 1.87511 16.4431 1.96291C16.4798 2.05134 16.5 2.14831 16.5 2.25V6.75C16.5 7.16421 16.1642 7.5 15.75 7.5C15.3358 7.5 15 7.16421 15 6.75V4.06066L8.03033 11.0303C7.73744 11.3232 7.26256 11.3232 6.96967 11.0303C6.67678 10.7374 6.67678 10.2626 6.96967 9.96967L13.9393 3H11.25ZM3.75 5.25C3.55109 5.25 3.36032 5.32902 3.21967 5.46967C3.07902 5.61032 3 5.80109 3 6V14.25C3 14.4489 3.07902 14.6397 3.21967 14.7803C3.36032 14.921 3.55109 15 3.75 15H12C12.1989 15 12.3897 14.921 12.5303 14.7803C12.671 14.6397 12.75 14.4489 12.75 14.25V9.75C12.75 9.33579 13.0858 9 13.5 9C13.9142 9 14.25 9.33579 14.25 9.75V14.25C14.25 14.8467 14.0129 15.419 13.591 15.841C13.169 16.2629 12.5967 16.5 12 16.5H3.75C3.15326 16.5 2.58097 16.2629 2.15901 15.841C1.73705 15.419 1.5 14.8467 1.5 14.25V6C1.5 5.40326 1.73705 4.83097 2.15901 4.40901C2.58097 3.98705 3.15326 3.75 3.75 3.75H8.25C8.66421 3.75 9 4.08579 9 4.5C9 4.91421 8.66421 5.25 8.25 5.25H3.75Z' fill='%232d82c6'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+
+  code {
+    @include monospace;
+    background-color: var(--codeBgColour);
+    padding: 1px 0.3em 2px 0.3em;
+    font-size: 95%;
+    overflow-wrap: break-word;
+    border-radius: 4px;
+  }
+
+  .note,
+  .important,
+  .warning {
+    display: block;
+    position: relative;
+    @include responsive(padding, 32px 24px, $sm: 24px);
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      @include responsive(top, 26px, $sm: 18px);
+      @include responsive(bottom, 24px, $sm: 17px);
+      width: 32px;
+      border-left: 4px solid var(--accent_green_light_theme);
+    }
+
+    > p:first-child:before {
+      font-family: "Roboto Mono";
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      content: "NOTE:";
+      color: var(--accent_green_light_theme);
+      padding-left: 23px;
+      margin-right: 3px;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.14286 12.148H8.85714V7.55371H7.14286V12.148ZM7.14286 6.16057H8.85714V4.53314H7.14286V6.16057ZM8 0C3.58171 0 0 3.58229 0 8C0 12.4183 3.58171 16 8 16C12.4177 16 16 12.4183 16 8C16 3.58229 12.4177 0 8 0Z' fill='%232CB88E'/%3E%3C/svg%3E%0A");
+      background-repeat: no-repeat;
+      @include responsive(
+        background-position,
+        left 6px,
+        $xl: left 4px,
+        $sm: left 1.5px
+      );
+    }
+
+    p {
+      padding-left: 0;
+      padding-right: 0;
+
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    @include darkTheme {
+      &:before {
+        border-left-color: #2c6454;
+      }
+
+      > p:first-child:before {
+        color: #2c6454;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.14286 12.148H8.85714V7.55371H7.14286V12.148ZM7.14286 6.16057H8.85714V4.53314H7.14286V6.16057ZM8 0C3.58171 0 0 3.58229 0 8C0 12.4183 3.58171 16 8 16C12.4177 16 16 12.4183 16 8C16 3.58229 12.4177 0 8 0Z' fill='%232c6454'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+
+  .warning {
+    &:before {
+      border-left-color: #eb7c7c;
+    }
+
+    > p:first-child:before {
+      content: "WARNING:";
+      color: #eb7c7c;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 35 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.625 18.8376H19.375V8.78753H15.625V18.8376ZM15.625 25.7401H19.375V22.1801H15.625V25.7401ZM34.5538 26.2463L20.3513 1.64626C19.0838 -0.548752 15.9162 -0.548752 14.6487 1.64626L0.446193 26.2463C-0.821311 28.4413 0.762444 31.1851 3.29745 31.1851H31.7025C34.2376 31.1851 35.8213 28.4413 34.5538 26.2463Z' fill='%23eb7c7c'/%3E%3C/svg%3E%0A");
+      @include responsive(
+        background-position,
+        left 7.5px,
+        $xl: left 5.5px,
+        $sm: left 2.5px
+      );
+    }
+
+    @include darkTheme {
+      &:before {
+        border-left-color: #793e3e;
+      }
+
+      > p:first-child:before {
+        color: #793e3e;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 35 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.625 18.8376H19.375V8.78753H15.625V18.8376ZM15.625 25.7401H19.375V22.1801H15.625V25.7401ZM34.5538 26.2463L20.3513 1.64626C19.0838 -0.548752 15.9162 -0.548752 14.6487 1.64626L0.446193 26.2463C-0.821311 28.4413 0.762444 31.1851 3.29745 31.1851H31.7025C34.2376 31.1851 35.8213 28.4413 34.5538 26.2463Z' fill='%23793e3e'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+
+  .tableWrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+
+    &.align_center {
+      tr {
+        td {
+          text-align: center;
+        }
+      }
+    }
+
+    tr {
+      &:first-child {
+        td,
+        th {
+          &:first-child {
+            @include responsive(border-top-left-radius, 4px, $sm: 0);
+          }
+        }
+        td,
+        th {
+          &:last-child {
+            @include responsive(border-top-right-radius, 4px, $sm: 0);
+          }
+        }
+      }
+      &:last-child {
+        td:first-child {
+          @include responsive(border-bottom-left-radius, 4px, $sm: 0);
+        }
+        td:last-child {
+          @include responsive(border-bottom-right-radius, 4px, $sm: 0);
+        }
+      }
+    }
+
+    thead + tbody tr:first-child {
+      td:first-child {
+        border-top-left-radius: 0;
+      }
+      td:last-child {
+        border-top-right-radius: 0;
+      }
+    }
+
+    th,
+    td {
+      padding: 0.5em 0.8em;
+    }
+
+    td {
+      background-color: var(--tableBgColor);
+      vertical-align: top;
+    }
+    th {
+      background-color: var(--grey93);
+    }
+
+    p {
+      padding: 0;
+    }
+
+    code {
+      --codeBgColour: var(--grey90);
+
+      @include darkTheme {
+        --codeBgColour: var(--grey14);
+      }
+    }
+  }
+
+  ol,
+  ul {
+    margin: 0;
+    padding: 0 24px;
+
+    li {
+      margin-left: 24px;
+      p {
+        @include responsive(padding, 4px 0, $xl: 1px 0 7px 0);
+      }
+    }
+
+    ol,
+    ul {
+      @include responsive(padding-left, 16px, $sm: 8px);
+    }
+  }
+
+  .fullWidth {
+    border-radius: 8px;
+    width: 100%;
+
+    @include breakpoint(sm) {
+      border-radius: 0px;
+    }
+  }
+
+  .raisedCodeBlock,
+  .shadowedTable {
+    @include responsive(margin, 16px 0px 32px 0px, $xl: 8px 0 24px 0);
+    @include responsive(
+      box-shadow,
+      0px 32px 40px -24px rgba(0, 0, 0, 0.15),
+      $sm: none
+    );
+
+    --codeBgColour: #fff;
+    --tableBgColor: #fff;
+
+    --copyBtnBg: var(--grey97);
+    --copyBtnColor: var(--grey40);
+    --copyBtnSvg: var(--grey60);
+    --codeBlockHorizontalPadding: 24px;
+
+    @include darkTheme {
+      @include responsive(
+        box-shadow,
+        0px 32px 40px -24px rgba(0, 0, 0, 0.25),
+        $sm: none
+      );
+
+      --codeBgColour: var(--grey6);
+      --tableBgColor: var(--grey6);
+      --copyBtnBg: var(--grey20);
+      --copyBtnColor: var(--grey60);
+      --copyBtnSvg: var(--grey40);
+    }
+
+    @include breakpoint(sm) {
+      .codeBlock {
+        border-radius: 0;
+      }
+    }
+  }
+
+  div.seealsoSpacer {
+    padding: 68px 0px 60px 0px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .youtube-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    width: auto !important;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+
+    @include breakpoint(sm) {
+      border-radius: 0;
+    }
+
+    & > span {
+      position: absolute;
+      inset: -16px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(20px);
+    }
+
+    & > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .youtube-embed-caption {
+    margin: 0;
+    padding: 0 24px;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    opacity: 0.8;
+
+    p {
+      font-size: inherit;
+      line-height: inherit;
+    }
+  }
+
+  .blockquote {
+    margin: 1em 0 2em 24px;
+    opacity: 0.9;
+    border-left: 3px solid var(--grey60);
+    font-size: 95%;
+
+    .quote {
+      font-style: italic;
+      p {
+        padding-left: 1.5em;
+        padding-right: 2em;
+      }
+    }
+
+    .attribution {
+      font-weight: 700;
+      margin-top: -1em;
+      p {
+        padding-left: 2em;
+        &:before {
+          content: "— ";
+        }
+      }
+    }
+
+    @include darkTheme {
+      border-left-color: var(--grey40);
+    }
+  }
+}

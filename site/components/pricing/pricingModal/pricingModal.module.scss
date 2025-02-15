@@ -1,0 +1,304 @@
+@import "../../../styles/mixins.scss";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparentize(#333, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+.container {
+  position: relative;
+  background-color: var(--grey14);
+  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  @include responsive(sm, border-radius, 0);
+  padding-bottom: 48px;
+  @include responsiveAll(width, 920px, 768px, 768px, 672px, 100%);
+  overflow: auto;
+
+  @include breakpoint(sm) {
+    height: 100%;
+    padding-bottom: 64px;
+  }
+
+  .subtitle {
+    color: var(--baseTextDarkTheme);
+    font-size: 20px;
+    @include responsive(xl, font-size, 16px);
+    line-height: 32px;
+    margin: 0 0 30px 0;
+    text-align: center;
+    @include responsive(sm, display, none);
+  }
+
+  .background {
+    width: 100%;
+    height: 53px;
+    background: url("/assets/pricing_top_bg.png");
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    @include responsive(sm, border-top-left-radius, 0);
+    @include responsive(sm, border-top-right-radius, 0);
+    margin-bottom: 6px;
+    position: sticky;
+    top: 0;
+  }
+
+  .modal {
+    padding: 0 40px;
+    @include responsive(sm, padding, 0 24px);
+
+    &.padding {
+      padding: 0 102px;
+      @include responsive(sm, padding, 0 24px);
+    }
+
+    h2 {
+      color: var(--grey80);
+      text-align: center;
+      font-family: EdgeDB;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 56px;
+      letter-spacing: -1.44px;
+      margin: 0 0 14px 0;
+
+      @include breakpoint(sm) {
+        font-size: 28px;
+        line-height: 32px;
+        letter-spacing: -0.84px;
+        margin-bottom: 40px;
+      }
+    }
+
+    p {
+      color: var(--baseTextDarkTheme);
+    }
+
+    .thanksMessage {
+      color: var(--grey50);
+      text-align: center;
+      margin-top: 80px;
+      font-size: 16px;
+      line-height: 32px;
+
+      @include responsive(sm, text-align, left);
+    }
+
+    ul {
+      list-style: none;
+      margin-bottom: 30px;
+      padding-left: 20px;
+
+      li::before {
+        content: "\2022";
+        color: var(--accentGreenDarkTheme);
+        display: inline-block;
+        font-size: 30px;
+        margin-right: 8px;
+        margin-left: -20px;
+        position: relative;
+        top: 6px;
+      }
+
+      li {
+        color: var(--baseTextDarkTheme);
+        @include responsiveAll(font-size, 20px, 16px, 16px, 16px, 14px);
+        line-height: 32px;
+        @include responsive(xl, line-height, 24px);
+        margin-bottom: 24px;
+        @include responsive(sm, margin-bottom, 32px);
+      }
+    }
+
+    .submitWrapper {
+      position: relative;
+      margin: 48px auto 0 auto;
+      display: flex;
+      justify-content: center;
+
+      @include breakpoint(sm) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-radius: 0;
+        width: 100%;
+      }
+
+      .spinner {
+        position: absolute;
+        top: 6px;
+        left: calc(50% - 18px);
+        color: #947bdb;
+        @include responsive(sm, top, 14px);
+      }
+    }
+  }
+
+  .submit {
+    border: none;
+    color: var(--grey8);
+    background: var(--accentViolet);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
+    padding: 8px 0;
+    cursor: pointer;
+    min-width: 240px;
+    border-radius: 6px;
+    @include responsive(sm, padding, 16px 0);
+    @include responsive(sm, border-radius, 0);
+
+    &:disabled {
+      opacity: 0.3;
+    }
+
+    svg {
+      fill: var(--grey8);
+      height: 32px;
+    }
+  }
+
+  a.submit {
+    width: 320px;
+    margin: 64px auto 0 auto;
+
+    @include breakpoint(sm) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      border-radius: 0;
+      width: 100%;
+    }
+  }
+
+  .close {
+    background: var(--grey50);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--grey14);
+    border: none;
+    position: absolute;
+    @include responsive(sm, position, fixed);
+    top: 12px;
+    right: 12px;
+    @include responsive(sm, top, 8px);
+    @include responsive(sm, top, 8px);
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  form {
+    > div {
+      display: flex;
+      gap: 20px 14px;
+
+      @include breakpoint(sm) {
+        flex-direction: column;
+      }
+    }
+
+    .optionalField {
+      margin-top: 20px;
+    }
+
+    label {
+      color: var(--grey50);
+      font-family: Roboto;
+      font-size: 16px;
+      line-height: 24px;
+      width: 100%;
+    }
+
+    input,
+    textarea {
+      background: var(--grey20);
+      color: var(--baseTextDarkTheme);
+      border: none;
+      border-radius: 6px;
+      padding: 12px;
+      width: 100%;
+      outline: none;
+      font-size: inherit;
+      line-height: inherit;
+      box-sizing: border-box;
+    }
+
+    input {
+      height: 48px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .error {
+      border: 2px solid var(--accentRedDarkTheme);
+    }
+
+    .errorText {
+      color: var(--accentRedDarkTheme);
+      margin: 6px 0 0 -1px;
+      font-size: 14px;
+      line-height: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.emailSubscribeModal {
+  p {
+    line-height: 1.8;
+  }
+
+  form {
+    display: flex;
+    gap: 16px;
+  }
+
+  button {
+    border: none;
+    color: var(--grey8);
+    background: var(--accentViolet);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
+    padding: 8px 24px;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  .successMsg {
+    color: #947bdb;
+    font-weight: 600;
+  }
+
+  .errorMsg {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: var(--accentRedDarkTheme);
+    font-size: 17px;
+    font-weight: 500;
+  }
+}
