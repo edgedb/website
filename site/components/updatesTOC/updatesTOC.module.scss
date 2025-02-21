@@ -1,0 +1,88 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.container {
+  grid-column: left-sidebar;
+  align-self: start;
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  // additionalLeftOffset applicable for screens wider than 2560px
+  --additionalLeftOffset: calc((max(100vw, 2560px) - 2560px) / 4);
+  left: calc(
+    (100vw - var(--contentWidth) - var(--overhang) * 2) / 4 - 80px +
+      var(--additionalLeftOffset)
+  );
+
+  height: 100%;
+  width: 160px;
+  padding-bottom: 70px;
+
+  @include breakpoint(md) {
+    display: none;
+    margin-left: 0px;
+  }
+
+  .toc {
+    list-style-type: none;
+    --tocHeight: 528px;
+    @include responsive(xl, --tocHeight, 432px);
+    max-height: var(--tocHeight);
+    
+    position: sticky;
+    top: calc((100vh - var(--tocHeight)) / 2);
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 24px 0;
+
+    transition: all 2s;
+
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(113, 10, 10) 24px,
+      black calc(100% - 24px),
+      transparent
+    );
+
+    .item {
+      font-size: 14px;
+      line-height: 24px;
+      color: var(--baseTextDarkTheme);
+
+      display: flex;
+      align-items: center;
+      padding: 4px 0;
+      margin-bottom: 6px;
+
+      svg {
+        opacity: 0.5;
+      }
+
+      &:hover {
+        color: var(--accentViolet);
+
+        svg {
+          opacity: 1;
+        }
+      }
+
+      &.active {
+        color: var(--accentViolet);
+
+        svg {
+          filter: drop-shadow(0px 0px 4px rgb(130, 128, 255));
+          opacity: 1;
+        }
+      }
+    }
+
+    a:last-child .item {
+      margin-bottom: 0;
+    }
+  }
+}

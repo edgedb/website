@@ -1,0 +1,39 @@
+@mixin font($name, $fn, $weight, $italic: false) {
+  @font-face {
+    font-family: $name;
+    font-weight: $weight;
+    font-display: swap;
+
+    @if $italic {
+      font-style: italic;
+      src: url("/assets/fonts/#{$fn}-#{$weight}italic.woff2") format("woff2");
+    } @else {
+      font-style: normal;
+      src: url("/assets/fonts/#{$fn}-#{$weight}.woff2") format("woff2");
+    }
+  }
+}
+
+@each $weight in 300, 400, 600, 700, 800 {
+  @include font("Open Sans", "open-sans-latin", $weight);
+  @include font("Open Sans", "open-sans-latin", $weight, true);
+}
+
+@each $weight in 100, 200, 300, 400, 500, 600, 700 {
+  @include font("Roboto Mono", "roboto-mono-latin", $weight);
+  @include font("Roboto Mono", "roboto-mono-latin", $weight, true);
+}
+
+@each $weight in 400, 500, 700 {
+  @include font("Roboto Flex", "roboto-flex-latin", $weight);
+  @include font("Roboto Flex", "roboto-flex-latin", $weight, true);
+}
+
+@include font("Sometype Mono", "SometypeMono", 500);
+@include font("Sometype Mono", "SometypeMono", 700);
+
+@each $weight in 300, 400, 500, 600, 700 {
+  @include font("EdgeDB", "edgedb", $weight);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");

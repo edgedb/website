@@ -1,0 +1,95 @@
+@import "../../mixins.scss";
+
+.arrowButton {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  border: 2px solid var(--arrowButtonBorderColour, #e1e1e1);
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: max-content;
+  padding: 10px 17px;
+  padding-right: 24px;
+  font-weight: bold;
+  @include responsive(font-size, 20px, $lg: 18px, $sm: 16px);
+  line-height: 24px;
+  color: var(--arrowButtonLabelColour, $edb_mid_blue);
+  transition: background-color 0.1s ease, border-color 0.1s ease,
+    color 0.1s ease;
+
+  .icon {
+    margin-right: 16px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+
+    transition: color 0.05s;
+    span {
+      font-weight: bold;
+      @include responsive(font-size, 12px, $sm: 10px);
+      line-height: 16px;
+      text-transform: uppercase;
+      color: var(--arrowButtonSublabelColour, #808080);
+    }
+  }
+
+  .expandingArrow {
+    margin-left: 32px;
+    transition: stroke 0.1s;
+
+    @include breakpoint(sm) {
+      display: none;
+    }
+  }
+
+  &.leftArrow {
+    flex-direction: row-reverse;
+    padding-right: 17px;
+    padding-left: 24px;
+    text-align: end;
+
+    .icon {
+      margin-right: unset;
+      margin-left: 16px;
+    }
+
+    & > div {
+      align-items: flex-end;
+      margin-right: unset;
+      margin-left: auto;
+    }
+
+    .expandingArrow {
+      transform: scaleX(-1);
+      margin-left: unset;
+      margin-right: 32px;
+    }
+  }
+
+  @include darkTheme {
+    border-color: var(--arrowButtonBorderColour, #4c4c4c);
+
+    --pageLinkColour: #{$edb_dark_blue};
+  }
+
+  @include hover {
+    background-color: var(--arrowButtonHoverBackgroundColour, $edb_mid_blue);
+    border-color: var(--arrowButtonHoverBackgroundColour, $edb_mid_blue);
+    color: #fff;
+
+    --arrowColour: #fff;
+    --expandArrow: 1;
+
+    span {
+      color: inherit;
+    }
+
+    @include darkTheme {
+      background-color: var(--arrowButtonHoverBackgroundColour, $edb_dark_blue);
+      border-color: var(--arrowButtonHoverBackgroundColour, $edb_dark_blue);
+    }
+  }
+}

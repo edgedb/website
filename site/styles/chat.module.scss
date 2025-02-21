@@ -1,0 +1,36 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.container {
+  padding: 40px;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    row-gap: 16px;
+
+    .prompt {
+      cursor: pointer;
+    }
+
+    .submit {
+      padding: 8px 16px;
+      background: #0ccb93;
+      outline: none;
+      border-radius: 5px;
+      border: none;
+      width: 100px;
+
+      &:hover {
+        background: #0ab684;
+        cursor: pointer;
+      }
+    }
+
+    .response {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+}

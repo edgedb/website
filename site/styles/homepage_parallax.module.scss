@@ -1,0 +1,227 @@
+@import "./mixins.scss";
+
+// speed relative to the content scrolling
+// 1 moves with content, 0 stays fixed in place
+$layer1Speed: 0.6;
+$layer2Speed: 0.4;
+
+$block1: "/_images/homepage/block_01";
+$block2: "/_images/homepage/block_02";
+$bar: "/_images/homepage/single_bar";
+$cube: "/_images/homepage/single_cube_mobile";
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: transform;
+  background: radial-gradient(
+    70% 70% at 50% 50%,
+    #ffffff 0%,
+    hsl(0, 0%, calc(((var(--pageScrollOffset) / 800) * 3%) + 97%)) 100%
+  );
+
+  :global(.pageScrollOffsetActive) & {
+    position: fixed;
+  }
+}
+
+.layer1 {
+  position: absolute;
+  width: 3984px;
+  height: 1949px;
+  top: -192px;
+  left: calc(50vw - 2070px);
+
+  will-change: transform;
+  transform: translateY(
+    calc(var(--pageScrollOffset) * #{$layer1Speed * -1px} + 700px)
+  );
+
+  background-repeat: no-repeat;
+  background-size: 1100px, 900px, 1280px, 280px, 460px, 380px;
+  background-position: 533px 269px, 855px 1047px, 2482px 94px, 1800px 0px,
+    0px 910px, 3604px 1040px;
+  @include sizedBgImages(
+    true,
+    $block1 1100,
+    $block2 1280,
+    $block2 1280,
+    $bar 460,
+    $bar 460,
+    $bar 460
+  );
+
+  @include breakpoint(xxl) {
+    width: 2858px;
+    height: 1590px;
+    left: calc(50vw - 1413px);
+
+    background-size: 784px, 628px, 1100px, 286px, 280px, 236px;
+    background-position: 256px 221px, 479px 962px, 1758px 130px, 1160px 0px,
+      0px 1114px, 2420px 982px;
+    @include sizedBgImages(
+      true,
+      $block1 784,
+      $block2 1280,
+      $block2 1280,
+      $bar 286,
+      $bar 286,
+      $bar 286
+    );
+  }
+
+  @include breakpoint(xl) {
+    width: 2143px;
+    height: 1481px;
+    top: -195px;
+    left: calc(50vw - 1001px);
+
+    background-size: 550px, 544px, 884px, 286px, 180px, 180px;
+    background-position: 162px 226px, 104px 937px, 1259px 286px, 824px 0px,
+      0px 1073px, 1816px 1001px;
+    @include sizedBgImages(
+      true,
+      $block1 555,
+      $block2 884,
+      $block2 884,
+      $bar 286,
+      $bar 286,
+      $bar 286
+    );
+  }
+
+  @include breakpoint(lg) {
+    width: 1557px;
+    height: 1079px;
+    top: -52px;
+    left: calc(50vw - 773px);
+
+    background-size: 555px, 450px, 590px, 220px, 220px;
+    background-position: 55px 84px, 80px 628px, 966px 267px, 0px 156px,
+      817px 0px;
+    @include sizedBgImages(
+      true,
+      $block1 555,
+      $block2 590,
+      $block2 590,
+      $bar 286,
+      $bar 286
+    );
+  }
+
+  @include breakpoint(md) {
+    width: 1114px;
+    height: 757px;
+    top: 8px;
+    left: calc(50vw - 552px);
+
+    background-size: 480px, 520px, 230px;
+    background-position: 0px 0px, 594px 144px, 92px 527px;
+    @include sizedBgImages(true, $block1 555, $block2 590, $bar 286);
+  }
+
+  @include breakpoint(sm) {
+    width: 782px;
+    height: 654px;
+    top: 6px;
+    left: calc(50vw - 405px);
+
+    background-size: 330px, 140px, 230px, 230px, 230px, 76px;
+    background-position: 376px 0px, 100px 514px, 552px 264px, 0px 37px,
+      115px 248px, 364px 48px;
+    @include sizedBgImages(
+      true,
+      $block2 330,
+      $bar 286,
+      $bar 286,
+      $bar 286,
+      $bar 286,
+      $cube 80
+    );
+  }
+}
+
+.layer2 {
+  position: absolute;
+  width: 2847px;
+  height: 1702px;
+  top: -182px;
+  left: calc(50vw - 1607px);
+
+  will-change: transform;
+  transform: translateY(
+    calc(var(--pageScrollOffset) * #{$layer2Speed * -1px} + 700px)
+  );
+
+  background-repeat: no-repeat;
+  background-size: 540px, 448px, 540px, 420px;
+  background-position: 1993px 0px, 0px 100px, 2307px 1162px, 209px 1258px;
+  @include sizedBgImages(false, $bar 540, $bar 540, $bar 540, $bar 540);
+
+  filter: blur(15px);
+
+  @include breakpoint(xxl) {
+    width: 2135px;
+    height: 1352px;
+    top: -141px;
+    left: calc(50vw - 1218px);
+
+    background-size: 448px, 260px, 320px, 448px;
+    background-position: 1882px 53px, 195px 125px, 1968px 1085px, 272px 874px;
+    @include sizedBgImages(false, $bar 460, $bar 460, $bar 460, $bar 460);
+
+    filter: blur(10px);
+  }
+
+  @include breakpoint(xl) {
+    width: 1747px;
+    height: 1229px;
+    top: -109px;
+    left: calc(50vw - 893px);
+
+    background-size: 340px, 280px, 280px, 340px;
+    background-position: 1407px 48px, 0px 0px, 1308px 949px, 34px 600px;
+    @include sizedBgImages(false, $bar 340, $bar 340, $bar 340, $bar 340);
+  }
+
+  @include breakpoint(lg) {
+    width: 1369px;
+    height: 922px;
+    top: 37px;
+    left: calc(50vw - 673px);
+
+    background-size: 240px, 240px, 280px;
+    background-position: 0px 459px, 1065px 0px, 1089px 642px;
+    @include sizedBgImages(false, $bar 286, $bar 286, $bar 286);
+  }
+
+  @include breakpoint(md) {
+    width: 332px;
+    height: 923px;
+    top: -83px;
+    left: calc(50vw + 126px);
+
+    background-size: 240px, 240px;
+    background-position: 92px 683px, 0px 0px;
+    @include sizedBgImages(false, $bar 286, $bar 286);
+  }
+
+  @include breakpoint(sm) {
+    width: 973px;
+    height: 648px;
+    top: -120px;
+    left: calc(50vw - 530px);
+
+    background-size: 240px, 240px, 240px;
+    background-position: 0px 408px, 573px 0px, 733px 80px;
+    @include sizedBgImages(false, $bar 286, $bar 286, $bar 286);
+
+    filter: blur(4px);
+  }
+}

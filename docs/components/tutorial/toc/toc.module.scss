@@ -1,0 +1,117 @@
+@import "@/mixins.scss";
+
+.toc {
+  display: flex;
+  flex-direction: column;
+  @include responsive(padding-left, 16px, $md: 32px);
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.sectionName {
+  color: var(--grey50);
+  font-size: 16px;
+  line-height: 40px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+
+  @include darkTheme {
+    color: var(--grey40);
+  }
+}
+
+$lineHeight: 24px;
+$lineGap: 16px;
+
+.category {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: #{$lineGap / -2} 0;
+  list-style: none;
+}
+
+.categoryLink {
+  position: relative;
+  display: block;
+  color: var(--grey10);
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  padding: #{$lineGap / 2} 0;
+  padding-left: 24px;
+
+  --lineColour: var(--grey60);
+  --activeColour: var(--accent_green_light_theme);
+
+  svg {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: -1px;
+    top: #{(($lineHeight + $lineGap) / 2) - 9px};
+    fill: var(--pageBg);
+  }
+
+  .ring {
+    stroke-width: 2px;
+    stroke: var(--lineColour);
+  }
+
+  .line {
+    stroke-width: 2px;
+    stroke: var(--lineColour);
+    top: #{($lineHeight + $lineGap) / 2};
+    height: 100%;
+  }
+
+  &.completed {
+    color: var(--activeColour);
+
+    .ring {
+      fill: var(--pageBg);
+      stroke: var(--pageBg);
+    }
+
+    .line {
+      stroke: var(--activeColour);
+    }
+
+    .dot {
+      fill: var(--activeColour);
+    }
+  }
+
+  &.active {
+    color: var(--activeColour);
+
+    .ring {
+      stroke: var(--activeColour);
+      fill: var(--pageBg);
+    }
+    .dot {
+      fill: var(--activeColour);
+    }
+  }
+
+  &:hover {
+    .dot {
+      fill: var(--activeColour);
+    }
+  }
+
+  :last-child > & {
+    .line {
+      display: none;
+    }
+  }
+
+  @include darkTheme {
+    color: var(--grey55);
+
+    --lineColour: var(--grey30);
+    --activeColour: var(--accent_green_dark_theme);
+  }
+}

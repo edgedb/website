@@ -1,0 +1,143 @@
+@import "../../styles/settings.vars.scss";
+@import "../../styles/mixins.scss";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(51, 51, 51, 0.6);
+  backdrop-filter: blur(21px);
+}
+
+.popup {
+  background: var(--grey14);
+  border-radius: $radius;
+  padding: 64px 60px 60px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  color: var(--baseTextDarkTheme);
+  position: relative;
+  text-align: center;
+  width: 610px;
+  height: 442px;
+
+  @include breakpoint(xl) {
+    width: 578px;
+    height: 378px;
+  }
+
+  h2 {
+    font-family: "EdgeDB", sans-serif;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -1.44px;
+
+    color: var(--grey80);
+
+    margin: 0;
+  }
+
+  p {
+    font-size: 20px;
+    line-height: 32px;
+
+    @include breakpoint(xl) {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .closePopup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    width: 40px;
+    height: 40px;
+
+    background: var(--grey50);
+    border-radius: 50px;
+    border: none;
+  }
+
+  .form {
+    margin: 82px auto 0 auto;
+    position: relative;
+    max-width: 458px;
+
+    @include responsive(xl, margin-top, 42px);
+
+    .errorMsg {
+      color: var(--accentRedDarkTheme);
+      position: absolute;
+      left: 0;
+      bottom: 46px;
+    }
+
+    .successMsg {
+      font-weight: $weight_bold;
+      line-height: 32px;
+      color: var(--accentViolet);
+
+      position: absolute;
+      bottom: -54px;
+    }
+
+    form {
+      display: flex;
+      width: 100%;
+
+      &.error {
+        input {
+          border-color: var(--accentRedDarkTheme);
+        }
+
+        button {
+          background-color: var(--accentRedDarkTheme);
+        }
+      }
+    }
+
+    input {
+      border: 2px solid var(--grey20);
+      outline: 0;
+      background: var(--grey20);
+      border-radius: 6px 0 0 6px;
+      font-size: 20px;
+      line-height: 24px;
+      padding: 10px 16px;
+      flex-grow: 1;
+      min-width: 0;
+      color: var(--baseTextDarkTheme);
+
+      @include responsive(xl, font-size, 18px);
+    }
+
+    button {
+      background: var(--accentViolet);
+      border-radius: 0 6px 6px 0;
+      border: 0;
+      font-weight: $weight_bold;
+      font-size: 20px;
+      line-height: 24px;
+      color: var(--grey8);
+      padding: 8px 24px;
+
+      @include responsive(xl, font-size, 18px);
+    }
+  }
+}

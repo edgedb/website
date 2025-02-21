@@ -1,0 +1,502 @@
+@import "@/mixins.scss";
+
+.headerSearchButton {
+  height: 32px;
+  width: 192px;
+  border-radius: 6px;
+  background: var(--grey90);
+  color: var(--grey30);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    flex-shrink: 0;
+    margin: 0 8px;
+  }
+
+  .placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .shortcut {
+    display: flex;
+    padding: 0px 6px 0px 4px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 2px;
+    background: #fff;
+    height: 24px;
+    margin: 4px;
+    margin-left: auto;
+    color: var(--grey50);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  @include darkTheme {
+    background: var(--grey14);
+    color: var(--grey55);
+
+    .shortcut {
+      background: var(--grey8);
+    }
+  }
+
+  @include breakpoint(lg) {
+    width: 32px;
+    background: none;
+    justify-content: center;
+    color: var(--grey50);
+
+    .placeholder,
+    .shortcut {
+      display: none;
+    }
+
+    @include darkTheme {
+      background: none;
+    }
+  }
+}
+
+.mobileSearchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background: var(--grey30);
+  color: var(--grey95);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+  }
+
+  @include breakpoint(sm) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @include darkTheme {
+    background: var(--grey55);
+    color: var(--grey8);
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparentize(#f7f7f7, 0.15);
+  z-index: 50;
+  transition: opacity 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 48px;
+
+  @include darkTheme {
+    background: transparentize(#000000, 0.4);
+  }
+
+  &:not(.popupOpen) {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  @include breakpoint(md) {
+    padding: 0;
+  }
+}
+
+.searchPanel {
+  display: flex;
+  width: 876px;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+  padding-bottom: 24px;
+  max-height: 100%;
+  overflow: hidden;
+
+  transform: translateY(-20px);
+  transition: transform 0.2s;
+
+  @include darkTheme {
+    background: var(--grey14);
+  }
+
+  .popupOpen & {
+    transform: none;
+  }
+
+  @include breakpoint(md) {
+    transform: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.header {
+  display: none;
+  padding: 16px 16px 0px 16px;
+  margin-bottom: -16px;
+  color: var(--grey25);
+
+  .closeButton {
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  @include darkTheme {
+    color: var(--grey55);
+  }
+
+  @include breakpoint(md) {
+    display: flex;
+  }
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid var(--grey80);
+  color: var(--grey25);
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 24px 24px 8px 24px;
+  box-sizing: border-box;
+
+  svg {
+    fill: currentColor;
+    width: 14px;
+    margin-left: 16px;
+    margin-right: -30px;
+    flex-shrink: 0;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    padding: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    flex-grow: 1;
+    align-self: stretch;
+    padding-left: 38px;
+    padding-right: 16px;
+  }
+
+  @include darkTheme {
+    border-color: var(--grey20);
+    color: var(--grey60);
+  }
+}
+
+.filtersRow {
+  overflow: auto hidden;
+  @include hideScrollbars;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0px,
+    #000 24px,
+    #000 calc(100% - 24px),
+    transparent 100%
+  );
+
+  flex-shrink: 0;
+  padding-top: 8px;
+  color: var(--grey25);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+
+  &.clientsFilters {
+    font-size: 14px;
+  }
+
+  @include darkTheme {
+    color: var(--grey55);
+  }
+}
+
+.filtersInner {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 0 24px;
+  min-width: max-content;
+}
+
+.filterTab {
+  position: relative;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: var(--grey95);
+
+  @include darkTheme {
+    background: var(--grey18);
+  }
+
+  &.selected {
+    background: var(--grey25);
+    color: #fff;
+
+    @include darkTheme {
+      background: var(--grey55);
+      color: var(--grey6);
+    }
+  }
+
+  &.noResults {
+    opacity: 0.3;
+  }
+
+  .filterCount {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    background: #fff;
+    border-radius: 4px;
+    display: block;
+    padding: 4px 3px;
+    color: var(--grey55);
+    @include monospace;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 8px;
+    transform: translateX(50%);
+
+    @include darkTheme {
+      background: var(--grey14);
+    }
+  }
+
+  .clientsFilters & {
+    background: none;
+    color: inherit;
+
+    @include darkTheme {
+      background: none;
+      color: inherit;
+    }
+
+    &.selected:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 2px solid currentColor;
+    }
+  }
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: auto;
+  padding: 0 24px;
+  margin-bottom: -24px;
+
+  --bgColour: #fff;
+  --bgColourTransparent: #{transparentize(#fff, 1)};
+
+  &:before,
+  &:after {
+    content: "";
+    height: 24px;
+    width: 100%;
+    flex-shrink: 0;
+    position: sticky;
+    z-index: 1;
+  }
+
+  &:before {
+    top: 0;
+    background: linear-gradient(
+      var(--bgColour) 8px,
+      var(--bgColourTransparent)
+    );
+  }
+  &:after {
+    bottom: 0;
+    margin-top: -24px;
+    background: linear-gradient(
+      var(--bgColourTransparent),
+      var(--bgColour) 16px
+    );
+  }
+
+  .scrollPadding {
+    height: 8px;
+    flex-shrink: 0;
+  }
+
+  @include darkTheme {
+    --bgColour: var(--grey14);
+    --bgColourTransparent: #{transparentize(#242424, 1)};
+  }
+}
+
+.searchResult {
+  display: block;
+  position: relative;
+  background-color: var(--grey95);
+  border-radius: 6px;
+  padding: 8px 16px;
+  padding-right: 44px;
+  margin-bottom: 16px;
+  text-decoration: none;
+
+  .resultHeaderWrapper {
+    display: flex;
+
+    @include breakpoint(md) {
+      flex-direction: column;
+    }
+  }
+
+  .resultHeader {
+    display: flex;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .resultTitle {
+    color: var(--grey25);
+    @include monospace;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .versionBadge {
+    background-color: #0077f9;
+    color: white;
+    border-radius: 5px;
+    padding: 0px 6px;
+    margin-right: 10px;
+    margin-left: 8px;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: 600;
+    align-self: center;
+
+    &.warning {
+      background-color: #d9890d;
+    }
+  }
+
+  .resultBreadcrumbs {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.4);
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: end;
+    padding-bottom: 2px;
+    padding-left: 12px;
+
+    @include breakpoint(md) {
+      align-self: start;
+      margin-left: 0;
+      padding-left: 0;
+      margin-top: 4px;
+    }
+  }
+
+  .resultBody {
+    padding: 7px 0px 6px 0px;
+    color: var(--grey25);
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  .matchedTerm {
+    background: #fee8b0;
+    border-radius: 2px;
+  }
+
+  .arrowIcon {
+    position: absolute;
+    right: 16px;
+    top: calc(50% - 6px);
+    fill: var(--grey70);
+  }
+
+  &.resultSelected {
+    .resultTitle {
+      color: var(--accent_green_light_theme);
+    }
+
+    .arrowIcon {
+      fill: var(--accent_green_light_theme);
+    }
+  }
+
+  @include darkTheme {
+    background-color: var(--grey8);
+
+    .resultTitle {
+      color: var(--grey65);
+    }
+
+    .resultBreadcrumbs {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .resultBody {
+      color: var(--grey50);
+    }
+
+    .matchedTerm {
+      background-color: #40310c;
+    }
+
+    &.resultSelected {
+      .resultTitle {
+        color: var(--accent_green_dark_theme);
+      }
+
+      .arrowIcon {
+        fill: var(--accent_green_dark_theme);
+      }
+    }
+  }
+}

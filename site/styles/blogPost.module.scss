@@ -1,0 +1,498 @@
+@import "./settings.vars.scss";
+@import "./mixins.scss";
+
+.page {
+  --overhang: 24px;
+  --headerLinkPopupBg: var(--grey97);
+  --codeBgColour: var(--grey6);
+  --headerLinkPopupBg: var(--grey10);
+
+  @include responsive(lg, --overhang, 16px);
+  @include responsive(md, --overhang, 24px);
+
+  position: relative;
+  @include responsive(md, overflow, hidden);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: var(--backgroundImage);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    opacity: var(--opacity);
+    filter: blur(80px);
+    transform: translate3d(0, 0, 0);
+    mask-image: linear-gradient(to bottom, black 15%, transparent 85%);
+
+    @include breakpoint(md) {
+      width: 200vw;
+      margin-left: -50vw;
+      height: 85vh;
+      mask-image: linear-gradient(to bottom, black 6%, transparent 94%);
+    }
+
+    @include breakpoint(sm) {
+      width: 300vw;
+      height: 80vh;
+      margin-left: -100vw;
+    }
+  }
+}
+
+.pageFooter {
+  --contentWidth: 800px;
+}
+
+.postHeader {
+  width: var(--contentWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .publishedOn {
+    @include publishedDate;
+    color: var(--grey80);
+    opacity: 0.6;
+  }
+
+  & > h1 {
+    color: var(--grey80);
+    font-family: "EdgeDB", sans-serif;
+    font-size: 42px;
+    @include responsive(lg, font-size, 32px);
+
+    line-height: 40px;
+    @include responsive(lg, line-height, 32px);
+    @include responsive(sm, line-height, 40px);
+
+    @include responsive(sm, font-weight, 800);
+
+    @include responsiveAll(margin-top, 16px, 9px, 9px, 16px, 9px);
+    margin-bottom: 14px;
+  }
+
+  .updatePostHeader {
+    width: 100%;
+    text-align: start;
+
+    .popup {
+      display: none;
+      margin-left: 16px;
+      vertical-align: middle;
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+
+        color: var(--accentViolet);
+      }
+    }
+
+    &:hover {
+      .popup {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.pageContent {
+  grid-column: content;
+  color: var(--grey65);
+
+  @include responsiveAll(padding-top, 110px, 22px, 0px, 24px, 16px);
+}
+
+.updatesContent {
+  @extend .pageContent;
+
+  .postHeader {
+    align-items: flex-start;
+  }
+
+  .postContent {
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--grey30);
+    margin-bottom: 100px;
+    @include responsive(lg, margin-bottom, 84px);
+  }
+}
+
+.postContent {
+  a {
+    color: var(--accentViolet);
+  }
+
+  .section {
+    width: 100% !important;
+
+    & > :not(details) {
+      width: var(--contentWidth);
+      margin: 12px 0px;
+    }
+
+    & > p {
+      display: inline-block;
+    }
+
+    p,
+    summary {
+      @include responsive(xl, font-size, 18px);
+      @include responsive(md, font-size, 16px);
+
+      line-height: 40px;
+      @include responsive(xl, line-height, 32px);
+      @include responsive(sm, line-height, 28px);
+    }
+
+    & > h2,
+    & summary > h2 {
+      font-size: 30px;
+      @include responsive(sm, font-size, 24px);
+
+      line-height: 32px;
+      @include responsive(sm, line-height, 32px);
+
+      margin: 48px 0px 20px 0px;
+      @include responsive(xl, margin, 43px 0px 12px 0px);
+      @include responsive(sm, margin, 48px 0px 12px 0px);
+    }
+    & summary > h2 {
+      margin: 24px 0;
+    }
+
+    & > h3,
+    & summary > h3 {
+      font-size: 23px;
+      @include responsive(sm, font-size, 19px);
+
+      line-height: 32px;
+
+      margin: 28px 0px 4px 0px;
+      @include responsive(xl, margin, 23px 0px 8px 0px);
+      @include responsive(sm, margin, 32px 0px 8px 0px);
+    }
+    & summary > h3 {
+      margin: 18px 0;
+    }
+
+    aside {
+      width: calc(100% - var(--contentWidth) - 40px);
+      float: right;
+      max-width: 360px;
+
+      background: #f7f7f7;
+      font-size: 16px;
+      padding: 0 20px;
+      border-radius: $radius;
+      margin-top: 20px;
+
+      line-height: 40px;
+      @include responsive(xl, line-height, 32px);
+      @include responsive(sm, line-height, 28px);
+
+      code {
+        background-color: #fff;
+      }
+
+      a > code {
+        @include hover {
+          background-color: $edb_mid_blue;
+        }
+      }
+
+      &.nobg {
+        background: none;
+      }
+    }
+
+    figcaption {
+      font-size: 15px;
+      color: #747474;
+      text-align: center;
+      margin: -32px auto 44px auto;
+      max-width: 60%;
+      @include responsive(sm, max-width, calc(100% - 60px));
+      line-height: 20px;
+    }
+
+    :not(aside) {
+      &.note,
+      &.important,
+      &.warning {
+        width: calc(var(--contentWidth) + var(--overhang) * 2);
+        margin-top: 16px;
+        margin-bottom: 16px;
+        margin-left: calc(-1 * var(--notePadding));
+        margin-right: calc(-1 * var(--notePadding));
+      }
+    }
+
+    @include breakpoint(lg) {
+      aside {
+        display: inline-block;
+        float: none;
+        width: calc(var(--contentWidth) + var(--overhang) * 2);
+        margin-top: 0;
+        margin-left: calc(-1 * var(--overhang));
+        margin-right: 0;
+        padding: 0 var(--overhang);
+        max-width: unset;
+      }
+    }
+
+    .picture {
+      margin: 2em 0;
+      border-radius: $radius;
+
+      @include breakpointMobileFirst(sm) {
+        &.floatRight {
+          float: right;
+          width: calc(var(--contentWidth) / 2);
+          margin: 16px;
+          margin-right: calc(
+            (min(var(--pageMaxWidth), 100vw) - var(--contentWidth)) / 2 -
+              var(--pageMargin) - var(--overhang)
+          );
+        }
+      }
+    }
+
+    .codeBlock,
+    .fullWidth {
+      width: calc(var(--contentWidth) + var(--overhang) * 2);
+      margin-left: calc(-1 * var(--overhang));
+
+      font-size: 18px;
+      @include responsive(xl, font-size, 16px);
+      @include responsive(sm, font-size, 14px);
+    }
+
+    .codeBlock {
+      --codeBlockVerticalPadding: 24px;
+      --codeBlockHorizontalPadding: var(--overhang);
+      border-radius: $radius;
+      margin-top: 20px;
+      display: inline-block;
+    }
+    .fullWidth {
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+
+    .sizedImage {
+      display: flex;
+      justify-content: center;
+
+      img {
+        height: auto;
+        border-radius: 8px;
+
+        @include breakpoint(sm) {
+          width: 100% !important;
+        }
+      }
+    }
+
+    details {
+      .codeBlock {
+        --codeBlockHorizontalPadding: 24px;
+        border-radius: 8px;
+      }
+
+      --codeBgColour: var(--grey12);
+      --codeSelectedTabColor: var(--grey12);
+      --codeTabColor: var(--grey10);
+      --detailsBlockBgColor: var(--grey6);
+      --pageBackgroundColour: var(--grey10);
+    }
+  }
+
+  table {
+    margin-top: 1em;
+  }
+
+  .blockquote {
+    margin: 2em 0;
+    opacity: 0.9;
+    border-left: 3px solid var(--grey40);
+    font-size: 95%;
+    line-height: 32px;
+
+    .quote {
+      font-style: italic;
+      p {
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+    }
+
+    .attribution {
+      font-weight: $weight_bold;
+      margin-top: -1em;
+      p {
+        padding-left: 2em;
+        &:before {
+          content: "— ";
+        }
+      }
+    }
+  }
+
+  .footnote {
+    font-size: 90%;
+
+    .nested_paragraph {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    &:target {
+      background: lighten($edb_mid_blue, 40%);
+      padding: 0 0.5em;
+      margin-left: -0.5em;
+      margin-right: -0.5em;
+      border-radius: $radius_sm;
+    }
+  }
+
+  :not(.footnote) + .footnote {
+    margin-top: 134px;
+    position: relative;
+
+    &:before {
+      position: absolute;
+      content: "";
+      display: block;
+      bottom: 100%;
+      width: 40px;
+      height: 4px;
+      background: #8e8e8e;
+      margin-top: 100px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.updatesPostContent .section .fullWidth {
+  margin-top: 16px;
+}
+
+.postFooter {
+  grid-column: content;
+}
+
+.leadImage,
+.leadYoutubeEmbed {
+  width: calc(100% + var(--bannerOverhang) * 2);
+  border-radius: $radius;
+  aspect-ratio: 2.4;
+  @include responsive(sm, aspect-ratio, 1.8);
+  @include responsiveAllXXL(margin-top, 60px, 30px, 20px, 18px, 26px, 26px);
+  @include responsiveAllXXL(margin-bottom, 88px, 72px, 70px, 48px, 48px, 48px);
+}
+
+.leadYoutubeEmbed {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+
+  @include breakpoint(sm) {
+    border-radius: 0;
+  }
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.githubBtn {
+  background-color: #eff3f6;
+  background-image: linear-gradient(180deg, #fafbfc, #eff3f6 90%);
+  border-color: rgba(27, 31, 35, 0.2);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: $weight_semibold;
+  color: #222;
+  line-height: 16px;
+  vertical-align: bottom;
+  cursor: pointer;
+  border: 1px solid #c5c9cc;
+  border-radius: 0.25em;
+  outline: 0;
+  display: inline-flex;
+  align-items: center;
+
+  &.huge {
+    padding: 8px 11px;
+    font-size: 15px;
+  }
+
+  @include hover {
+    color: #222;
+    background-color: #e6ebf1;
+    background-image: linear-gradient(180deg, #f0f3f6, #e6ebf1 90%);
+    border-color: #a5a9ac;
+    border-color: rgba(27, 31, 35, 0.35);
+    text-decoration: none;
+  }
+
+  svg {
+    display: block;
+    margin-right: 0.5em;
+    path {
+      fill: #222;
+    }
+  }
+}
+
+.page {
+  @include responsiveAll(--contentWidth, 792px, 632px, 552px, 592px, 100%);
+
+  :global(.globalPageWrapperBlog) {
+    @include responsiveAllXXL(
+      --bannerOverhang,
+      148px,
+      116px,
+      68px,
+      24px,
+      24px,
+      var(--pageMargin)
+    );
+  }
+}
+
+@include breakpoint(sm) {
+  .page :global(.globalPageWrapperBlog) {
+    --leftSidebarWidth: 0;
+    --rightSidebarWidth: 0;
+    --overhang: var(--pageMargin);
+  }
+
+  .leadImage {
+    border-radius: 0;
+  }
+
+  .postContent {
+    .section {
+      aside,
+      .codeBlock,
+      .fullWidth {
+        border-radius: 0;
+      }
+    }
+  }
+}

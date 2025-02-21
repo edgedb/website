@@ -1,0 +1,412 @@
+@import "../../../mixins.scss";
+@import "@edgedb-site/shared/components/code/mixins.scss";
+
+.cell {
+  --baseBorderColour: #bfbfbf;
+  --baseTextColour: #8f8f8f;
+  --editedColour: #eea663;
+  --focusedColour: var(--codeCellFocusedColour, #1f8aed);
+  --errorColour: #f15e67;
+  --backgroundColor: var(--codeCellBackgroundColour, #fff);
+
+  --borderColour: var(--baseBorderColour);
+  --promptColour: var(--baseTextColour);
+
+  position: relative;
+  padding: 12px 16px;
+  margin: 0 -16px;
+  font-size: 16px;
+  line-height: 25px;
+
+  &:first-child {
+    margin-bottom: 30px;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 8px;
+    border: 2px solid var(--borderColour);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    transition: border-color 0.25s;
+  }
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: var(--backgroundColor);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .inner {
+    @include monospace;
+    position: relative;
+    overflow-x: auto;
+
+    textarea {
+      outline: none;
+    }
+  }
+
+  .cellType {
+    position: absolute;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: var(--promptColour);
+    top: 27px;
+    right: calc(100% + 19px);
+    transform: translateY(-50%);
+    text-align: end;
+    transition: color 0.25s;
+
+    .counter:after {
+      content: counter(codecell);
+      font-family: "Sometype Mono", monospace;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 11px;
+      vertical-align: sub;
+      margin-left: 1px;
+    }
+  }
+
+  .indicator {
+    display: none;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--editedColour);
+  }
+
+  &.edited {
+    --borderColour: var(--editedColour);
+    --promptColour: var(--editedColour);
+
+    .indicator {
+      display: block;
+    }
+  }
+
+  &.focused {
+    --borderColour: var(--focusedColour);
+    --promptColour: var(--focusedColour);
+
+    &:before,
+    .upperBorder:after,
+    .lowerBorder:after {
+      opacity: 1;
+    }
+  }
+
+  &.inspector {
+    padding: 2px 10px;
+
+    .inner {
+      padding: 6px 0;
+    }
+
+    @include breakpoint(lg) {
+      .inner {
+        padding-top: 10px;
+      }
+    }
+
+    .inlineCellHeaders & .inner {
+      padding-top: 10px;
+    }
+  }
+
+  &.outdated {
+    --borderColour: var(--editedColour);
+    --promptColour: var(--editedColour);
+
+    .cellTypeStatus:after {
+      content: " outdated";
+    }
+  }
+
+  &.error {
+    --borderColour: var(--errorColour);
+    --promptColour: var(--errorColour);
+
+    .inner {
+      color: var(--errorColour);
+    }
+  }
+
+  @include darkTheme {
+    --baseBorderColour: #595959;
+    --baseTextColour: #595959;
+    --editedColour: #b27236;
+    --focusedColour: var(--codeCellFocusedColour, #3a82c4);
+    --errorColour: #c14a51;
+    --backgroundColor: var(--codeCellBackgroundColour, #242424);
+  }
+}
+
+.cellBorder {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  right: 0;
+  bottom: 0;
+
+  .upperBorder,
+  .lowerBorder {
+    height: 50%;
+    display: flex;
+
+    & > * {
+      flex-shrink: 0;
+    }
+
+    &:after {
+      content: "";
+      flex-grow: 1;
+      border: 2px solid var(--focusedColour);
+      border-left: none;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+  }
+
+  .upperBorder:after {
+    border-bottom: none;
+    border-top-right-radius: 4px;
+  }
+  .lowerBorder:after {
+    border-top: none;
+    border-bottom-right-radius: 4px;
+  }
+}
+
+.modeToggle {
+  position: relative;
+  padding: 0.5em;
+  margin-right: -0.5em;
+  z-index: 1;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    content: "";
+    border-bottom: 2px dotted currentColor;
+    left: 0.5em;
+    right: 0.5em;
+    bottom: 0.25em;
+  }
+
+  @include hover {
+    color: var(--focusedColour);
+  }
+}
+
+.codeInner {
+  display: grid;
+}
+
+.textEditor {
+  grid-area: 1 / 1;
+  min-width: max-content;
+}
+
+.errorOverlay {
+  grid-area: 1 / 1;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  min-width: max-content;
+  background: transparent;
+  box-sizing: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-variant-ligatures: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-indent: inherit;
+  text-rendering: inherit;
+  text-transform: inherit;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  pointer-events: none;
+  color: transparent;
+
+  span {
+    text-decoration: underline wavy var(--errorColour) 1.2px;
+  }
+}
+
+.errorHint {
+  font-style: italic;
+  color: #6c6c6c;
+
+  @include darkTheme {
+    color: #949494;
+  }
+}
+
+.code {
+  padding-top: 16px;
+  padding-bottom: 20px;
+
+  :global {
+    @include tokenColours;
+  }
+
+  @include hover {
+    --borderColour: var(--focusedColour);
+    --promptColour: var(--focusedColour);
+  }
+}
+
+.unevaled {
+  font-style: italic;
+  color: #bfbfbf;
+
+  a {
+    margin-left: 16px;
+    font-style: normal;
+    font-size: 95%;
+  }
+
+  @include darkTheme {
+    color: #7f7f7f;
+  }
+}
+
+.controls {
+  position: relative;
+  display: flex;
+  align-self: flex-end;
+  bottom: -15px;
+  height: 32px;
+  padding: 0 6px;
+  color: #fff;
+  z-index: 1;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    span {
+      height: 20px;
+      border-radius: 4px;
+      padding: 0 6px;
+      background: var(--buttonBg);
+    }
+
+    svg {
+      fill: currentColor;
+      margin-right: 4px;
+    }
+
+    :global(.no-touch) &:hover span,
+    :global(.touch) & span {
+      background: var(--activeButtonBg);
+    }
+  }
+
+  .run {
+    --buttonBg: #a7e1ca;
+    --activeButtonBg: #46b98f;
+
+    span:hover {
+      background: var(--accent_green_light_theme);
+    }
+
+    .edited & span {
+      border-radius: 4px 0 0 4px;
+    }
+  }
+
+  .reset {
+    --buttonBg: #f2d0b2;
+    --activeButtonBg: #eea663;
+
+    margin-left: 2px;
+
+    span {
+      border-radius: 0 4px 4px 0;
+
+      &:hover {
+        background: #d78100;
+      }
+    }
+  }
+
+  @include darkTheme {
+    color: #2c2d2e;
+
+    .run {
+      --buttonBg: #376251;
+      --activeButtonBg: #2c9b70;
+    }
+
+    .reset {
+      --buttonBg: #78593d;
+      --activeButtonBg: #b27236;
+    }
+  }
+}
+
+@mixin inlineCellHeaders {
+  .cell {
+    .cellType {
+      position: relative;
+      line-height: 32px;
+      top: -16px;
+      right: auto;
+      align-self: flex-start;
+      padding: 0 6px;
+      transform: none;
+
+      .modeToggle {
+        margin-right: 0;
+      }
+    }
+
+    &.outdated {
+      .cellTypeStatus:after {
+        content: " (outdated)";
+      }
+    }
+  }
+}
+
+.inlineCellHeaders {
+  @include inlineCellHeaders;
+}
+
+@include breakpoint(lg) {
+  @include inlineCellHeaders;
+}
+
+@include breakpoint(sm) {
+  .cell {
+    font-size: 16px;
+  }
+}

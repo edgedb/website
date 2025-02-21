@@ -1,0 +1,25 @@
+@import "../../../styles/settings.vars.scss";
+@import "../../../styles/mixins.scss";
+
+.navTable {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  width: max-content;
+  margin: 80px 0;
+
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+  }
+
+  @include breakpoint(md) {
+    margin: 65px auto;
+  }
+}
+
+.navItem {
+  width: auto;
+  svg path {
+    fill: currentColor;
+  }
+}

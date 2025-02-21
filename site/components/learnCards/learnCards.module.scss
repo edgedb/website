@@ -1,0 +1,125 @@
+@import "../../styles/mixins.scss";
+
+.learnCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  @include responsive(md, grid-template-columns, 1fr 1fr);
+  @include responsive(sm, grid-template-columns, 1fr);
+
+  @include responsiveAll(gap, 64px, 56px, 46px, 68px, 30px);
+
+  .skipColumn {
+    grid-column-start: 2;
+    @include responsive(md, grid-column-start, 1);
+  }
+
+  a {
+    color: #4c4c4c;
+    @include responsive(sm, color, #fff);
+    font-size: 20px;
+    line-height: 28px;
+
+    .cardContent {
+      --arrowColour: #0ccb93;
+      @include responsive(sm, --arrowColour, #fff);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 8px;
+      padding: 0 40px 0 44px;
+      background-color: #f7f7f7;
+      @include responsiveAll(height, 168px, 136px, 112px, 144px, 160px);
+      @include responsive(lg, padding-left, 34px);
+      @include responsive(lg, padding-right, 30px);
+
+      & > * {
+        z-index: 2;
+        transition: color 0.15s;
+        transition: stroke 0.5s;
+      }
+
+      &:hover {
+        --expandArrow: 1;
+        --arrowColour: #fff;
+
+        .cardBackground {
+          opacity: 0.3;
+        }
+      }
+    }
+
+    @include raisedShadow(
+      #fff,
+      8px,
+      true,
+      40px,
+      8px,
+      48px,
+      rgba(0, 0, 0, 0.15)
+    );
+
+    .cardTitle {
+      max-width: 72%;
+      font-weight: 600;
+      font-size: 26px;
+      @include responsive(xl, font-size, 20px);
+    }
+
+    .cardBackground {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      background-image: url("/assets/exploring_bg.svg");
+      background-position: right top;
+      background-repeat: no-repeat;
+      z-index: 1;
+      transition: opacity 0.1s;
+      @include responsive(sm, opacity, 0.3);
+
+      &:hover {
+        opacity: 0.3;
+      }
+    }
+
+    .cardGradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      opacity: 0;
+      @include responsive(sm, opacity, 1);
+      transition: opacity 0.15s;
+      z-index: 0;
+    }
+
+    &:nth-child(5n + 1) .cardGradient {
+      background: linear-gradient(90deg, #cc9add 8.06%, #ebad98 106.93%);
+    }
+    &:nth-child(5n + 2) .cardGradient {
+      background: linear-gradient(90deg, #dca3bb -6.93%, #b199f2 91.94%);
+    }
+    &:nth-child(5n + 3) .cardGradient {
+      background: linear-gradient(90deg, #cb9ade -6.93%, #8aa1f8 91.94%);
+    }
+    &:nth-child(5n + 4) .cardGradient {
+      background: linear-gradient(90deg, #b199f1 -6.93%, #5faaff 91.94%);
+    }
+    &:nth-child(5n) .cardGradient {
+      background: linear-gradient(90.91deg, #5faaff 8.06%, #79e0d4 106.93%);
+    }
+
+    @include hover {
+      color: #fff;
+
+      .cardGradient {
+        opacity: 1;
+      }
+    }
+  }
+}

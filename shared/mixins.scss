@@ -1,0 +1,243 @@
+@mixin palette {
+  --grey6: #0f0f0f;
+  --grey8: #141414;
+  --grey10: #1a1a1a;
+  --grey12: #1f1f1f;
+  --grey14: #242424;
+  --grey18: #2e2e2e;
+  --grey20: #333333;
+  --grey25: #404040;
+  --grey30: #4d4d4d;
+  --grey40: #666666;
+  --grey45: #737373;
+  --grey50: #808080;
+  --grey55: #8c8c8c;
+  --grey60: #999999;
+  --grey65: #a6a6a6;
+  --grey70: #b3b3b3;
+  --grey75: #bfbfbf;
+  --grey80: #cccccc;
+  --grey85: #d9d9d9;
+  --grey90: #e6e6e6;
+  --grey93: #ededed;
+  --grey95: #f2f2f2;
+  --grey97: #f7f7f7;
+  --white: #fff;
+
+  --link_light_theme: #0075d1;
+  --link_dark_theme: #2d82c6;
+
+  --accent_green_light_theme: #2cb88e;
+  --accent_green_dark_theme: #279474;
+  --accent_violet_light_theme: #cfbffb;
+  --accent_violet_dark_theme: #8979b7;
+
+  --accentRedLightTheme: #d78d87;
+  --accentRedDarkTheme: #af6963;
+  --accentViolet: #8280ff;
+}
+
+// todo: to be deleted
+$edb_mid_blue: #1f8aed;
+$edb_dark_blue: #3a82c4;
+
+@mixin darkTheme {
+  [data-theme="dark"] & {
+    @content;
+  }
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] & {
+      @content;
+    }
+  }
+}
+
+@mixin hover {
+  &:hover {
+    @content;
+  }
+}
+
+// Breakpoints
+
+$breakpoints: (
+  xs: 320px,
+  sm: 768px,
+  md: 1024px,
+  lg: 1440px,
+  xl: 1920px,
+  xxl: 2560px,
+);
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    // Subtracts 0.5px to make breakpoint exclusive (width < x) instead of
+    // inclusive (width <= x)
+    // (Uses -0.5px instead of -1px due to incorrect behaviour on some
+    // systems ie. win10 with fractional display scaling ¯\_(ツ)_/¯)
+    @media (max-width: #{$breakpoint-value - 0.5px}) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin breakpointMobileFirst($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (min-width: #{$breakpoint-value}) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin responsive($prop, $baseVal, $vals...) {
+  #{$prop}: #{$baseVal};
+
+  @each $breakpoint, $value in keywords($vals) {
+    @if $breakpoint == touch {
+      @include touch() {
+        #{$prop}: #{$value};
+      }
+    } @else {
+      @include breakpoint($breakpoint) {
+        #{$prop}: #{$value};
+      }
+    }
+  }
+}
+
+@mixin monospace {
+  font-family: "Roboto Mono", monospace;
+}
+
+// Misc.
+
+@mixin hideScrollbars {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@function mapBgImage($imgs, $suffix) {
+  $bgList: ();
+  @each $url, $size in $imgs {
+    $bgList: append(
+      $bgList,
+      url("#{$url}#{if($size,'-'+$size,'')}#{$suffix}.webp"),
+      $separator: comma
+    );
+  }
+  @return $bgList;
+}
+
+@mixin sizedBgImage($img, $retina: true) {
+  background-image: mapBgImage([$img], "");
+
+  @if $retina {
+    @media (min-resolution: 2dppx) {
+      background-image: mapBgImage([$img], "-2x");
+    }
+  }
+}
+
+@mixin raisedShadow(
+  $bgColour,
+  $radius,
+  $hover: true,
+  $blur: 30px,
+  $blurBottom: 8px,
+  $blurHPad: 48px,
+  $blurColour: rgba(0, 0, 0, 0.15)
+) {
+  position: relative;
+  z-index: 0;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 80%;
+    left: $blurHPad;
+    right: $blurHPad;
+    bottom: 0;
+    border-radius: $radius;
+    box-shadow: 0 $blurBottom $blur $blurColour;
+    z-index: -1;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $bgColour;
+    border-radius: $radius;
+    z-index: -1;
+  }
+
+  @if $hover {
+    transition: transform 0.05s;
+
+    &:before {
+      transition: box-shadow 0.05s;
+    }
+
+    @media (min-resolution: 2dppx) {
+      @include hover {
+        transform: scale(0.99);
+
+        &:before {
+          box-shadow: 0 #{$blurBottom * (3 / 4)} #{$blur * (2 / 3)} $blurColour;
+          left: #{$blurHPad / 2};
+          right: #{$blurHPad / 2};
+        }
+      }
+    }
+
+    &:active {
+      transform: scale(0.98) !important;
+
+      &:before {
+        box-shadow: 0
+          #{$blurBottom *
+          (3 / 8)}
+          #{$blur /
+          3}
+          $blurColour !important;
+        left: #{$blurHPad / 4} !important;
+        right: #{$blurHPad / 4} !important;
+      }
+    }
+  }
+}
+
+@mixin font($name, $fn, $weight, $italic: false) {
+  @font-face {
+    font-family: $name;
+    font-weight: $weight;
+    font-display: swap;
+
+    @if $italic {
+      font-style: italic;
+      src: url("/assets/fonts/#{$fn}-#{$weight}italic.woff2") format("woff2");
+    } @else {
+      font-style: normal;
+      src: url("/assets/fonts/#{$fn}-#{$weight}.woff2") format("woff2");
+    }
+  }
+}
+
+@mixin touch() {
+  @media (pointer: coarse) {
+    @content;
+  }
+}

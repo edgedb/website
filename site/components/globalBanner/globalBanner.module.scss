@@ -1,0 +1,131 @@
+@import "../../styles/mixins.scss";
+
+.globalBannerContainer {
+  position: sticky;
+  top: 0;
+  height: 48px;
+  width: 100%;
+  z-index: 105;
+  display: block;
+  flex-direction: column;
+
+  &.bannerHidden {
+    display: none;
+  }
+
+  // @include breakpoint(sm) {
+  //   position: fixed;
+  //   height: 150vh;
+  //   top: auto;
+  //   bottom: 0;
+  //   background: rgba(255, 255, 255, 0.6);
+  //   z-index: 200;
+  // }
+
+  @include breakpoint(sm) {
+    display: flex;
+  }
+}
+
+.globalBanner {
+  position: relative;
+  height: 100%;
+  padding: 0 64px;
+  background: linear-gradient(90.91deg, #b199f2 8.06%, #dca3bb 106.93%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // @include breakpoint(sm) {
+  //   height: auto;
+  //   margin-top: auto;
+
+  //   flex-direction: column;
+  //   padding: 24px 26px;
+  //   align-items: stretch;
+  // }
+
+  @include darkMode {
+    background: linear-gradient(90.91deg, #8b6cdf 8.06%, #e176a3 106.93%);
+  }
+}
+
+.bannerMessage {
+  font-size: 20px;
+  font-weight: $weight_semibold;
+  color: #ffffff;
+
+  @include breakpoint(md) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  @include breakpoint(sm) {
+    margin-right: 24px;
+  }
+}
+
+.bannerLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  // background: rgba(255, 255, 255, 0.1);
+  // border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 16px;
+  padding-right: 8px;
+  // margin-left: 40px;
+  font-size: 16px;
+  font-weight: $weight_semibold;
+  color: #ffffff;
+
+  .expandingArrow {
+    --arrowColour: #fff;
+    margin-left: 16px;
+  }
+
+  @include hover {
+    --expandArrow: 1;
+    color: #fff;
+  }
+
+  // @include breakpoint(md) {
+  //   font-size: 18px;
+  // }
+
+  // @include breakpoint(sm) {
+  //   margin-left: 0;
+  //   margin-top: 30px;
+  // }
+}
+
+.bannerClose {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  cursor: pointer;
+
+  svg {
+    fill: #fff;
+  }
+
+  @include hover {
+    opacity: 0.8;
+  }
+
+  // @include breakpoint(sm) {
+  //   svg {
+  //     width: 34px;
+  //     height: 34px;
+  //   }
+  // }
+}

@@ -1,0 +1,118 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  user-select: none;
+
+  @include responsiveAll(margin-bottom, 190px, 185px, 150px, 120px, 120px);
+
+  .tabs {
+    margin: 40px auto 60px auto;
+    @include responsive(xl, margin, 30px auto 40px auto);
+    justify-content: center;
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+
+    @include breakpoint(sm) {
+      overflow-x: scroll;
+      padding: 0 24px;
+      width: 100vw;
+      @include hideScrollbar;
+
+      // &::before,
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   top: 0;
+      //   bottom: 0;
+      //   width: 46px;
+      //   z-index: 1;
+      // }
+
+      // &::before {
+      //   left: 0;
+      //   width: 24px;
+      //   background: linear-gradient(
+      //     270deg,
+      //     rgba(26, 26, 26, 0) 0%,
+      //     #1a1a1a 100%
+      //   );
+      // }
+
+      // &::after {
+      //   right: 0;
+      //   width: 24px;
+      //   background: linear-gradient(
+      //     270deg,
+      //     #1a1a1a 0%,
+      //     rgba(26, 26, 26, 0) 100%
+      //   );
+      // }
+    }
+
+    .tab {
+      display: inline-block;
+      padding: 5px 12px 7px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 2px solid rgba(204, 204, 204, 0.2);
+      color: var(--baseTextDarkTheme);
+      font-family: Open Sans;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      position: relative;
+
+      &:not(:first-child) {
+        margin-left: 16px;
+      }
+
+      &:hover {
+        color: var(--grey8);
+        background-color: var(--accentViolet);
+        border-color: var(--accentViolet);
+      }
+
+      &.active {
+        color: var(--grey6);
+        background-color: var(--grey75);
+        border-color: var(--grey75);
+        background-origin: border-box;
+
+        &:hover {
+          background: var(--grey75);
+          color: var(--grey6);
+        }
+      }
+    }
+  }
+
+  .tabImgs {
+    display: grid;
+    justify-items: center;
+
+    img {
+      @include responsiveAll(
+        width,
+        1280px,
+        1056px,
+        944px,
+        704px,
+        calc(100% - 48px)
+      );
+      height: auto;
+
+      grid-area: 1 / 1;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}

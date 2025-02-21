@@ -1,0 +1,303 @@
+@import "./mixins.scss";
+
+.page {
+  background: none;
+
+  --grayDarkColor: #4d4d4d;
+  --whiteTextColor: #e5e5e5;
+  --pageMargin: 32px;
+
+  @include responsive(sm, --pageMargin, 24px);
+  @include responsiveAllXXL(
+    --contentWidth,
+    1222px,
+    1222px,
+    1230px,
+    916px,
+    712px,
+    min(520px, 100%)
+  );
+
+  @include responsiveAll(
+    background-size,
+    3686px,
+    1920px,
+    1704px,
+    1332px,
+    1032px
+  );
+
+  @include responsiveAll(
+    background-position-y,
+    -579px,
+    -40px,
+    -76px,
+    -24px,
+    -40px
+  );
+}
+
+.pageFooter {
+  background: none;
+  z-index: 1;
+  --footerSubscribeBgColour: #f7f7f7;
+}
+
+.content {
+  grid-column: content;
+  @include responsiveAllXXL(
+    margin-top,
+    196px,
+    160px,
+    84px,
+    108px,
+    152px,
+    56px
+  );
+  margin-bottom: 224px;
+  @include responsiveAllXXL(
+    margin-bottom,
+    224px,
+    200px,
+    168px,
+    76px,
+    68,
+    28px
+  );
+
+  z-index: 1;
+  color: var(--baseTextDarkTheme);
+
+  p {
+    font-size: 20px;
+    line-height: 40px;
+    @include responsive(sm, font-size, 18px);
+    @include responsive(sm, line-height, 32px);
+  }
+
+  h1,
+  h2 {
+    @include edgedbfont;
+    font-style: normal;
+    font-weight: $weight_bold;
+    text-align: center;
+    color: var(--grey80, #ccc);
+    margin: 0 auto 0 auto;
+  }
+
+  h1 {
+    @include responsiveAll(font-size, 96px, 64px, 80px, 80px, 38px);
+    @include responsiveAll(line-height, 96px, 64px, 72px, 72px, 32px);
+    @include responsiveAll(
+      letter-spacing,
+      normal,
+      -1.92px,
+      -2.4px,
+      -2.4px,
+      -1.14px
+    );
+
+    @include responsiveAll(
+      width,
+      1232px,
+      992px,
+      832px,
+      688px,
+      min(600px, 100%)
+    );
+
+    @include responsiveAllXXL(
+      margin-bottom,
+      137px,
+      94px,
+      78px,
+      92px,
+      100px,
+      104px
+    );
+
+    span {
+      color: #8280ff;
+    }
+  }
+
+  h2 {
+    @include responsiveAll(font-size, 80px, 80px, 64px, 48px, 32px);
+    @include responsiveAll(line-height, 72px, 72px, 56px, 48px, 24px);
+  }
+
+  .announcement {
+    text-align: center;
+    a {
+      color: var(--accentGreenDarkTheme);
+    }
+  }
+
+  .joinUsText {
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    font-weight: 700;
+    width: 270px;
+    @include responsiveAll(margin-bottom, 144px, 100px, 100px, 16px, 74px);
+  }
+
+  .intro {
+    @include responsiveAll(
+      width,
+      736px,
+      624px,
+      704px,
+      608px,
+      min(100%, 400px)
+    );
+    margin: auto;
+
+    @include responsiveAll(font-size, 24px, 18px, 20px, 20px, 18px);
+    @include responsiveAll(line-height, 48px, 32px, 40px, 40px, 32px);
+  }
+}
+
+.section {
+  @include responsiveAll(margin-top, 120px, 120px, 62px, 140px, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.teamSection {
+  @extend .section;
+  @include responsiveAllXXL(
+    margin-top,
+    136px,
+    192px,
+    184px,
+    120px,
+    112px,
+    104px
+  );
+}
+
+.leadInvestors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 60px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  @include responsive(md, flex-wrap, wrap);
+  @include responsive(md, margin-bottom, 20px);
+
+  svg {
+    margin-bottom: 32px;
+    @include responsive(sm, margin-bottom, 64px);
+    @include responsive(sm, width, 100%);
+  }
+}
+
+.angelInvestors {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  width: 100%;
+  gap: 48px;
+  height: 1016px;
+  @include responsive(lg, height, 1360px);
+  @include responsive(md, height, 1216px);
+  @include responsive(lg, column-gap, 0);
+  @include responsive(md, gap, 32px);
+  @include responsive(sm, gap, 24px);
+  margin-bottom: 92px;
+  @include responsive(sm, margin-bottom, 20px);
+  @include responsive(sm, flex-wrap, nowrap);
+  @include responsive(sm, height, fit-content);
+
+  .investor {
+    width: 376px;
+    @include responsive(lg, width, 410px);
+    @include responsive(md, width, 336px);
+    @include responsive(sm, width, min(100%, 360px));
+  }
+}
+
+.team {
+  width: 1012px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px 80px;
+  margin-top: 100px;
+  margin-bottom: 136px;
+  @include responsiveAll(margin-bottom, 136px, 144px, 104px, 96px, 88px);
+
+  @include responsive(lg, row-gap, 88px);
+  @include responsive(lg, column-gap, 32px);
+  @include responsive(lg, width, 924px);
+  @include responsive(md, width, 508px);
+  @include responsive(sm, grid-template-columns, 1fr);
+  @include responsive(sm, justify-items, center);
+  @include responsive(sm, width, 100%);
+
+  .member {
+    &:nth-child(5n + 1) {
+      > div > svg {
+        transform: rotate(-72deg);
+      }
+    }
+    &:nth-child(5n + 2) {
+      > div > svg {
+        transform: rotate(-144deg);
+      }
+    }
+    &:nth-child(5n + 3) {
+      > div > svg {
+        transform: rotate(-216deg);
+      }
+    }
+    &:nth-child(5n + 4) {
+      > div > svg {
+        transform: rotate(-288deg);
+      }
+    }
+  }
+}
+
+.teamDesc {
+  @include responsiveAll(margin-top, 68px, 66px, 86px, 36px, 32px);
+}
+
+.joinUsBtnWrapper {
+  position: relative;
+
+  .joinUsButton {
+    width: 144px;
+    height: 144px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--grey6, #0f0f0f);
+
+    background: #8280ff;
+    box-shadow: 0px 0px 56px 0px rgba(158, 104, 247, 0.4);
+    border-radius: 50%;
+
+    span {
+      font-size: 40px;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 56px 0px rgba(158, 104, 247, 0.7);
+      background: #9a98ff;
+    }
+  }
+}
+
+// .skipColumn {
+//   grid-column-start: 2;
+//   @include responsive(sm, grid-column-start, 1);
+// }

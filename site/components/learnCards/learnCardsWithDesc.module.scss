@@ -1,0 +1,155 @@
+@import "../../styles/mixins.scss";
+
+.learnCards {
+  display: grid;
+  width: 1152px;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px 52px;
+
+  @include breakpoint(lg) {
+    width: 928px;
+    gap: 48px;
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: 1fr;
+    width: 592px;
+    gap: 56px;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+    gap: 26px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 30px 40px;
+    color: #4c4c4c;
+    font-size: 20px;
+    line-height: 32px;
+
+    @include raisedShadow(
+      #fff,
+      8px,
+      true,
+      40px,
+      8px,
+      48px,
+      rgba(0, 0, 0, 0.15)
+    );
+
+    & > * {
+      z-index: 1;
+      transition: color 0.15s;
+    }
+
+    svg {
+      flex-shrink: 0;
+      fill: #e2e2e2;
+      width: 62px;
+      margin-right: 40px;
+      transition: fill 0.15s;
+      height: 90px;
+    }
+
+    .cardTitle {
+      display: block;
+      font-weight: $weight_bold;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .expandingArrow {
+      position: absolute;
+      right: 12px;
+      bottom: 23px;
+      margin-right: 0;
+    }
+
+    .cardGradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 0;
+    }
+
+    &:nth-child(1) .cardGradient {
+      background: linear-gradient(90deg, #cc9add 8.06%, #ebad98 106.93%);
+    }
+    &:nth-child(2) .cardGradient {
+      background: linear-gradient(90deg, #dca3bb -6.93%, #b199f2 91.94%);
+    }
+    &:nth-child(3) .cardGradient {
+      background: linear-gradient(90deg, #cb9ade -6.93%, #8aa1f8 91.94%);
+    }
+    &:nth-child(4) .cardGradient {
+      background: linear-gradient(90deg, #b199f1 -6.93%, #5faaff 91.94%);
+    }
+
+    @include hover {
+      color: #fff;
+
+      svg {
+        fill: #fff;
+      }
+
+      --arrowColour: #fff;
+      --expandArrow: 1;
+
+      .cardGradient {
+        opacity: 1;
+      }
+    }
+
+    @include breakpoint(lg) {
+      font-size: 18px;
+    }
+
+    @include breakpoint(md) {
+      color: #fff;
+
+      svg {
+        fill: #fff;
+      }
+
+      --arrowColour: #fff;
+
+      .cardGradient {
+        opacity: 1;
+      }
+    }
+
+    @include breakpoint(sm) {
+      flex-direction: column;
+      padding-bottom: 56px;
+
+      svg {
+        margin-right: 0;
+        margin-bottom: 18px;
+      }
+
+      .cardTitle {
+        text-align: center;
+      }
+
+      p {
+        display: none;
+      }
+
+      .expandingArrow {
+        margin-bottom: 10px;
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+  }
+}

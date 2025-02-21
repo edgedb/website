@@ -1,0 +1,229 @@
+@import "@/mixins.scss";
+
+.sideNavWrapper {
+  display: contents;
+}
+
+.sideNav {
+  display: flex;
+  height: calc(100vh - var(--pageHeaderHeight));
+  position: sticky;
+  top: var(--pageHeaderHeight);
+  @include responsive(width, 248px, $lg: 218px, $md: 342px, $sm: 100%);
+  @include responsive(--menuContentInset, 16px, $md: 0px);
+
+  .customScrollbars {
+    width: 100%;
+  }
+
+  .verticalBar {
+    opacity: 1;
+    width: 2px;
+    background: var(--grey80);
+    padding: 0px;
+    right: 8px;
+    bottom: 40px;
+
+    > div {
+      width: 4px;
+      background: var(--grey70);
+      position: relative;
+      right: 1px;
+    }
+
+    @include breakpoint(md) {
+      background: transparent;
+    }
+
+    @include darkTheme() {
+      background: var(--grey20);
+
+      > div {
+        background: var(--grey25);
+      }
+
+      @include breakpoint(md) {
+        background: transparent;
+      }
+    }
+  }
+
+  @mixin overlayStyles {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    @include responsive(width, 342px, $sm: 100%);
+    background: var(--pageBg);
+    z-index: 20;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.5);
+    transform: translateX(calc(-100% - 36px));
+    transition: transform 0.2s;
+
+    .menuOpen & {
+      transform: none;
+    }
+  }
+
+  @include breakpoint(md) {
+    @include overlayStyles;
+  }
+
+  &.alwaysOverlay {
+    @include overlayStyles;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 19;
+  opacity: 0.85;
+  background: var(--grey14);
+
+  .menuOpen & {
+    display: block;
+  }
+}
+
+.scrollContainer {
+  height: 100%;
+  overflow: hidden auto;
+  overscroll-behavior: none;
+  @include hideScrollbars;
+}
+
+.scrollContent {
+  display: flex;
+  flex-direction: column;
+  @include responsive(padding-top, 132px, $xl: 80px, $lg: 48px, $md: 80px);
+  @include responsive(padding-bottom, 160px, $lg: 120px, $md: 88px, $sm: 72px);
+  @include responsive(padding-right, 16px, $md: 0);
+
+  @include breakpoint(md) {
+    > ul > li:not(:last-child) {
+      border-bottom: 2px solid var(--white);
+
+      @include darkTheme {
+        border-color: var(--grey6);
+      }
+    }
+  }
+}
+
+.header {
+  margin-bottom: 9px;
+  margin-left: calc(-1 * var(--menuContentInset));
+  margin-right: -12px;
+  position: sticky;
+  top: 16px;
+  z-index: 1;
+  @include responsive(padding-left, 16px, $md: 0);
+
+  &Inner {
+    @include responsive(padding, 16px, $md: 24px 32px);
+    border-radius: 8px;
+    color: var(--grey30);
+    @include responsive(font-size, 18px, $md: 22px);
+    font-weight: 700;
+    line-height: 24px;
+    background: #fff;
+    box-shadow: 0px 13px 8px -8px rgba(0, 0, 0, 0.08);
+
+    @include darkTheme {
+      color: var(--grey55);
+      background: var(--grey6);
+      box-shadow: 0px 13px 8px -8px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    height: 24px;
+    width: 100%;
+    margin-bottom: -8px;
+    margin-top: -16px;
+    background: var(--pageBg);
+  }
+
+  @include breakpoint(md) {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+
+    &Inner {
+      border-radius: 0;
+    }
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.toggleMenuButton {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--accent_green_light_theme);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  cursor: pointer;
+  z-index: 20;
+  transition: transform 0.2s;
+
+  .inner {
+    display: flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+
+    .menuOpen & {
+      transform: translate(-100%);
+    }
+  }
+
+  svg {
+    color: var(--grey95);
+    fill: currentColor;
+  }
+
+  &.closeOnly {
+    transform: translate(calc(100% + 24px));
+
+    .menuOpen & {
+      transform: none;
+    }
+
+    .inner {
+      transform: translate(-100%);
+    }
+  }
+
+  @include darkTheme {
+    background: var(--accent_green_dark_theme);
+
+    svg {
+      color: var(--grey8);
+    }
+  }
+
+  @include breakpoint(sm) {
+    width: 48px;
+    height: 48px;
+
+    .inner {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}

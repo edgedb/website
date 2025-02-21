@@ -1,0 +1,51 @@
+@import "@edgedb-site/shared/mixins.scss";
+
+.container {
+  border-radius: 8px;
+  @include responsive(border, 2px solid var(--grey85, #d9d9d9), $sm: none);
+  @include responsive(padding, 32px, $sm: 24px);
+  gap: 24px;
+  display: grid;
+  @include responsive(
+    grid-template-columns,
+    1fr 1fr 1fr 1fr,
+    $lg: 1fr 1fr 1fr,
+    $sm: 1fr
+  );
+  @include responsive(margin-top, 64px, $lg: 56px, $sm: 28px);
+  position: relative;
+
+  .title {
+    position: absolute;
+    top: -22px;
+    @include responsive(left, 15px, $sm: 24px);
+    padding: 2px 8px;
+    background: var(--pageBg);
+  }
+
+  .item {
+    color: #0075d1;
+    padding: 16px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: var(--grey90);
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: var(--grey80);
+    }
+  }
+
+  @include darkTheme {
+    @include responsive(border, 2px solid var(--grey20, #333), $sm: none);
+
+    .item {
+      color: #2d82c6;
+      background-color: var(--grey14);
+
+      &:hover {
+        background: var(--grey20);
+      }
+    }
+  }
+}

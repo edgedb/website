@@ -1,0 +1,303 @@
+@import "./fonts.scss";
+
+@import "./mixins.scss";
+@import "./settings.vars.scss";
+
+:root {
+  --leftSidebarWidth: 1fr;
+  --contentWidth: 1040px;
+  --rightSidebarWidth: 1fr;
+
+  --codeBgColour: #{$edb_code_bg};
+  --codeBgColourTransparent: #{transparentize($edb_code_bg, 1)};
+
+  --pageLinkColour: #{$edb_mid_blue};
+  --pageLinkHoverColour: #{$edb_blue};
+
+  --syntaxGreen: #1a8f66;
+  --syntaxPurple: #be65cd;
+  --syntaxBlue: #0075d2;
+  --syntaxOrange: #d78100;
+  --syntaxComment: #7f7f7f;
+  --syntaxSynopsis: #7f7f7f;
+  --syntaxOptional: #999;
+
+  // new design system
+  --baseTextLightTheme: #1a1a1a;
+  --baseTextDarkTheme: #bababa;
+  --accentRedLightTheme: #d78d87;
+  --accentRedDarkTheme: #af6963;
+
+  --accentGreenLightTheme: #2cb88e;
+  --accentGreenDarkTheme: #279474;
+  --accent_green_light_theme: var(--accentGreenLightTheme);
+  --accent_green_dark_theme: var(--accentGreenDarkTheme);
+
+  --white: #fff;
+
+  --grey6: #0f0f0f;
+  --grey8: #141414;
+  --grey10: #1a1a1a;
+  --grey12: #1f1f1f;
+  --grey14: #242424;
+  --grey18: #2e2e2e;
+  --grey20: #333;
+  --grey25: #404040;
+  --grey30: #4d4d4d;
+  --grey40: #666;
+  --grey50: #808080;
+  --grey55: #8c8c8c;
+  --grey60: #999;
+  --grey65: #a6a6a6;
+  --grey75: #bfbfbf;
+  --grey80: #ccc;
+  --grey85: #d9d9d9;
+  --grey90: #e6e6e6;
+  --grey95: #f2f2f2;
+  --grey97: #f7f7f7;
+
+  --baseText: var(--baseTextDarkTheme);
+  --accentGreen: var(--accentGreenLightTheme);
+  --accentViolet: #8280ff;
+  --activeViolet: #7240ff;
+  --accentRed: var(--accentRedLightTheme);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--grey10);
+}
+
+html {
+  @include mainfont;
+  background-color: var(--grey10);
+
+  font-weight: $weight_regular;
+  font-size: 20px;
+  line-height: 40px;
+  color: $edb_dark_grey;
+  -webkit-text-size-adjust: 100%;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scroll-padding-top: var(--headerAnchorOffset, 32px);
+}
+
+input,
+textarea,
+button {
+  @include mainfont;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  margin-top: 2em;
+}
+
+h1 {
+  font-weight: $weight_bold;
+  font-size: 54px;
+  line-height: 66px;
+  margin: 28px 0;
+}
+
+.subheading {
+  font-size: 26px;
+  line-height: 40px;
+}
+
+a {
+  color: var(--accentGreenDarkTheme);
+  text-decoration: none;
+
+  .no-touch &:hover {
+    & > code {
+      background: var(--accentGreenDarkTheme);
+      color: #fff;
+    }
+  }
+
+  .no-touch a:hover {
+    color: var(--pageLinkHoverColour);
+  }
+}
+
+code {
+  @include monospace;
+  background-color: var(--codeBgColour);
+  border-radius: $radius_sm;
+  padding: 1px 0.3em 2px 0.3em;
+  font-size: 95%;
+  overflow-wrap: break-word;
+}
+
+.sharedPageWrapper {
+  display: grid;
+  grid-template-columns:
+    [left-sidebar] minmax(0, var(--leftSidebarWidth))
+    [content] minmax(auto, var(--contentWidth))
+    [right-sidebar] minmax(0, var(--rightSidebarWidth));
+  width: 100%;
+  max-width: var(--pageMaxWidth);
+  padding: 0 var(--pageMargin);
+  margin: 0 auto;
+}
+
+.globalPageWrapper {
+  --pageMaxWidth: 1440px;
+  @include responsive(lg, --pageMaxWidth, 1024px);
+
+  @extend .sharedPageWrapper;
+}
+
+.globalPageWrapperBlog {
+  @extend .sharedPageWrapper;
+
+  z-index: 1;
+
+  --pageMaxWidth: 2560px;
+
+  --pageMargin: 0px;
+  @include responsive(md, --pageMargin, 24px);
+}
+
+.globalPageWrapperCloud {
+  --pageMargin: 0;
+  @include responsive(sm, --pageMargin, 24px);
+
+  @include responsive(xl, --pageMaxWidth, 1248px);
+  @include responsive(lg, --pageMaxWidth, 944px);
+  @include responsive(md, --pageMaxWidth, 100%);
+
+  @extend .globalPageWrapper;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+a,
+button {
+  outline: 0;
+}
+
+@include breakpoint(xl) {
+  :root {
+    --contentWidth: 860px;
+    --pageMargin: 16px;
+  }
+
+  html {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 54px;
+    margin: 24px 0;
+  }
+}
+
+@include breakpoint(sm) {
+  :root {
+    --pageMargin: 24px;
+  }
+
+  html {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.75em;
+  }
+
+  dd {
+    margin-left: 1.75em;
+  }
+}
+
+@mixin darkStyles {
+  --codeBgColourTransparent: #{transparentize($edb_dark_code_bg, 1)};
+
+  --pageLinkColour: #{$edb_dark_link_blue};
+  --pageLinkHoverColour: #{$edb_dark_blue};
+
+  color: $edb_light_grey;
+
+  --syntaxGreen: #07a66d;
+  --syntaxPurple: #ac86f6;
+  --syntaxBlue: #369ff2;
+  --syntaxOrange: #f4e470;
+  --syntaxComment: #7f7f7f;
+
+  --baseText: var(--baseTextDarkTheme);
+  --accentGreen: var(--accentGreenDarkTheme);
+  --accentRed: var(--accentRedDarkTheme);
+}
+
+[data-theme="dark"] {
+  @include darkStyles;
+}
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    @include darkStyles;
+  }
+}
+
+.promoLink {
+  --startColor: #8b6cdf;
+  --endColor: #e176a3;
+  --gradient: linear-gradient(
+    90deg,
+    var(--startColor) 0%,
+    var(--endColor) 100%
+  );
+
+  display: block;
+  position: relative;
+  width: max-content;
+  height: 32px;
+  line-height: 32px;
+  font-weight: $weight_bold;
+  font-size: 14px;
+  border-radius: 4px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="buttonGradient" x1="0" x2="100" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="%238b6cdf" offset="0"/><stop stop-color="%23e176a3" offset="1"/></linearGradient></defs><rect x="1" y="1" width="100%" height="100%" style="height:calc(100% - 2px); width:calc(100% - 2px)" rx="3" ry="3" stroke-width="2" fill="transparent" stroke="url(%23buttonGradient)"/></svg>');
+
+  span {
+    padding: 0 12px;
+    background: var(--startColor);
+    background: var(--gradient);
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .no-touch &:hover {
+    background: var(--gradient);
+
+    span {
+      background-clip: unset;
+      color: #fff;
+      -webkit-text-fill-color: unset;
+    }
+  }
+
+  @include breakpoint(md) {
+    height: 29px;
+    line-height: 29px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,277 @@
+title: "Nested Structures"
+slug: "nested-structures"
+categories:
+  - category: "Shapes"
+    slug: "shapes"
+    pages:
+      - title: "Working with Shapes"
+        slug: "working-with-shapes"
+        cells:
+          - kind: text
+            text: |
+              It's possible to fetch an object and its links as a nested
+              structure. This is done by using nested shapes. For example,
+              to fetch an `Account` and all the stuff on the `watchlist` try:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: {
+                  title
+                }
+              } filter .username = 'Alice';
+
+          - kind: text
+            text: |
+              To add the names of all the characters and who played
+              them we will need to add one more level of nesting.
+              Also, we will fetch a *link property* by using the `@`
+              symbol in front of the field name. Since the names of
+              the characters depend on the movie, they are stored in a
+              link property `character_name` of the link `actors`. Try
+              the following query to fetch all of these details:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: {
+                  title,
+                  actors: {
+                    name,
+                    @character_name,
+                  }
+                }
+              } filter .username = 'Alice';
+
+      - title: "Subqueries"
+        slug: "subqueries"
+        cells:
+          - kind: text
+            text: |
+              Sometimes it is not enough to fetch the data as is, but
+              it is necessary to add something extra to it. This can
+              be done by adding a computed field to the shape. Let's
+              fetch all the accounts and add the `username` length as
+              well as the length of their `watchlist` to the results:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                # Computed value for the number of characters in
+                # the username.
+                len_username := len(.username),
+                # Use count for figuring out the length of the watchlist.
+                len_watchlist := count(.watchlist)
+              };
+
+          - kind: text
+            text: |
+              We can even incorporate a comparison to the average `username`
+              length in our computed field. There are several ways to do this,
+              but in this example we'll use the `detached` keyword.
+              Using `detached` denotes that the `Account` that we're
+              referring to in the subquery is the original unmodified set 
+              in the database rather than the object for which we're computing
+              the value of `above_avg`:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                len_username := len(.username),
+                # Try this with and without detached to see the difference.
+                above_avg :=
+                  len(.username) > math::mean(len(detached Account.username))
+              };
+
+          - kind: text
+            text: |
+              On the next page, we'll learn to use a `with` block to do the
+              same query in a more readable way.
+
+      - title: "With Block"
+        slug: "with-block"
+        cells:
+          - kind: text
+            text: |
+              A computed field in a shape gets calculated for every object
+              on which it is defined, not just the ones that make it
+              through the filter, but *every* one. The filter may, in
+              fact, refer to a computed value, so it must be known
+              for all objects. This may be inefficient in some cases,
+              such as the previous example with fetching the posts
+              with their length and a comparison to average post
+              length. You can use a `with` block to factor out some
+              common computations, give them names and use them later
+              on in a query. Let's re-write our inefficient query like
+              this:
+
+          - kind: edgeql
+            text: |
+              with
+                # No longer need a detached here, because Account is
+                # already in a different scope from the query below.
+                avg_len := math::mean(len(detached Account.username))
+              select Account {
+                username,
+                len_username := len(.username),
+                above_avg := len(.username) > avg_len
+              };
+
+          - kind: text
+            text: |
+              The `with` block is also very convenient if you need to
+              compare objects in a set to other objects in the same
+              set, such as "find all movies that have the same title".
+              The `with` block makes it easy to define a copy of the
+              original set to be used later in comparisons. Try this
+              out:
+
+          - kind: edgeql
+            text: |
+              with
+                # Define a set M, identical to Movie
+                M := Movie
+              select Movie {
+                title,
+                release_year
+              } filter .title = M.title
+                and
+                # This is to make sure that we've matched the title
+                # on a different post.
+                Movie != M;
+
+      - title: "Shapes and JSON"
+        slug: "shapes-and-json"
+        cells:
+          - kind: text
+            text: |
+              Sometimes it's advantageous to get the shaped query
+              results as a JSON structure instead of the native EdgeDB
+              objects and types. Fortunately the only thing that's
+              needed to achieve that is to cast the result of the
+              query into `json`:
+
+          - kind: edgeql
+            text: |
+              select <json>Account {
+                username,
+                watchlist: {
+                  title,
+                  actors: {
+                    name,
+                    @character_name,
+                  }
+                }
+              } filter Account.username = 'Alice';
+
+          - kind: text
+            text: |
+              Notice that we used a full `Account.username` path
+              expression without abbreviations; `.username` won't work 
+              here. This is because in this context the `filter` scope
+              is now the `json` being selected and not the `Account` object.
+              So an abbreviated path would fail (`json` has no links or
+              properties), but a fully-qualified path is still able to
+              be resolved to the same `Account` object that we're
+              casting to `json`.
+
+          - kind: text
+            text: |
+              In practice you rarely need to perform this type of
+              `json` cast explicitly. Our client libraries feature a
+              `query_json` version along with the regular `query`
+              functionality.
+
+  - category: "Polymorphism"
+    slug: "polymorphism"
+    pages:
+      - title: Shapes
+        slug: "shapes"
+        cells:
+          - kind: text
+            text: |
+              In our schema, the abstract type `Content` is extended 
+              by the concrete types `Movie` and `Show`, making `Content`
+              polymorphic: it's a single interface to more than one type.
+              
+              To make a polymorphic query inside a shape, you can use 
+              the `is` keyword followed by a concrete type, all inside 
+              square brackets. For example, to get all the different 
+              `Content` objects starring a particular actor, try:
+
+          - kind: edgeql
+            text: |
+              select Content {
+                title,
+                [is Movie].release_year,
+                [is Show].num_seasons,
+              }
+              filter .actors.name = 'Patrick Stewart';
+
+          - kind: text
+            text: |
+              Finally, all the data necessary to render a user's page
+              with their `watchlist` organized by `title` and
+              `release_year` as well as the featured suggestions from
+              above can be packed into a single query:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: {
+                  title,
+                  [is Movie].release_year,
+                  [is Show].num_seasons,
+                }
+                # We'll order by the first word of the title.
+                order by re_match(r'\w+', .title)[0] asc
+                # We can refer to release_year here because we've defined
+                # how that should be included in the shape.
+                      then .release_year desc,
+                suggested := (
+                  select Content {
+                    title,
+                    [is Movie].release_year,
+                    [is Show].num_seasons,
+                  }
+                  filter .actors.name = 'Patrick Stewart'
+                ),
+              }
+              filter .username = 'Alice';
+
+      - title: Expressions
+        slug: "expressions"
+        cells:
+          - kind: text
+            text: |
+              The `[is Type]` construct can also be used on any
+              expression to filter out all the objects that don't
+              correspond to the specified type (we've already seen it
+              used with backlinks). Additionally, since the resulting
+              expression is guaranteed to be of the specified type,
+              the type-specific links and properties can now be
+              accessed on it. Try it out with the base type `Object`
+              or `Content` and narrow it down to `Show` (we've only
+              got one `Show` in this tutorial 🙂):
+
+          - kind: edgeql
+            text: |
+              select Object[is Show] {
+                title,
+                num_seasons
+              };
+
+          - kind: edgeql
+            expectError: true
+            text: |
+              # This will cause an error since not all Content has num_seasons,
+              # only Show has that property. Can you fix the query?
+              select Content {
+                title,
+                num_seasons
+              };

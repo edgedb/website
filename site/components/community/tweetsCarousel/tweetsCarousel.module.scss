@@ -1,0 +1,202 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/settings.vars.scss";
+
+.tweetsCarousel {
+  position: relative;
+  padding-top: 50px;
+  padding-bottom: 135px;
+  overflow: hidden;
+
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    );
+  }
+
+  &:after {
+    left: auto;
+    right: 0;
+    background: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    );
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 56px;
+
+  .prevTweet,
+  .nextTweet {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  svg {
+    width: 12px;
+    height: 24px;
+    color: $edb_mid_blue;
+  }
+
+  @include hover {
+    svg {
+      color: $edb_blue;
+    }
+  }
+
+  .prevTweet {
+    margin-right: 44px;
+  }
+
+  .nextTweet svg {
+    transform: scaleX(-1);
+  }
+}
+
+.tweets {
+  --tweetWidth: 355px;
+  --tweetMargin: 30px;
+
+  display: flex;
+  align-items: flex-start;
+
+  position: relative;
+  left: calc(50% - (var(--tweetWidth) / 2) - var(--tweetMargin));
+  width: calc(var(--tweetWidth) + var(--tweetMargin) * 2);
+
+  transition: transform 0.25s;
+
+  &.disableTransition {
+    transition: none;
+  }
+}
+
+.tweetCard {
+  position: relative;
+  width: var(--tweetWidth);
+  flex-shrink: 0;
+  padding: 24px 30px;
+  font-size: 20px;
+  line-height: 32px;
+  margin: 0 var(--tweetMargin);
+
+  @include raisedShadow(#f7f7f7, 12px);
+
+  img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-color: #fafafa;
+    border-radius: 32px;
+    object-fit: cover;
+  }
+
+  .username {
+    font-weight: $weight_bold;
+    margin-top: 9px;
+  }
+
+  .tweetLink {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    line-height: 16px;
+    color: #999999 !important;
+    display: none;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+
+    svg {
+      width: 28px;
+      fill: $edb_mid_blue;
+      margin-left: 10px;
+    }
+  }
+
+  @include hover {
+    .tweetLink {
+      display: flex;
+    }
+  }
+}
+
+@include breakpoint(xl) {
+  .tweets {
+    --tweetWidth: 300px;
+    --tweetMargin: 24px;
+  }
+
+  .tweetCard {
+    font-size: 20px;
+    line-height: 32px;
+
+    .username {
+      font-size: 18px;
+    }
+  }
+}
+
+@include breakpoint(lg) {
+  .tweetsCarousel {
+    padding-bottom: 110px;
+  }
+
+  .tweetCard {
+    font-size: 16px;
+  }
+}
+
+@include breakpoint(md) {
+  .tweetsCarousel {
+    margin-left: calc(-1 * var(--pageMargin));
+    margin-right: calc(-1 * var(--pageMargin));
+    padding-bottom: 90px;
+
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  .tweets {
+    --tweetWidth: 336px;
+  }
+
+  .tweetCard {
+    transition: opacity 0.2s;
+
+    &:not(.active) {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .tweetsCarousel {
+    padding-bottom: 56px;
+  }
+
+  .tweets {
+    --tweetWidth: 280px;
+  }
+}

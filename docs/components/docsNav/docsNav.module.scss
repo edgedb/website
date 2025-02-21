@@ -1,0 +1,210 @@
+@import "@/mixins.scss";
+
+.docsNav {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+    gap: 4px;
+    @include responsive(padding-left, 4px, $md: 0);
+
+    li {
+      a,
+      div {
+        box-sizing: border-box;
+        width: 100%;
+      }
+      @include breakpoint(md) {
+        width: 100%;
+      }
+    }
+
+    ul {
+      padding-left: 12px;
+      @include responsive(padding-left, 12px, $md: 0px);
+      margin-top: 4px;
+
+      &:not(.expanded) {
+        display: none;
+      }
+
+      ul {
+        .nested {
+          @include responsive(padding-left, 10px, $md: 64px);
+        }
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+
+  .navContentWithVersionSwitcher {
+    @include breakpoint(md) {
+      margin-top: 56px;
+    }
+  }
+}
+
+.navItem {
+  display: inline-flex;
+  padding: 8px 12px;
+  @include responsive(padding, 8px 12px, $md: 16px 24px 16px 32px);
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  color: var(--grey30);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &.nested {
+    @include responsive(padding, 8px 10px, $md: 12px 24px 12px 48px);
+    font-size: 14px;
+    line-height: 18px;
+    gap: 4px;
+
+    .arrow {
+      margin-top: 6px;
+      margin-right: 0px;
+    }
+
+    &.active {
+      color: var(--accent_green_dark_theme);
+
+      .arrow {
+        fill: var(--accent_green_dark_theme);
+      }
+    }
+
+    &:not(.active):hover {
+      color: var(--accent_green_light_theme);
+
+      .arrow {
+        fill: var(--accent_green_light_theme);
+      }
+    }
+
+    &.expandable {
+      @include responsive(padding-left, 0px, $md: 38px);
+    }
+
+    &.expanded .arrow {
+      margin-top: 7px;
+    }
+  }
+
+  &.expandable {
+    @include responsive(padding-left, 0px, $md: 20px);
+    margin-left: 0;
+  }
+
+  &.active {
+    color: var(--accent_green_dark_theme);
+
+    .arrow {
+      fill: var(--accent_green_dark_theme);
+    }
+  }
+
+  &:not(.active):hover {
+    color: var(--accent_green_light_theme);
+
+    .arrow {
+      fill: var(--accent_green_light_theme);
+    }
+  }
+
+  .arrow {
+    flex-shrink: 0;
+    fill: var(--grey55);
+    align-self: start;
+    margin-top: 9px;
+    margin-right: 1px;
+  }
+  &.expanded .arrow {
+    transform: rotate(90deg);
+    margin-top: 10px;
+  }
+
+  @include darkTheme {
+    color: var(--grey65);
+
+    &.active {
+      color: var(--accent_green_dark_theme);
+
+      .arrow {
+        fill: var(--accent_green_dark_theme);
+      }
+    }
+
+    &:not(.active):hover {
+      color: var(--accent_green_light_theme);
+
+      .arrow {
+        fill: var(--accent_green_light_theme);
+      }
+    }
+
+    &.nested {
+      color: var(--grey55);
+
+      &.active {
+        color: var(--accent_green_dark_theme);
+
+        .arrow {
+          fill: var(--accent_green_dark_theme);
+        }
+      }
+
+      &:not(.active):hover {
+        color: var(--accent_green_light_theme);
+
+        .arrow {
+          fill: var(--accent_green_light_theme);
+        }
+      }
+    }
+
+    .arrow {
+      fill: var(--grey30);
+    }
+  }
+}
+
+.badge {
+  border: 1px solid #979797;
+  color: #979797;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0 4px;
+  font-size: 60%;
+  line-height: 1.7;
+  font-weight: 600;
+  vertical-align: middle;
+  position: relative;
+  margin-left: 5px;
+
+  &.versionLatest {
+    border-color: #2f9771;
+    color: #2f9771;
+  }
+
+  &.versionDev {
+    border-color: #ca9033;
+    color: #ca9033;
+  }
+}
+
+.externalLink {
+  vertical-align: middle;
+  margin-top: -3px;
+  margin-left: 3px;
+  opacity: 0.7;
+}

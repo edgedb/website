@@ -1,0 +1,486 @@
+title: "Data Mutations"
+slug: "data-mutations"
+categories:
+  - category: "Insert"
+    slug: "insert"
+    pages:
+      - title: Inserting Data
+        slug: "inserting-data"
+        cells:
+          - kind: text
+            text: |
+              Let's start with adding a new `Account`. We'll need a
+              `username` and to make things more interesting we'll add
+              all movies with Scarlett Johansson to our watchlist:
+
+          - kind: edgeql
+            text: |
+              insert Account {
+                username := 'tutorial',
+                watchlist := (
+                  # Using a sub-query to fetch the existing movies.
+                  select Movie filter .actors.name = 'Scarlett Johansson'
+                )
+              };
+
+          - kind: text
+            text: |
+              Now let's select the post we just added:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username,
+                watchlist: {
+                  title
+                }
+              } filter .username = 'tutorial';
+
+      - title: insert Result
+        slug: "insert-result"
+        cells:
+          - kind: text
+            text: |
+              You may have noticed that when you run an `insert` command,
+              some data is returned as the result. Every `insert` is also a
+              query that returns the object that was just inserted along with
+              its `id`. It is possible to get more than just the `id` by 
+              using `select` and applying a shape to the returned `insert`
+              as a whole:
+
+          - kind: edgeql
+            text: |
+              # Wrap the entire insert with parentheses to treat it as
+              # an expression which can then be selected.
+              select (
+                insert Account {
+                  username := 'evans_fan',
+                  watchlist := (
+                    # Using a sub-query to fetch the existing movies.
+                    select Movie filter .actors.name = 'Chris Evans'
+                  )
+                }
+              ) {
+                username,
+                watchlist: {
+                  title
+                }
+              };
+
+      - title: Using For
+        slug: "using-for"
+        cells:
+          - kind: text
+            text: |
+              One way to insert multiple pieces of data in a single
+              command is to use the `for` query. Basically, this
+              construct allows you to iterate over some input set and
+              perform some operation on each element. It's somewhat
+              like invoking a function element-wise on the input
+              set, without having to define the function.
+
+              Consider the following example that uses JSON as its
+              input (which could come from some external source or
+              even be passed as a parameter):
+
+          - kind: edgeql
+            text: |
+              with
+                input_data := to_json('{
+                  "title": "Star Trek: Voyager",
+                  "seasons": [1, 2, 3, 4, 5, 6, 7]
+                }'),
+                title := <str>input_data['title'],
+                seasons := <array<int64>>input_data['seasons'],
+                voyager := (insert Show { title := <str>title })
+              # Unpack the seasons array as a set. Then insert the 
+              # corresponding number of seasons for the show.
+              for num in array_unpack(seasons)
+              union (
+                insert Season {
+                  number := num,
+                  show := voyager
+                }
+              );
+
+          - kind: text
+            text: |
+              Let's see what we've just inserted:
+
+          - kind: edgeql
+            text: |
+              select Show {
+                title,
+                num_seasons,
+                seasons := .<show[is Season] {
+                    number
+                }
+              } filter .title like '%Voyager';
+
+      - title: Nested Insert
+        slug: "nested-insert"
+        cells:
+          - kind: text
+            text: |
+              Sometimes it's necessary to insert several objects at
+              the same time because they make up a single nested
+              structure. Since each `insert` can be treated as an
+              expression, they can just be nested into each other.
+              Consider, for example, adding a `Show` with just one `Season`:
+
+          - kind: edgeql
+            text: |
+              # Wrap everything in a `select` to also display the
+              # entire inserted structure.
+              select (
+                insert Season {
+                  number := 1,
+                  show := (
+                    insert Show {
+                      title := 'Firefly'
+                    }
+                  )
+                }
+              ) {
+                number,
+                show: {
+                  title,
+                }
+              }
+
+  - category: "Update"
+    slug: "update"
+    pages:
+      - title: Updating Data
+        slug: "updating-data"
+        cells:
+          - kind: text
+            text: |
+              Sometimes you may need to edit existing data. You can use
+              `update` to do that. Using `update` begins the update process,
+              `filter` narrows down the set of objects to edit (no need for
+              `filter` if you want to update every object), and the
+              `set` block determines the actual changes:
+
+          - kind: edgeql
+            text: |
+              update Movie
+              filter
+                  # Here we use "title" and "release_year" 
+                  # to get the movie we want, but in real 
+                  # life we'd probably use the "id".
+                  .title = 'Dune'
+                  and
+                  .release_year = 2021
+              set {
+                  # Concatenate an additional string to existing title.
+                  title := .title ++ ": Part One"
+              };
+
+          - kind: text
+            text: |
+              Let's select the updated post:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                  title,
+                  release_year
+              } filter
+                  # simialr to filter for update
+                  .title like 'Dune%'
+                  and
+                  .release_year = 2021;
+
+      - title: Updating a Set
+        slug: "updating-set"
+        cells:
+          - kind: text
+            text: |
+              Let's take a closer look at the latest Dune:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                  title,
+                  actors: {
+                    name,
+                    @character_name
+                  },
+              } filter
+                  .title = 'Dune' and .release_year = 2021;
+
+          - kind: text
+            text: |
+              Let's add Dave Bautista (who is already in our database)
+              to the actors:
+
+          - kind: edgeql
+            text: |
+              update Movie
+              filter
+                  .title = 'Dune' and .release_year = 2021
+              set {
+                  actors += (
+                    select Person {
+                      @character_name := 'Glossu Rabban Harkonnen'
+                    } filter .name = 'Dave Bautista'
+                  ),
+              };
+
+          - kind: text
+            text: |
+              Let's see the updated movie now:
+
+          - kind: edgeql
+            text: |
+              select Movie {
+                  title,
+                  actors: {
+                    name,
+                    @character_name
+                  },
+              } filter
+                  .title = 'Dune' and .release_year = 2021;
+
+  - category: "Delete"
+    slug: "delete"
+    pages:
+      - title: "Deleting Data"
+        slug: "deleting-data"
+        cells:
+          - kind: text
+            text: |
+              For this exercise let's pick an `Account` to delete:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username
+              };
+
+          - kind: text
+            text: |
+              Let's imagine that one of our users decided to quit our
+              app and has requested that we completely delete their
+              account. The `delete` command uses the same mechanism as
+              `select` to find the items to be deleted. Also, just
+              like `insert` and `update`, a `delete` command can be
+              wrapped in "(...)" and used as an expression. Normally,
+              we might have used the `id` to pick what needs to be
+              deleted, but in case of the `Account` the username is
+              just as good, since it has an `exclusive` constraint on
+              it, which guarantees that each username is unique:
+
+          - kind: edgeql
+            text: |
+              delete Account
+              filter .username = 'Billie';
+
+          - kind: text
+            text: |
+              Let's make sure that we've deleted the right `Account`:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                username
+              };
+
+          - kind: text
+            text: |
+              This next example shows how we can send some watchlist info
+              in JSON format to a user who wants her account deleted but
+              wishes to retain the info:
+
+          - kind: edgeql
+            text: |
+              select <json>(delete Account
+                filter .username = 'Alice') {
+                username,
+                watchlist: {
+                  title, 
+                  actors: {
+                    name, 
+                    @character_name
+                  }
+                }
+              };
+
+  - category: "Upsert"
+    slug: "upsert"
+    pages:
+      - title: Conditional Inserts
+        slug: "conditional-inserts"
+        cells:
+          - kind: text
+            text: |
+              Sometimes you need to either insert a new object or
+              update an existing one identified with some key
+              (possibly something other than the main `id`). This is
+              typical of situations like this tutorial, where an
+              object may or may not already exist and needs to be
+              reset back to some specific state. This kind of
+              operation is often called an "upsert" - a portmanteau of
+              "update or insert". In EdgeQL this is achieved by
+              appending `unless conflict` clause to a regular `insert`:
+
+          - kind: edgeql
+            text: |
+              with movies := (
+                select Movie filter .title like 'Ant-Man%'
+              )
+              insert Account {
+                username := 'AntManFan',
+                watchlist := movies
+              } unless conflict on .username else (
+                update Account
+                set {
+                  watchlist := movies,
+                }
+              );
+
+          - kind: text
+            text: |
+              Let's make sure that we've ended up with a new `Account`:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                id,
+                username,
+                watchlist: { title },
+              } filter .username = 'AntManFan';
+
+          - kind: text
+            text: |
+              Now, just to prove that this "upsert" operation doesn't
+              create a new `Account` every time, let's run it again to
+              update the `watchlist`:
+
+          - kind: edgeql
+            text: |
+              with movies := (
+                select Movie filter .actors@character_name = 'Ant-Man'
+              )
+              insert Account {
+                username := 'AntManFan',
+                watchlist := movies
+              } unless conflict on .username else (
+                update Account
+                set {
+                  watchlist := movies,
+                }
+              );
+
+          - kind: text
+            text: |
+              See that although the `watchlist` is updated, the `id`
+              is the same as before:
+
+          - kind: edgeql
+            text: |
+              select Account {
+                id,
+                username,
+                watchlist: { title },
+              } filter .username = 'AntManFan';
+
+      - title: Idempotent Insert
+        slug: "idempotent-insert"
+        cells:
+          - kind: text
+            text: |
+
+              The "upsert" is only one possible use of the conditional
+              `insert` command. In reality there are several other
+              useful usages of `unless conflict` construct. In its most
+              basic form, it allows to simply ignore conflicting
+              `insert` commands rather than causing an error. This is
+              useful if we want the `insert` to be idempotent, such as
+              in the case of trying to create composable
+              initialization scripts. Here's an example of such an
+              `insert`:
+
+          - kind: edgeql
+            text: |
+              insert Account {
+                username := 'System',
+              } unless conflict;
+
+          - kind: edgeql
+            text: |
+              insert Account {
+                username := 'System',
+              } unless conflict;
+
+          - kind: edgeql
+            text: |
+              insert Account {
+                username := 'System',
+              } unless conflict;
+
+          - kind: text
+            text: |
+              Firstly, notice that the most basic form of `unless
+              conflict` has no condition or an `else` part.
+
+              Secondly, see that only the first `insert` produced an
+              object, while the following ones resulted in empty sets.
+
+              Lastly, we encourage you to experiment and see what
+              happens if `unless conflict` is omitted in the above
+              example.
+
+      - title: Select-or-Insert
+        slug: "select-or-insert"
+        cells:
+          - kind: text
+            text: |
+              There are times when rather than an "upsert" you need to
+              select an object or insert it, if it wasn't there.
+              Consider, for example, the functionality to create a new
+              account or retrieve an existing one:
+
+          - kind: edgeql
+            text: |
+              # Wrap everything in a `select` to also display the
+              # entire inserted structure.
+              select (
+                # Although it may seem more natural to think
+                # of it as a select-or-insert command, it is
+                # actually implemented as an
+                # insert-or-select one.
+                insert Account {
+                  username := 'Alice',
+                } unless conflict on .username else Account
+                  # No need to add a filter, because the
+                  # User here is referring to the
+                  # conflicting User from the insert part.
+              ) {
+                id,
+                username,
+                watchlist: {
+                  title,
+                }
+              }
+
+          - kind: text
+            text: |
+              You can experiment with creating accounts with different
+              usernames and see whether they seem to be fetching a
+              pre-existing record or not by looking at the `id` or `watchlist`.
+
+          - kind: edgeql
+            text: |
+              select (
+                insert Account {
+                  username := 'New',
+                } unless conflict on .username else Account
+              ) {
+                id,
+                username,
+                watchlist: {
+                  title,
+                }
+              }

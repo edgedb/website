@@ -1,0 +1,50 @@
+title: Polymorphism
+
+columns:
+- lang: edgeql
+  body: |
+    SELECT
+      Text {
+        type := Text.__type__.name,
+        body,
+
+        # If a matched Text object is
+        # an Issue, extract extra
+        # information.
+        [IS Issue].title,
+        [IS Issue].number,
+        [IS Issue].priority: {
+          name
+        },
+        [IS Issue].status: {
+          name
+        },
+
+        # If a matched Text object is
+        # a LogEntry, extract 'spent_time'.
+        [IS LogEntry].spent_time
+      }
+
+    FILTER
+      Text.body ILIKE "%spam%";
+
+- lang: json
+  body: |
+    // An example JSON result of the query.
+    {
+      "type": "LogEntry",
+      "body": "Fixed spammy email title",
+      "spent_time": 1.2
+    },
+    {
+      "type": "Issue",
+      "body": "Looks like spam to me.",
+      "title": "Too many notifications sent",
+      "number": 102,
+      "priority": {
+        "name": "LOW"
+      },
+      "status": {
+        "name": "NEW"
+      }
+    }

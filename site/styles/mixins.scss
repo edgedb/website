@@ -1,0 +1,274 @@
+@import "settings.vars.scss";
+@import "_urlEncode.scss";
+
+@mixin mainfont {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, arial,
+    sans-serif;
+}
+
+@mixin edgedbfont {
+  font-family: "EdgeDB", "Arial Narrow", "Arial", sans-serif;
+  text-transform: uppercase;
+}
+
+@mixin monospace {
+  font-family: "Roboto Mono", Monaco, monospace;
+}
+
+@mixin monoSubheader {
+  font-family: "Sometype Mono", monospace;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+}
+
+@mixin widerThan($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (min-width: #{$breakpoint-value - 0.5px}) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    // Subtracts 0.5px to make breakpoint exclusive (width < x) instead of
+    // inclusive (width <= x)
+    // (Uses -0.5px instead of -1px due to incorrect behaviour on some
+    // systems ie. win10 with fractional display scaling ¯\_(ツ)_/¯)
+    @media (max-width: #{$breakpoint-value - 0.5px}) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin breakpointMobileFirst($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (min-width: #{$breakpoint-value}) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin responsive($breakpoint, $prop, $value) {
+  @include breakpoint($breakpoint) {
+    #{$prop}: $value;
+  }
+}
+//                                 1920 1440 1024 768
+@mixin responsiveAll($prop, $base, $xl, $lg, $md, $sm) {
+  #{$prop}: $base;
+  @include breakpoint(xl) {
+    #{$prop}: $xl;
+  }
+  @include breakpoint(lg) {
+    #{$prop}: $lg;
+  }
+  @include breakpoint(md) {
+    #{$prop}: $md;
+  }
+  @include breakpoint(sm) {
+    #{$prop}: $sm;
+  }
+}
+
+//                                    2560  1920 1440 1024 768
+@mixin responsiveAllXXL($prop, $base, $xxl, $xl, $lg, $md, $sm) {
+  #{$prop}: $base;
+  @include breakpoint(xxl) {
+    #{$prop}: $xxl;
+  }
+  @include breakpoint(xl) {
+    #{$prop}: $xl;
+  }
+  @include breakpoint(lg) {
+    #{$prop}: $lg;
+  }
+  @include breakpoint(md) {
+    #{$prop}: $md;
+  }
+  @include breakpoint(sm) {
+    #{$prop}: $sm;
+  }
+}
+
+@mixin touch() {
+  @media (pointer: coarse) {
+    @content;
+  }
+}
+
+@mixin publishedDate {
+  color: var(--grey60);
+  font-size: 14px;
+  text-transform: uppercase;
+  @include responsive(xl, text-transform, unset);
+  letter-spacing: 1.4px;
+  line-height: 1;
+  @include responsive(sm, font-size, 12px);
+}
+
+@mixin darkMode {
+  [data-theme="dark"] & {
+    @content;
+  }
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] & {
+      @content;
+    }
+  }
+}
+
+@mixin hover {
+  :global(.no-touch) &:hover {
+    @content;
+  }
+}
+
+@mixin hideScrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+$validSizes: 320, 420, 768, 1024, 1440, 1920, 2560;
+
+@function mapBgImage($imgs, $suffix) {
+  $bgList: ();
+  @each $url, $size in $imgs {
+    $bgList: append(
+      $bgList,
+      url("#{$url}#{if($size,'-'+$size,'')}#{$suffix}.webp"),
+      $separator: comma
+    );
+  }
+  @return $bgList;
+}
+
+@mixin sizedBgImage($img, $retina: true) {
+  background-image: mapBgImage([$img], "");
+
+  @if $retina {
+    @media (min-resolution: 2dppx) {
+      background-image: mapBgImage([$img], "-2x");
+    }
+  }
+}
+
+@mixin sizedBgImages($retina, $imgs...) {
+  background-image: mapBgImage($imgs, "");
+
+  @if $retina {
+    @media (min-resolution: 2dppx) {
+      background-image: mapBgImage($imgs, "-2x");
+    }
+  }
+}
+
+@mixin optimisedBackgroundImages($bgUrl) {
+  @include sizedBgImage($bgUrl 2560, false);
+
+  @include breakpoint(xl) {
+    @include sizedBgImage($bgUrl 1920, false);
+  }
+  @include breakpoint(lg) {
+    @include sizedBgImage($bgUrl 1440, false);
+  }
+  @include breakpoint(md) {
+    @include sizedBgImage($bgUrl 1024, false);
+  }
+  @include breakpoint(sm) {
+    @include sizedBgImage($bgUrl 768, false);
+  }
+  @include breakpoint(xs) {
+    @include sizedBgImage($bgUrl 320, false);
+  }
+}
+
+@mixin raisedShadow(
+  $bgColour,
+  $radius,
+  $hover: true,
+  $blur: 30px,
+  $blurBottom: 8px,
+  $blurHPad: 48px,
+  $blurColour: rgba(0, 0, 0, 0.15)
+) {
+  position: relative;
+  z-index: 0;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 80%;
+    left: $blurHPad;
+    right: $blurHPad;
+    bottom: 0;
+    border-radius: $radius;
+    box-shadow: 0 $blurBottom $blur $blurColour;
+    z-index: -1;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $bgColour;
+    border-radius: $radius;
+    z-index: -1;
+  }
+
+  @if $hover {
+    transition: transform 0.05s;
+
+    &:before {
+      transition: box-shadow 0.05s;
+    }
+
+    @media (min-resolution: 2dppx) {
+      @include hover {
+        transform: scale(0.99);
+
+        &:before {
+          box-shadow: 0 #{$blurBottom * (3 / 4)} #{$blur * (2 / 3)} $blurColour;
+          left: #{$blurHPad / 2};
+          right: #{$blurHPad / 2};
+        }
+      }
+    }
+
+    &:active {
+      transform: scale(0.98) !important;
+
+      &:before {
+        box-shadow: 0
+          #{$blurBottom *
+          (3 / 8)}
+          #{$blur /
+          3}
+          $blurColour !important;
+        left: #{$blurHPad / 4} !important;
+        right: #{$blurHPad / 4} !important;
+      }
+    }
+  }
+}

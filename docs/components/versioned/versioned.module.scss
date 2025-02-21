@@ -1,0 +1,50 @@
+@import "@edgedb-site/shared/mixins.scss";
+
+.hiddenSection {
+  position: relative;
+  margin-bottom: 32px;
+
+  .content {
+    mask-image: linear-gradient(#000, transparent);
+    pointer-events: none;
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  .showMore {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    background: var(--pageLightBg);
+    border-radius: 16px;
+
+    span {
+      display: block;
+      font-size: 14px;
+      line-height: 32px;
+      padding: 0 16px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    @include darkTheme {
+      background: var(--pageDarkBg);
+
+      span {
+        background: rgba(255, 255, 255, 0.04);
+      }
+    }
+  }
+}
+
+.versionAddedLatest {
+  border-color: #2f9771;
+  color: #2f9771;
+}
+
+.versionAddedDev {
+  border-color: #ca9033;
+  color: #ca9033;
+}

@@ -1,0 +1,27 @@
+.. blog:published-on:: 2023-06-22 10:01 AM PST
+
+==========
+EdgeDB 3.0
+==========
+
+We're thrilled to announce EdgeDB 3.0, a release that comes loaded with
+new features and improvements:
+
+* A simplification of EdgeDB Schema language.
+
+* *Triggers* and *mutation rewrites*.
+
+* UI gains a new Web REPL and a visual query builder.
+
+* EdgeQL gets a new ``analyze`` command, splats, nested modules,
+  new set operators, and more.
+
+* ``edgedb watch`` command to simplify schema prototyping.
+
+* ``ext::pgvector`` for embeddings.
+
+* SQL in read-only mode.
+
+* Native Java and Elixir clients.
+
+Read more in the `announcement blog post </blog/edgedb-3-0>`_!

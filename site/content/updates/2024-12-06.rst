@@ -1,0 +1,63 @@
+.. blog:published-on:: 2024-12-10 10:00 AM PST
+
+=============
+Dev Report #3
+=============
+
+December update time! Here's what the EdgeDB team has been up to:
+
+* This month, we've learned that **Yury** loves puzzles 🧩 as he's all into solving
+  Advent of Code. He also decided Python is too mainstream, so he's solving it 
+  in EdgeQL. Follow his solutions at `@1st1 <1st1_>`_ on X.
+
+* **Andrey** is working on AI-powered query translation, turning "show me all users 
+  who joined last week" into proper EdgeQL.
+
+* **Dijana** built EdgeDB's Vercel AI SDK provider with full documentation and a demo 
+  app showing a real-world use case. Stay tuned for the release - you'll be able to 
+  integrate EdgeDB's AI features into your projects in minutes.
+
+* **Scott** is living in a time zone where days are 48 hours long - it's the only 
+  explanation for how he manages EdgeDB Auth improvements, ``edgedb-js``, and being our
+  Discord superhero 🥇 In 6.0, you'll be able to keep your EdgeDB database on your 
+  private network and still use browser-driven authentication flows like OAuth and 
+  Magic Links.
+
+* The cloud team has welcomed a new team member, **Antoine**!
+
+* **James** made PostGIS data so pretty in Cloud UI, we're considering a pivot to map-making.
+
+* **Fredrick** is enjoying his time off 🏖️ (we're not jealous at all)
+
+* **Fantix** is building compiler support for non-query configuration values, 
+  improving how we handle env vars and TOML files. The work brings better error 
+  checking and static evaluation - just in time for Cloud's SMTP settings.
+
+* **Zack and the cloud team** are not only ensuring that Cloud operates smoothly and 
+  enhancing its functionality, but there are also ongoing efforts to create a unit-testable 
+  codebase for the Cloud.
+
+* **Roman** is busy with a secret project (🤫). We'll still be a database, we promise...
+
+* **Matt** continues his mission to make everything blazingly fast™ with Rust. HTTP layer 
+  now uses reqwest for better performance in AI and auth flows, MacOS SSL issues are 
+  fixed by switching to rustls, and more improvements are in progress.
+  
+* **Aljaz and Victor** are deep in SQL support land. They've seen things in ORM codebases 
+  that can't be unseen.
+
+* We're `Drizzle <drizzle_>`_'s biggest sponsor now. TypeScript fans, you're in for a 
+  treat in Q1 2025 👀
+
+* Additionally, we are discussing how to make EdgeDB more approachable, with plans to 
+  revamp documentation and improve the onboarding and learning experience.
+
+* Last but not least: EdgeDB 6 drops early 2025 with SQL support, PostGIS, better auth, 
+  and more goodies than we can fit in this update!
+  
+.. lint-off
+
+.. _1st1: https://twitter.com/1st1
+.. _drizzle: https://orm.drizzle.team/
+
+.. lint-on

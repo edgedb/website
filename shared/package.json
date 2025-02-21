@@ -1,0 +1,12 @@
+{
+  "name": "@edgedb-site/shared",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "@edgedb-site/build-tools": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^14.1.2"
+  }
+}

@@ -1,0 +1,37 @@
+@import "@/mixins.scss";
+
+.qnaNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    line-height: 20px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 16px;
+
+    .count {
+      display: flex;
+      height: 20px;
+      padding: 0 4px;
+      align-items: center;
+      border-radius: 4px;
+      background: var(--grey90);
+      color: var(--grey40);
+      @include monospace;
+      font-size: 12px;
+      font-weight: 400;
+
+      @include darkTheme {
+        background: var(--grey8);
+        color: var(--grey40);
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import "../../styles/mixins.scss";
+
+.container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--grey18);
+  padding: 80px;
+  margin-top: 40px;
+  @include responsive(sm, margin-top, 20px);
+  @include responsive(lg, padding, 64px);
+  @include responsive(sm, padding, 64px 24px);
+
+  .title {
+    margin: 0;
+    text-transform: uppercase;
+    font-family: "EdgeDB";
+    font-size: 34px;
+    margin-bottom: 56px;
+    text-align: center;
+    color: var(--baseTextDarkTheme);
+  }
+
+  .posts {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 48px;
+    padding-bottom: 84px;
+
+    a {
+      height: fit-content;
+    }
+
+    .postImage {
+      width: 304px;
+      height: 192px;
+      @include responsive(lg, width, 272px);
+      @include responsive(lg, height, 160px);
+      border-radius: 8px;
+      box-shadow: 0px 32px 24px -24px rgba(0, 0, 0, 0.25);
+      margin-bottom: 28px;
+    }
+
+    .postTitle {
+      line-height: 24px;
+      font-weight: 700;
+      margin: auto;
+      width: 260px;
+      text-align: center;
+      color: var(--baseTextDarkTheme);
+    }
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    background-color: var(--accentViolet);
+    border-radius: 6px;
+    padding: 12px;
+
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: var(--grey6);
+
+    z-index: 1;
+
+    &:hover {
+      background-color: var(--activeViolet);
+    }
+
+    svg {
+      fill: currentColor;
+      height: 22px;
+      width: auto;
+      margin-left: -4px;
+      margin-right: 4px;
+    }
+  }
+}

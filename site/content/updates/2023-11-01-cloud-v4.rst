@@ -1,0 +1,14 @@
+.. blog:published-on:: 2023-11-01 10:01 AM PST
+
+================================
+Introducing Cloud and EdgeDB 4.0
+================================
+
+Today we are announcing EdgeDB 4.0 and launching our Cloud product.
+
+We're kicking off this launch with a keynote presentation.
+Alongside discussing EdgeDB 4.0 and the Cloud, we've invited four
+amazing engineers and founders to share their stories about
+building real-world products with EdgeDB.
+
+Read more in the `announcement blog post </blog/edgedb-cloud-and-edgedb-4-0>`_!

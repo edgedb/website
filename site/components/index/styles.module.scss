@@ -1,0 +1,217 @@
+@import "../../styles/mixins.scss";
+
+.anno {
+  background: rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  border-radius: 40px;
+  padding: 8px 13px 8px 11px;
+  color: #ccc;
+  user-select: none;
+  // cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  .text {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    margin-left: 6px;
+
+    @include responsiveAll(font-size, 14px, 14px, 14px, 13px, 12px);
+  }
+
+  .dot {
+    display: block;
+    border-radius: 13px;
+    min-height: 13px;
+    min-width: 13px;
+    max-height: 13px;
+    max-width: 13px;
+    background-color: var(--baseText);
+  }
+
+  // &:hover {
+  //   background: rgba(0,0,0,0.9);
+  // }
+}
+
+.versus {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-radius: 12px;
+  width: 1296px;
+
+  @include responsive(xl, width, 1232px);
+  @include responsive(lg, width, 928px);
+
+  @include breakpoint(md) {
+    max-width: 100%;
+    margin-right: 48px;
+    margin-left: 48px;
+    border-radius: 0;
+  }
+
+  @include breakpoint(sm) {
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 0;
+  }
+
+  overflow: hidden;
+
+  .tabs + .tabs {
+    border-left: 2px solid var(--grey8);
+  }
+
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+
+    .header {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      min-width: 0;
+      overflow-y: auto;
+      background: rgba(51, 51, 51, 0.8);
+      padding: 14px;
+
+      @include breakpoint(sm) {
+        justify-content: flex-start;
+      }
+
+      .tab {
+        user-select: none;
+        text-wrap: nowrap;
+        outline: 0;
+
+        font-weight: 400;
+        font-size: 16px;
+
+        background: transparent;
+        border: 2px solid var(--grey30);
+        color: var(--baseText);
+        padding: 3px 10px;
+        border-radius: 4px;
+
+        cursor: pointer;
+
+        &.active {
+          color: var(--accentViolet);
+          background: var(--grey14);
+          border-color: var(--grey14);
+        }
+      }
+    }
+
+    .cnt {
+      flex: 1;
+
+      background-color: rgba(15, 15, 15, 0.5);
+      backdrop-filter: blur(10px);
+
+      overflow: hidden;
+      overflow-x: auto;
+
+      .tab {
+        flex: 1;
+        display: none;
+        min-width: fit-content;
+        padding: 20px;
+
+        &.active {
+          display: block;
+        }
+
+        .code {
+          background: transparent;
+          border-radius: 0;
+          border-width: 0;
+          color: var(--baseText);
+          overflow: hidden;
+          overflow-y: hidden;
+          min-width: fit-content;
+          margin: 0;
+          padding: 0;
+
+          & > div {
+            display: contents;
+
+            & > div {
+              display: contents;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.bubbleCnt {
+  $bg: rgba(36, 36, 36, 1); // SCSS doesn't want to inline #-colors...
+  $size: 48px;
+
+  display: flex;
+  gap: 8px;
+
+  .avatar {
+    min-width: $size;
+    max-width: $size;
+    min-height: $size;
+    max-height: $size;
+    border: 1px solid var(--grey80);
+    border-radius: $size;
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-self: flex-end;
+  }
+
+  .bubble {
+    margin: 1px 0;
+    padding: 12px 16px;
+    position: relative;
+    border-radius: 18px;
+    align-self: flex-start;
+    background-color: $bg;
+
+    h6 {
+      color: var(--accentViolet);
+      font-weight: bold;
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      line-height: 20px;
+      a {
+        &,
+        &:hover {
+          text-decoration: none;
+          color: inherit;
+          outline: none;
+        }
+      }
+    }
+
+    p {
+      color: var(--baseText);
+      font-size: 16px;
+      line-height: 24px;
+      margin: 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='15.515px' height='17.5px' viewBox='32.484 17.5 15.515 17.5' enable-background='new 32.484 17.5 15.515 17.5'><path fill='#{$bg}' d='M38.484,17.5c0,8.75,1,13.5-6,17.5C51.484,35,52.484,17.5,38.484,17.5z'/></svg>")
+        left bottom no-repeat;
+      left: -6px;
+    }
+  }
+}

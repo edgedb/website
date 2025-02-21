@@ -1,0 +1,225 @@
+@import "../../mixins.scss";
+
+.pageFooter {
+  padding-top: 24px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  @include responsive(margin-bottom, 70px, $md: 30px);
+  min-width: 0;
+  width: 100%;
+  row-gap: 32px;
+
+  font-size: 16px;
+  line-height: 40px;
+  color: var(--grey30);
+
+  @include darkTheme {
+    color: var(--grey60);
+  }
+
+  @include breakpoint(md) {
+    align-items: center;
+  }
+}
+
+.heading {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 40px;
+  color: var(--grey55);
+
+  @include breakpoint(md) {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  @include darkTheme {
+    color: var(--grey40);
+  }
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+
+  @include breakpoint(sm) {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    text-align: center;
+  }
+}
+
+.linksGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+  width: 136px;
+  @include breakpoint(md) {
+    text-align: center;
+    margin: 0 auto 32px auto;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    line-height: 24px;
+    padding: 8px 0;
+  }
+}
+
+.rssLink a {
+  color: inherit;
+}
+
+.subscribe {
+  @include responsive(width, 380px, $sm: min(100%, 380px));
+  @include responsive(padding, 0px, $sm: 0 24px);
+  box-sizing: border-box;
+
+  .subscribeInput {
+    line-height: 32px;
+
+    .successMsg {
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--accentGreen);
+    }
+
+    .errorMsg {
+      color: var(--accentRed);
+      font-size: 14px;
+      line-height: 18px;
+      margin-bottom: 6px;
+    }
+
+    form {
+      display: flex;
+      min-width: 0;
+    }
+
+    input {
+      border-radius: 4px 0 0 4px;
+      line-height: 32px;
+      padding: 0 10px;
+      font-size: 14px;
+      flex-grow: 1;
+      min-width: 0;
+      outline: 0;
+      border: 2px solid transparent;
+      color: var(--baseText);
+
+      &::placeholder {
+        color: var(--grey65);
+
+        @include darkTheme {
+          color: var(--grey50);
+        }
+      }
+    }
+
+    button {
+      background-color: var(--accentViolet);
+      border: none;
+      border-radius: 0 4px 4px 0;
+      line-height: 32px;
+      padding: 0 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    @include darkTheme {
+      .successMsg {
+        color: (--accentGreen);
+      }
+
+      input {
+        background-color: var(--grey20);
+      }
+
+      button {
+        color: var(--grey14);
+      }
+    }
+  }
+  .message {
+    line-height: 26px;
+    margin-top: 10px;
+    opacity: 0.5;
+  }
+}
+
+.copyright {
+  grid-column: content;
+  color: var(--grey30);
+
+  @include darkTheme {
+    color: var(--grey55);
+  }
+
+  a {
+    color: inherit;
+
+    &:first-child {
+      margin-right: 2px;
+    }
+
+    &:nth-child(2) {
+      svg {
+        margin: 0 4px;
+      }
+    }
+
+    &:nth-child(3) {
+      margin: 0 6px;
+    }
+
+    &:nth-child(4) {
+      svg {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .label {
+    opacity: 0.5;
+    font-size: 14px;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--accentGreenLightTheme);
+
+      @include darkTheme {
+        &:hover {
+          color: var(--accentViolet);
+        }
+      }
+    }
+  }
+
+  @include breakpoint(md) {
+    width: 160px;
+    text-align: center;
+    margin: 0 auto 40px auto;
+  }
+}

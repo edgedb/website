@@ -1,0 +1,719 @@
+@import "./mixins.scss";
+
+@mixin blurBg {
+  backdrop-filter: blur(10px);
+}
+
+.page {
+  position: relative;
+  z-index: 0;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    @include responsiveAll(margin-top, 72px, 64px, 16px, 66px, 12px);
+
+    h1 {
+      color: var(--grey80);
+      @include edgedbfont;
+      text-align: center;
+      @include responsiveAllXXL(font-size, 74px, 58px, 50px, 50px, 50px, 34px);
+      @include responsiveAllXXL(
+        line-height,
+        74px,
+        58px,
+        50px,
+        50px,
+        50px,
+        34px
+      );
+      @include responsiveAll(
+        letter-spacing,
+        normal,
+        -1.68,
+        -1.68,
+        -1.44,
+        -0.96
+      );
+
+      font-weight: 700;
+      line-height: 96px;
+      margin: 28px 60px 47px 60px;
+      @include responsive(sm, margin, 28px 20px 56px 20px);
+
+      span {
+        color: var(--accentViolet);
+      }
+    }
+
+    h2 {
+      color: var(--accentViolet);
+      text-align: center;
+      @include edgedbfont;
+      font-weight: 700;
+      @include responsiveAll(font-size, 40px, 40px, 34px, 34px, 28px);
+      @include responsiveAll(line-height, 64px, 56px, 48px, 40px, 28px);
+      @include responsiveAll(letter-spacing, -1.92, -1.68, -1.44, -1.2, -0.84);
+      margin-top: 120px;
+      max-width: 928px;
+      margin: auto;
+    }
+
+    h3 {
+      color: var(--baseTextDarkTheme);
+      font-family: Open Sans;
+      @include responsiveAll(font-size, 20px, 16px, 16px, 14px, 14px);
+      @include responsiveAll(line-height, 32px, 24px, 24px, 24px, 24px);
+      font-weight: 700;
+    }
+
+    p {
+      font-family: Open Sans;
+      @include responsiveAllXXL(font-size, 20px, 20px, 18px, 18px, 16px, 16px);
+      @include responsiveAllXXL(
+        line-height,
+        32px,
+        32px,
+        24px,
+        24px,
+        24px,
+        24px
+      );
+      color: var(--baseTextDarkTheme);
+
+      span {
+        font-weight: 700;
+      }
+    }
+
+    .small {
+      @include responsiveAllXXL(font-size, 20px, 20px, 18px, 18px, 16px, 16px);
+      @include responsiveAllXXL(
+        line-height,
+        32px,
+        32px,
+        24px,
+        24px,
+        24px,
+        24px
+      );
+    }
+
+    .introParagraph {
+      text-align: center;
+      @include responsiveAll(width, 944px, 760px, 740px, 512px, 100%);
+      @include responsive(sm, text-align, start);
+      margin: auto;
+      @include responsiveAll(margin-bottom, 78px, 88px, 34px, 46px, 56px);
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      position: relative;
+
+      padding: 12px 16px;
+      @include responsive(lg, padding, 8px 12px);
+
+      font-family: Open Sans;
+      @include responsiveAllXXL(font-size, 20px, 20px, 18px, 18px, 16px, 16px);
+      @include responsiveAllXXL(
+        line-height,
+        32px,
+        32px,
+        24px,
+        24px,
+        24px,
+        24px
+      );
+      @include responsive(sm, font-size, 14px);
+      line-height: 32px;
+      font-weight: 700;
+      color: var(--grey8);
+      cursor: pointer;
+      outline: 0;
+      user-select: none;
+      border: none;
+      border-radius: 8px;
+
+      background: var(--accentViolet);
+
+      svg {
+        margin-right: 16px;
+      }
+
+      &::after {
+        background: linear-gradient(90deg, #da76a9 0%, #df9c6c 100%);
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+      }
+
+      &:hover {
+        &::after {
+          opacity: 1;
+        }
+      }
+
+      span,
+      svg {
+        z-index: 1;
+      }
+    }
+
+    .uiSection {
+      .introParagraph {
+        margin-top: 50px;
+        @include responsive(sm, margin-top, 40px);
+        margin-bottom: 30px;
+        @include responsive(sm, margin-bottom, 20px);
+        text-align: center;
+        @include responsiveAll(width, 880px, 608px, 608px, 512px, 100%);
+
+        @include responsive(sm, padding, 0 24px);
+      }
+    }
+
+    .generalFeatures {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      @include responsive(sm, display, block);
+      margin-bottom: 140px;
+      @include responsiveAll(margin-top, 120px, 88px, 64px, 64px, 64px);
+      @include responsiveAll(margin-bottom, 140px, 130px, 100px, 100px, 86px);
+    }
+
+    .feature {
+      color: var(--baseTextDarkTheme);
+      font-family: Open Sans;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 32px;
+      padding-left: 40px;
+      padding-right: 40px;
+      @include responsive(sm, padding, 0);
+    }
+
+    .resilienceFeatures {
+      display: flex;
+      @include responsiveAll(gap, 188px, 136px, 80px, 40px, 26px);
+      margin-top: 80px;
+      @include responsiveAll(margin-top, 86px, 86px, 64px, 58px, 50px);
+      margin-bottom: 152px;
+      @include responsive(lg, margin-bottom, 116px);
+      @include responsive(md, padding, 0 40px);
+      @include responsive(sm, padding, 0);
+      @include responsive(sm, flex-direction, column);
+    }
+
+    .overview {
+      border-radius: 8px;
+      @include responsive(sm, border-radius, 0);
+      background-color: rgba(15, 15, 15, 0.5);
+      @include blurBg;
+      box-shadow: 0px 40px 40px -24px rgba(0, 0, 0, 0.12);
+      @include responsive(sm, box-shadow, none);
+      @include responsiveAll(padding, 48px, 32px, 32px, 24px, 24px);
+      height: fit-content;
+      position: sticky;
+      @include responsive(sm, position, static);
+      top: 20px; // give it some top-margin when it's scrolling in fixed
+      flex-shrink: 0;
+      @include responsive(sm, margin, 0 -24px 12px -24px);
+      @include responsiveAll(width, 720px, 552px, 432px, 328px, 100vw);
+
+      p {
+        font-family: Open Sans;
+        color: var(--baseTextDarkTheme);
+        margin: 0 0 16px 0;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .resilienceFeature {
+      @extend .feature;
+      position: relative;
+      order: var(--blockOrder);
+      z-index: 0;
+      padding-right: 0;
+
+      &:first-child h3 {
+        margin-top: 0;
+      }
+
+      &:last-child p {
+        margin-bottom: 0;
+      }
+
+      &:before {
+        counter-reset: resilienceFeature var(--blockOrder);
+        content: counter(resilienceFeature, decimal-leading-zero);
+
+        position: absolute;
+        top: -4px;
+        left: 16px;
+        @include responsive(xl, top, -8px);
+        @include responsive(xl, left, 20px);
+        @include responsive(md, left, 22px);
+        z-index: -1;
+
+        @include edgedbfont;
+        font-size: 64px;
+        @include responsive(xl, font-size, 54px);
+        @include responsive(md, font-size, 46px);
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        letter-spacing: -2.4px;
+        color: rgba(204, 204, 204, 0.2);
+
+        @include responsive(sm, display, none);
+      }
+    }
+
+    .ctaSection {
+      @include responsiveAllXXL(
+        padding-top,
+        160px,
+        136px,
+        112px,
+        112px,
+        92px,
+        100px
+      );
+      padding-bottom: 112px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        margin-bottom: 50px;
+        @include responsive(sm, margin-bottom, 32px);
+      }
+
+      .outroParagraph {
+        @include responsiveAll(width, 992px, 768px, 768px, 634px, 100%);
+        @include responsiveAll(margin-bottom, 64px, 40px, 40px, 40px, 34px);
+        text-align: start;
+      }
+
+      @include breakpoint(sm) {
+        padding-bottom: 40px;
+        button::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .authSection {
+    h2 {
+      margin-bottom: 56px;
+    }
+
+    .authParagraph {
+      text-align: center;
+      @include responsiveAll(width, 880px, 608px, 608px, 512px, 100%);
+    }
+  }
+
+  .interactiveSection {
+    width: 100vw;
+
+    @include responsiveAll(margin-top, 64px, 24px, 40px, 0px, 24px);
+
+    .interactiveContent {
+      display: flex;
+      justify-content: space-between;
+      @include responsive(sm, flex-direction, column);
+      width: 100%;
+      max-width: var(--pageMaxWidth);
+      @include responsiveAllXXL(
+        padding-left,
+        230px,
+        270px,
+        190px,
+        140px,
+        44px,
+        24px
+      );
+
+      @include responsiveAllXXL(
+        padding-right,
+        230px,
+        240px,
+        140px,
+        60px,
+        44px,
+        24px
+      );
+      margin: auto;
+    }
+
+    .themeSwitcher {
+      position: static;
+      margin: auto;
+    }
+
+    .colorPickerWrapper {
+      width: 416px;
+      @include responsive(md, width, 328px);
+      @include responsive(sm, width, 100%);
+      @include responsive(sm, margin-top, 20px);
+      margin-top: 32px;
+
+      p {
+        @include responsiveAllXXL(
+          font-size,
+          20px,
+          20px,
+          18px,
+          18px,
+          16px,
+          16px
+        );
+        @include responsiveAllXXL(
+          line-height,
+          32px,
+          32px,
+          24px,
+          24px,
+          24px,
+          24px
+        );
+        color: var(--baseTextLightTheme);
+      }
+    }
+
+    .colorPicker {
+      padding: 24px;
+      border-radius: 8px;
+      background: var(--grey95);
+      box-shadow: 0px 40px 40px -24px rgba(0, 0, 0, 0.12);
+      width: 352px;
+      @include responsive(md, width, 328px);
+      @include responsive(sm, width, min(100%, 288px));
+      margin-bottom: 56px;
+      @include responsive(lg, margin-bottom, 80px);
+      @include responsive(sm, margin, 20px auto 40px auto);
+      margin-top: 48px;
+
+      input[type="file"]::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+
+      .logoWrapper {
+        position: relative;
+        margin-bottom: 22px;
+      }
+
+      .logoInput,
+      .fakeInput {
+        height: 32px;
+        border: none;
+        border-radius: 4px;
+        background-color: var(--white);
+        padding: 4px 8px;
+
+        flex-grow: 1;
+        font-family: Open Sans;
+        font-size: 16px;
+        color: var(--baseTextLightTheme);
+        line-height: 22px;
+        width: 100%;
+        outline: 0;
+      }
+
+      .logoInput {
+        opacity: 0;
+        z-index: 1;
+        position: relative;
+      }
+
+      .fakeInput {
+        position: absolute;
+        top: 30px;
+        z-index: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--grey40);
+      }
+
+      label {
+        color: var(--baseTextLightTheme);
+        font-family: Open Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        display: block;
+      }
+
+      .color {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background-size: cover;
+        background-position: center center;
+        flex-shrink: 0;
+      }
+    }
+
+    .themeSwitcherBig {
+      display: flex;
+      gap: 16px;
+      margin: auto;
+      width: fit-content;
+      cursor: pointer;
+
+      button {
+        display: flex;
+        width: 128px;
+        padding: 11px 14px 13px 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        border: 2px solid var(--grey65);
+        background-color: transparent;
+        color: var(--grey30);
+        font-family: Open Sans;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        cursor: pointer;
+
+        &.active {
+          background: var(--grey30);
+          border-color: var(--grey30);
+          color: var(--grey95);
+        }
+      }
+    }
+
+    &.darkMode {
+      p {
+        color: var(--baseTextDarkTheme);
+      }
+
+      .themeSwitcherBig {
+        button {
+          border-color: var(--grey30);
+          color: var(--grey80);
+
+          &.active {
+            background-color: var(--grey80);
+            border-color: var(--grey80);
+            color: var(--grey14);
+          }
+        }
+      }
+
+      .colorPicker {
+        background-color: var(--grey18);
+
+        label {
+          color: var(--baseTextDarkTheme);
+        }
+
+        .logoInput,
+        .fakeInput {
+          background-color: var(--grey14);
+          color: var(--baseTextDarkTheme);
+
+          &.placeholder {
+            color: var(--grey50);
+          }
+        }
+      }
+    }
+  }
+}
+
+.imageTabs {
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.06));
+}
+
+.blink {
+  animation: blink-animation 4s steps(20, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 1200px;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+
+  div {
+    position: absolute;
+    width: var(--size);
+    height: calc(var(--size) * 1080 / 1920);
+    left: calc(50% + var(--left));
+    background-size: 100%;
+    --parallax: 0.025;
+
+    transform: translate(
+      calc(var(--mouseRelPosX) * -1 * var(--parallax)),
+      calc(var(--mouseRelPosY) * -1 * var(--parallax))
+    );
+  }
+
+  div:nth-child(1) {
+    --size: 1200px;
+    --parallax: 0.03;
+    top: 176px;
+    --left: -1280px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_01" 600, true);
+  }
+
+  div:nth-child(2) {
+    --size: 380px;
+    --parallax: 0.01;
+    top: 120px;
+    --left: 173px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_02", false);
+    z-index: -1;
+  }
+
+  div:nth-child(3) {
+    display: none;
+    --size: 540px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_03", false);
+    z-index: -2;
+  }
+
+  div:nth-child(4) {
+    --size: 1200px;
+    --parallax: 0.03;
+    top: 308px;
+    --left: 448px;
+    @include sizedBgImage("/_images/cloud/toon_cloud_04", false);
+  }
+
+  @include breakpoint(xxl) {
+    div:nth-child(1) {
+      top: -38px;
+      --left: -1444px;
+    }
+    div:nth-child(2) {
+      top: 120px;
+      --left: 196px;
+    }
+    div:nth-child(3) {
+      display: block;
+      top: 458px;
+      --left: -584px;
+    }
+    div:nth-child(4) {
+      --size: 980px;
+      top: 400px;
+      --left: 320px;
+    }
+  }
+
+  @include breakpoint(xl) {
+    div:nth-child(1) {
+      --size: 720px;
+      top: 1px;
+      --left: -982px;
+    }
+    div:nth-child(2) {
+      --size: 300px;
+      top: 128px;
+      --left: 162px;
+    }
+    div:nth-child(3) {
+      --size: 480px;
+      top: 349px;
+      --left: -520px;
+    }
+    div:nth-child(4) {
+      --size: 860px;
+      top: 280px;
+      --left: 248px;
+    }
+  }
+
+  @include breakpoint(lg) {
+    div:nth-child(1) {
+      --size: 567px;
+      top: 9px;
+      --left: -744px;
+    }
+    div:nth-child(2) {
+      --size: 220px;
+      top: 114px;
+      --left: 103px;
+    }
+    div:nth-child(3) {
+      --size: 280px;
+      top: 318px;
+      --left: -376px;
+    }
+    div:nth-child(4) {
+      --size: 640px;
+      top: 288px;
+      --left: 213px;
+    }
+  }
+
+  @include breakpoint(md) {
+    div:nth-child(1) {
+      --size: 400px;
+      top: 21px;
+      --left: -532px;
+    }
+    div:nth-child(2) {
+      --size: 180px;
+      top: 40px;
+      --left: -56px;
+    }
+    div:nth-child(3) {
+      --size: 275px;
+      top: 290px;
+      --left: -316px;
+    }
+    div:nth-child(4) {
+      --size: 420px;
+      top: 116px;
+      --left: 142px;
+    }
+  }
+
+  @include breakpoint(sm) {
+    div:nth-child(1),
+    div:nth-child(2),
+    div:nth-child(3) {
+      display: none;
+    }
+
+    div:nth-child(4) {
+      --size: 284px;
+      top: 64px;
+      --left: -142px;
+    }
+  }
+}

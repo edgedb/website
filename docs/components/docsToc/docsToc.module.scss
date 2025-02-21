@@ -1,0 +1,87 @@
+@import "@/mixins.scss";
+
+.docsToc {
+  position: sticky;
+  top: var(--pageHeaderHeight);
+  display: flex;
+  flex-direction: column;
+  padding-top: 132px;
+
+  @include responsive(padding-top, 144px, $xl: 91px);
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--grey50);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background: none;
+    }
+
+    &.active {
+      color: var(--grey30);
+
+      &:before {
+        background: var(--grey40);
+      }
+    }
+
+    &:hover {
+      color: var(--accent_green_light_theme);
+
+      &:before {
+        background: currentColor;
+      }
+    }
+
+    &.faded {
+      opacity: 0.4;
+    }
+
+    @include darkTheme {
+      color: var(--grey55);
+
+      &.active {
+        color: var(--grey70);
+      }
+
+      &:hover {
+        color: var(--accent_green_dark_theme);
+      }
+    }
+  }
+}
+
+.badge {
+  --outline-color: #979797;
+  border: 1px solid var(--outline-color);
+  color: var(--outline-color);
+  border-radius: 2px;
+  display: inline;
+  padding: 2px 4px;
+  font-size: 60%;
+  line-height: 1.7;
+  font-weight: 600;
+  vertical-align: middle;
+
+  &.versionLatest {
+    --outline-color: #2f9771;
+  }
+
+  &.versionDev {
+    --outline-color: #ca9033;
+  }
+}

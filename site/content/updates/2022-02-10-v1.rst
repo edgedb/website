@@ -1,0 +1,12 @@
+.. blog:published-on:: 2022-02-10 10:01 AM PST
+
+==========
+EdgeDB 1.0
+==========
+
+Today, after several years of building (and a long list of prereleases)
+we are extremely proud to announce the release of EdgeDB 1.0, the first
+open source, graph-relational database! 🎊
+
+Read our announcement `blog post </blog/edgedb-1-0>`_ and the
+`HN discussion <https://news.ycombinator.com/item?id=30290225>`_.
